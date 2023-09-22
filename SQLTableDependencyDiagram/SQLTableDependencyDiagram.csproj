@@ -44,6 +44,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Connect.cs" />
+    <Compile Include="Controller\DTEApplicationController.cs" />
+    <Compile Include="MenuItems\SqlColumnMenuItem.cs" />
+    <Compile Include="MenuItems\SqlTableMenuItem.cs" />
+    <Compile Include="PartialClasses\Connect_DTE_Events.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -56,8 +61,22 @@
     <PackageReference Include="Microsoft.VSSDK.BuildTools" Version="17.4.2119" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Data\DBSchema.xml" />
+    <Content Include="MockData\DBSchema.xml" />
+    <Content Include="Resources\1453477379_Calculator.png" />
+    <Content Include="Resources\1453477392_hammer_screwdriver.png" />
+    <Content Include="Resources\1453480678_files-folders-15.png" />
+    <Content Include="Resources\1453480682_Table_16x16.png" />
+    <Content Include="Resources\1453480689_table_tab_search.png" />
+    <Content Include="Resources\1453480695_table-add.png" />
+    <Content Include="Resources\1453480700_table-edit.png" />
+    <Content Include="Resources\1453480710_table_sum.png" />
+    <Content Include="Resources\1453480734_table-accept.png" />
+    <Content Include="Resources\1453480774_040.png" />
+    <Content Include="Resources\1453480786_041.png" />
+    <Content Include="Resources\1453480802_database_add.png" />
+    <Content Include="Resources\1453480812_database_save.png" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(VSToolsPath)\VSSDK\Microsoft.VsSDK.targets" Condition="'$(VSToolsPath)' != ''" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
