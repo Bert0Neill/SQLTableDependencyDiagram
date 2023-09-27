@@ -85,6 +85,43 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Assemblies\ConnectionDlg.dll" />
+    <Content Include="Assemblies\DdsShapesLib.dll" />
+    <Content Include="Assemblies\Interop.ShDocVw.dll" />
+    <Content Include="Assemblies\MDXQueryGenerator.dll" />
+    <Content Include="Assemblies\Microsoft.AnalysisServices.BackEnd.dll" />
+    <Content Include="Assemblies\Microsoft.AnalysisServices.BackEnd.XmlSerializers.dll" />
+    <Content Include="Assemblies\Microsoft.AnalysisServices.Common.dll" />
+    <Content Include="Assemblies\Microsoft.AnalysisServices.Controls.dll" />
+    <Content Include="Assemblies\Microsoft.AnalysisServices.Graphing.dll" />
+    <Content Include="Assemblies\Microsoft.Data.ConnectionUI.Dialog.dll" />
+    <Content Include="Assemblies\Microsoft.Data.ConnectionUI.dll" />
+    <Content Include="Assemblies\Microsoft.Data.DataFeedClient.dll" />
+    <Content Include="Assemblies\Microsoft.DataTransformationServices.Interfaces.dll" />
+    <Content Include="Assemblies\Microsoft.DataWarehouse.dll" />
+    <Content Include="Assemblies\Microsoft.DataWarehouse.SQM.dll" />
+    <Content Include="Assemblies\Microsoft.ReportingServices.DataExtensions.dll" />
+    <Content Include="Assemblies\Microsoft.ReportingServices.Diagnostics.dll" />
+    <Content Include="Assemblies\Microsoft.ReportingServices.Interfaces.dll" />
+    <Content Include="Assemblies\Microsoft.ReportingServices.QueryDesigners.dll" />
+    <Content Include="Assemblies\Microsoft.ReportingServices.ReportDesign.Common.dll" />
+    <Content Include="Assemblies\Microsoft.ReportingServices.RsClient.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Configuration.SString.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.Controls.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.Sdk.Scripting.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.Sdk.SqlStudio.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.SDK.TaskForms.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.SqlStudio.Controls.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.SqlStudio.Explorer.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Management.UserSettings.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.Sqm.dll" />
+    <Content Include="Assemblies\Microsoft.SqlServer.StorageClient.dll" />
+    <Content Include="Assemblies\ObjectExplorer.dll" />
+    <Content Include="Assemblies\SQLEditors.dll" />
+    <Content Include="Assemblies\SqlMgmt.dll" />
+    <Content Include="Assemblies\SqlPackageBase.dll" />
+    <Content Include="Assemblies\SqlWorkbench.Interfaces.dll" />
+    <Content Include="Assemblies\SSMSAddin.dll" />
     <Content Include="MockData\DBSchema.xml" />
     <Content Include="Resources\1453477379_Calculator.png" />
     <Content Include="Resources\1453477392_hammer_screwdriver.png" />
