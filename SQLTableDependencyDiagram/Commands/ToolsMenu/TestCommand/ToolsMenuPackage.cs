@@ -13,7 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
-namespace SQLTableDependencyDiagram.Commands
+namespace SQLTableDependencyDiagram.Commands.ToolsMenu.TestCommand
 {
     /// <summary>
     /// This is the class that implements the package exposed by this assembly.
@@ -32,22 +32,21 @@ namespace SQLTableDependencyDiagram.Commands
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
-    [ProvideAutoLoad(UIContextGuids80.NoSolution)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [Guid(HelloWorldPackage.PackageGuidString)]
+    [Guid(ToolsMenuPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
-    public sealed class HelloWorldPackage : AsyncPackage
+    public sealed class ToolsMenuPackage : AsyncPackage
     {
         /// <summary>
-        /// HelloWorldPackage GUID string.
+        /// ToolsMenuPackage GUID string.
         /// </summary>
-        public const string PackageGuidString = "b1a6c550-d24b-43bb-be0b-1bcd4652e523";
+        public const string PackageGuidString = "97ee3afe-4891-45e4-b102-e7712866c383";
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="HelloWorldPackage"/> class.
+        /// Initializes a new instance of the <see cref="ToolsMenuPackage"/> class.
         /// </summary>
-        public HelloWorldPackage()
+        public ToolsMenuPackage()
         {
             // Inside this method you can place any initialization code that does not require
             // any Visual Studio service because at this point the package object is created but
@@ -69,9 +68,8 @@ namespace SQLTableDependencyDiagram.Commands
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
-            await HelloWorld.InitializeAsync(this);
-            await SQLTableDependencyDiagram.Commands.TableMenuDiagram.InitializeAsync(this);
-            await SQLTableDependencyDiagram.Commands.DatabaseMenuCommandsHandler.InitializeAsync(this);
+            await ToolsMenu.InitializeAsync(this);
+            await SQLTableDependencyDiagram.Commands.ToolsMenu.TestCommand2.TestCommand2.InitializeAsync(this);
         }
 
         #endregion

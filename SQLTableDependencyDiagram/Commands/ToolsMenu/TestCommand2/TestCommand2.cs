@@ -7,22 +7,22 @@ using System.Threading;
 using System.Threading.Tasks;
 using Task = System.Threading.Tasks.Task;
 
-namespace SQLTableDependencyDiagram.Commands
+namespace SQLTableDependencyDiagram.Commands.ToolsMenu.TestCommand2
 {
     /// <summary>
     /// Command handler
     /// </summary>
-    internal sealed class DatabaseMenuCommandsHandler
+    internal sealed class TestCommand2
     {
         /// <summary>
         /// Command ID.
         /// </summary>
-        public const int CommandId = 4130;
+        public const int CommandId = 4129;
 
         /// <summary>
         /// Command menu group (command set GUID).
         /// </summary>
-        public static readonly Guid CommandSet = new Guid("fe79e69d-abe8-4f45-b976-62bced2d91d2");
+        public static readonly Guid CommandSet = new Guid("11a318e6-e2bf-4271-85ad-a3ed94a25167");
 
         /// <summary>
         /// VS Package that provides this command, not null.
@@ -30,12 +30,12 @@ namespace SQLTableDependencyDiagram.Commands
         private readonly AsyncPackage package;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="DatabaseMenuCommandsHandler"/> class.
+        /// Initializes a new instance of the <see cref="TestCommand2"/> class.
         /// Adds our command handlers for menu (commands must exist in the command table file)
         /// </summary>
         /// <param name="package">Owner package, not null.</param>
         /// <param name="commandService">Command service to add command to, not null.</param>
-        private DatabaseMenuCommandsHandler(AsyncPackage package, OleMenuCommandService commandService)
+        private TestCommand2(AsyncPackage package, OleMenuCommandService commandService)
         {
             this.package = package ?? throw new ArgumentNullException(nameof(package));
             commandService = commandService ?? throw new ArgumentNullException(nameof(commandService));
@@ -48,7 +48,7 @@ namespace SQLTableDependencyDiagram.Commands
         /// <summary>
         /// Gets the instance of the command.
         /// </summary>
-        public static DatabaseMenuCommandsHandler Instance
+        public static TestCommand2 Instance
         {
             get;
             private set;
@@ -71,12 +71,12 @@ namespace SQLTableDependencyDiagram.Commands
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in DatabaseMenuCommandsHandler's constructor requires
+            // Switch to the main thread - the call to AddCommand in TestCommand2's constructor requires
             // the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new DatabaseMenuCommandsHandler(package, commandService);
+            Instance = new TestCommand2(package, commandService);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace SQLTableDependencyDiagram.Commands
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "DatabaseMenuCommandsHandler";
+            string title = "TestCommand2";
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(
