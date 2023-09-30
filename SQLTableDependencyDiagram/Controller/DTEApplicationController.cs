@@ -4,7 +4,7 @@ using Microsoft.SqlServer.Management.UI.VSIntegration;
 using System;
 using System.Text;
 
-namespace SSMSAddin
+namespace SQLTableDependencyDiagram.Controller
 {
     /// <summary>
     /// Collection of Helper methods 

@@ -25,6 +25,7 @@ using System.Collections;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Xml;
+using SQLTableDependencyDiagram.Models;
 
 namespace DatabaseDiagram
 {

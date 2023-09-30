@@ -19,7 +19,7 @@ using System.Collections;
 using System.Drawing;
 using System;
 
-namespace DatabaseDiagram
+namespace SQLTableDependencyDiagram.Models
 {
     [Serializable]
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Assert, Name = "FullTrust")]

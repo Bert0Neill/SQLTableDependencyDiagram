@@ -5,6 +5,7 @@ using Microsoft.SqlServer.Management.Smo.RegSvrEnum;
 using Microsoft.SqlServer.Management.UI.VSIntegration;
 using Microsoft.SqlServer.Management.UI.VSIntegration.Editors;
 using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
+using SQLTableDependencyDiagram.Controller;
 using System;
 using System.Collections.Generic;
 using System.Collections.Specialized;
@@ -16,7 +17,7 @@ using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 
-namespace SSMSAddin
+namespace SQLTableDependencyDiagram.MenuItems
 {
     class SqlTableMenuItem : ToolsMenuItemBase, IWinformsMenuHandler
     {
@@ -35,7 +36,7 @@ namespace SSMSAddin
         {
             this.applicationObject = applicationObject;
             this.dteController = new DTEApplicationController();
-            this.tableRegex = new Regex(SSMSAddin.Properties.Resources.TableRegEx);
+            this.tableRegex = new Regex(SQLTableDependencyDiagram.Properties.Resources.TableRegEx);
         }
         #endregion
 
@@ -64,25 +65,25 @@ namespace SSMSAddin
         {
             /*context menu*/
             ToolStripMenuItem item = new ToolStripMenuItem("Custom SQL");
-            item.Image = SSMSAddin.Properties.Resources.hammer16;
+            item.Image = SQLTableDependencyDiagram.Properties.Resources.hammer16;
 
             /*context submenu item - generate inserts*/
             ToolStripMenuItem insertItem = new ToolStripMenuItem("Generate Insert's");
-            insertItem.Image = SSMSAddin.Properties.Resources._1453480812_database_save;
+            insertItem.Image = SQLTableDependencyDiagram.Properties.Resources._1453480812_database_save;
             insertItem.Tag = false;
             insertItem.Click += new EventHandler(InsertItem_Click);
             item.DropDownItems.Add(insertItem);
 
             /*context submenu item - count*/
             insertItem = new ToolStripMenuItem("Count(*)");
-            insertItem.Image = SSMSAddin.Properties.Resources.calculator16;
+            insertItem.Image = SQLTableDependencyDiagram.Properties.Resources.calculator16;
             insertItem.Tag = false;
             insertItem.Click += new EventHandler(Count_Click);
             item.DropDownItems.Add(insertItem);
 
             /*context menu*/
             ToolStripMenuItem scriptIt = new ToolStripMenuItem("Script Full Table Schema");
-            scriptIt.Image = SSMSAddin.Properties.Resources._1453480695_table_add;
+            scriptIt.Image = SQLTableDependencyDiagram.Properties.Resources._1453480695_table_add;
             scriptIt.Click += new EventHandler(ScriptIt_Click);
           
 
@@ -108,7 +109,7 @@ namespace SSMSAddin
                 string schema = match.Groups["Schema"].Value;
                 string database = match.Groups["Database"].Value;
                 string connectionString = this.Parent.Connection.ConnectionString + ";Database=" + database;
-                string sqlStatement = string.Format(SSMSAddin.Properties.Resources.SQLCount, schema, tableName);
+                string sqlStatement = string.Format(SQLTableDependencyDiagram.Properties.Resources.SQLCount, schema, tableName);
 
                 SqlCommand command = new SqlCommand(sqlStatement);
                 command.Connection = new SqlConnection(connectionString);
@@ -161,7 +162,7 @@ namespace SSMSAddin
 
                 string connectionString = this.Parent.Connection.ConnectionString + ";Database=" + database;
 
-                SqlCommand command = new SqlCommand(string.Format(SSMSAddin.Properties.Resources.SQLSelect, schema, tableName));
+                SqlCommand command = new SqlCommand(string.Format(SQLTableDependencyDiagram.Properties.Resources.SQLSelect, schema, tableName));
                 command.Connection = new SqlConnection(connectionString);
                 command.Connection.Open();
 

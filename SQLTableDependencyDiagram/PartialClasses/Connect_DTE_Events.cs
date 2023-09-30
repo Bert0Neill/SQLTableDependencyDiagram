@@ -1,7 +1,7 @@
 ﻿using EnvDTE;
 using System;
 
-namespace SSMSAddin
+namespace SQLTableDependencyDiagram.PartialClasses
 {
     /// <summary>
     /// This class contains the events for the DTE Application object,

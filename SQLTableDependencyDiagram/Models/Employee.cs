@@ -12,94 +12,96 @@
 using System;
 using System.Collections;
 
-
-/// <summary>
-/// The Employee class represents an employee in the orgranization structure. This class is used only for 
-/// extracting the oganization structure data and creating the diagram symbol nodes
-/// </summary>
-public class Employee
+namespace SQLTableDependencyDiagram.Models
 {
-    private String strName = String.Empty;
-    private String strID = String.Empty;
-    private String strPrimaryKeyID = String.Empty;
-    private String strForeignKeyID = String.Empty;
-    private String strGender = String.Empty;
-    private ArrayList alSubEmployees = new ArrayList();
-    private int nRecSubEmployeeCount = 0;
-    private String strImageName = String.Empty;
-    private ArrayList strColumns = new ArrayList();
-
-
-    public String TableName
+    /// <summary>
+    /// The Employee class represents an employee in the orgranization structure. This class is used only for 
+    /// extracting the oganization structure data and creating the diagram symbol nodes
+    /// </summary>
+    public class Employee
     {
-        get { return this.strName; }
-        set { this.strName = value; }
-    }
+        private String strName = String.Empty;
+        private String strID = String.Empty;
+        private String strPrimaryKeyID = String.Empty;
+        private String strForeignKeyID = String.Empty;
+        private String strGender = String.Empty;
+        private ArrayList alSubEmployees = new ArrayList();
+        private int nRecSubEmployeeCount = 0;
+        private String strImageName = String.Empty;
+        private ArrayList strColumns = new ArrayList();
 
-    public String EmployeeID
-    {
-        get { return this.strID; }
-        set { this.strID = value; }
-    }
 
-    public String PrimaryKeyID
-    {
-        get { return this.strPrimaryKeyID; }
-        set { this.strPrimaryKeyID = value; }
-    }
+        public String TableName
+        {
+            get { return this.strName; }
+            set { this.strName = value; }
+        }
 
-    public String Gender
-    {
-        get { return this.strGender; }
-        set { this.strGender = value; }
-    }
+        public String EmployeeID
+        {
+            get { return this.strID; }
+            set { this.strID = value; }
+        }
 
-    public ArrayList Coloumns
-    {
-        get { return this.strColumns; }
-        set { this.strColumns = value; }
-    }
+        public String PrimaryKeyID
+        {
+            get { return this.strPrimaryKeyID; }
+            set { this.strPrimaryKeyID = value; }
+        }
 
-    public String ForeignKeyID
-    {
-        get { return this.strForeignKeyID; }
-        set { this.strForeignKeyID = value; }
-    }
+        public String Gender
+        {
+            get { return this.strGender; }
+            set { this.strGender = value; }
+        }
 
-    public string ImageName
-    {
-        get { return this.strImageName; }
-        set { this.strImageName = value; }
-    }
+        public ArrayList Coloumns
+        {
+            get { return this.strColumns; }
+            set { this.strColumns = value; }
+        }
 
-    public ArrayList SubEmployees
-    {
-        get { return this.alSubEmployees; }
-    }
+        public String ForeignKeyID
+        {
+            get { return this.strForeignKeyID; }
+            set { this.strForeignKeyID = value; }
+        }
 
-    public int RecSubEmployeeCount
-    {
-        get { return this.nRecSubEmployeeCount; }
-        set { this.nRecSubEmployeeCount = value; }
-    }
+        public string ImageName
+        {
+            get { return this.strImageName; }
+            set { this.strImageName = value; }
+        }
 
-    public Employee()
-    {
-    }
+        public ArrayList SubEmployees
+        {
+            get { return this.alSubEmployees; }
+        }
 
-    public Employee(string name, string id, ArrayList Coloumn)
-    {
-        this.strName = name;
-        this.strID = id;
-        this.strColumns = Coloumn;
-    }
+        public int RecSubEmployeeCount
+        {
+            get { return this.nRecSubEmployeeCount; }
+            set { this.nRecSubEmployeeCount = value; }
+        }
 
-    public Employee(string name, string id, ArrayList Coloumn, string primaryKey,string foreignKey)
-    {
-        this.strName = name;
-        this.strID = id;
-        this.strColumns = Coloumn;
-        this.strPrimaryKeyID = primaryKey;
-        this.strForeignKeyID = foreignKey;
+        public Employee()
+        {
+        }
+
+        public Employee(string name, string id, ArrayList Coloumn)
+        {
+            this.strName = name;
+            this.strID = id;
+            this.strColumns = Coloumn;
+        }
+
+        public Employee(string name, string id, ArrayList Coloumn, string primaryKey, string foreignKey)
+        {
+            this.strName = name;
+            this.strID = id;
+            this.strColumns = Coloumn;
+            this.strPrimaryKeyID = primaryKey;
+            this.strForeignKeyID = foreignKey;
+        }
     }
 }

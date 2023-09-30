@@ -32,6 +32,7 @@ namespace SQLTableDependencyDiagram.Commands
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
+    [ProvideAutoLoad(UIContextGuids80.NoSolution)]
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(HelloWorldPackage.PackageGuidString)]
@@ -69,6 +70,8 @@ namespace SQLTableDependencyDiagram.Commands
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await HelloWorld.InitializeAsync(this);
+            await SQLTableDependencyDiagram.Commands.TableMenuDiagram.InitializeAsync(this);
+            await SQLTableDependencyDiagram.Commands.DatabaseMenuCommandsHandler.InitializeAsync(this);
         }
 
         #endregion

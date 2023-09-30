@@ -1,12 +1,13 @@
 ﻿using EnvDTE80;
 using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
+using SQLTableDependencyDiagram.Controller;
 using System;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 
 
-namespace SSMSAddin
+namespace SQLTableDependencyDiagram.MenuItems
 {
     /// <summary>
     /// table menu item extension
@@ -24,7 +25,7 @@ namespace SSMSAddin
         {
             this.applicationObject = _applicationObject;
             this.dteController = new DTEApplicationController();
-            this.columnRegex = new Regex(SSMSAddin.Properties.Resources.ColumnRegEx);
+            this.columnRegex = new Regex(SQLTableDependencyDiagram.Properties.Resources.ColumnRegEx);
         }
         #endregion
 
@@ -49,11 +50,11 @@ namespace SSMSAddin
         {
             /*context menu*/
             ToolStripMenuItem item = new ToolStripMenuItem("Custom SQL");
-            item.Image = SSMSAddin.Properties.Resources._1453480700_table_edit;
+            item.Image = SQLTableDependencyDiagram.Properties.Resources._1453480700_table_edit;
 
             /*context submenu item - duplicate*/
             ToolStripMenuItem insertItem = new ToolStripMenuItem("Remove Duplicates");
-            insertItem.Image = SSMSAddin.Properties.Resources._1453480689_table_tab_search;
+            insertItem.Image = SQLTableDependencyDiagram.Properties.Resources._1453480689_table_tab_search;
             insertItem.Tag = false;
             insertItem.Click += new EventHandler(Duplicate_Click);
             item.DropDownItems.Add(insertItem);
@@ -76,7 +77,7 @@ namespace SSMSAddin
                 string schema = match.Groups["Schema"].Value;
                 string database = match.Groups["Database"].Value;
                 string connectionString = this.Parent.Connection.ConnectionString + ";Database=" + database;
-                string sqlStatement = string.Format(SSMSAddin.Properties.Resources.SQLDuplicateColumnData, columnName, tableName);
+                string sqlStatement = string.Format(SQLTableDependencyDiagram.Properties.Resources.SQLDuplicateColumnData, columnName, tableName);
 
                 this.dteController.CreateNewScriptWindow(new StringBuilder(sqlStatement)); // create new document
 
