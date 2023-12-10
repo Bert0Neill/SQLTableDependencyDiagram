@@ -90,7 +90,7 @@ namespace SQLTableDependencyDiagram.Commands.ToolsMenu.TestCommand2
         {
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "TestCommand2";
+            string title = "TestCommand2_Bert";
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(

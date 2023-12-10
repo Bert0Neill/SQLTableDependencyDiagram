@@ -56,7 +56,7 @@
         <Parent guid="guidToolsMenuPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages" id="bmpPic1" />
         <Strings>
-          <ButtonText>Invoke ToolsMenu</ButtonText>
+          <ButtonText>Invoke ToolsMenu_Bert_SQL</ButtonText>
         </Strings>
       </Button>
       <!--<Button guid="guidToolsMenuPackageCmdSet" id="cmdidTestCommand2" priority="0x0100" type="Button">

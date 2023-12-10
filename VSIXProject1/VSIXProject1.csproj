@@ -36,7 +36,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <CopyVsixExtensionFiles>True</CopyVsixExtensionFiles>
-    <CopyVsixExtensionLocation>C:\Program Files %28x86%29\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\Extensions\SQLTableDependencyDiagram</CopyVsixExtensionLocation>
+    <CopyVsixExtensionLocation>C:\Program Files %28x86%29\Microsoft SQL Server\120\Tools\Binn\ManagementStudio\Extensions\VSIXProject1</CopyVsixExtensionLocation>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>

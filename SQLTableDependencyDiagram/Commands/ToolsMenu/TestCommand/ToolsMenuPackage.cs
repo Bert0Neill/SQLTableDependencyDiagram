@@ -36,6 +36,7 @@ namespace SQLTableDependencyDiagram.Commands.ToolsMenu.TestCommand
     [ProvideMenuResource("Menus.ctmenu", 1)]
     [Guid(ToolsMenuPackage.PackageGuidString)]
     [SuppressMessage("StyleCop.CSharp.DocumentationRules", "SA1650:ElementDocumentationMustBeSpelledCorrectly", Justification = "pkgdef, VS and vsixmanifest are valid VS terms")]
+    [ProvideAutoLoad(UIContextGuids80.NoSolution)] // select NO in prompt for older versions of SS
     public sealed class ToolsMenuPackage : AsyncPackage
     {
         /// <summary>
