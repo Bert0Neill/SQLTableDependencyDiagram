@@ -9,7 +9,7 @@ using Syncfusion.Windows.Forms;
 
 namespace DatabaseDiagram
 {
-    partial class Form1
+    partial class ViewDependency
     {
         /// <summary>
         /// Required designer variable.
@@ -38,7 +38,7 @@ namespace DatabaseDiagram
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(ViewDependency));
             this.panel1 = new System.Windows.Forms.Panel();
             this.label1 = new System.Windows.Forms.Label();
             this.cboDatabaseDiagram = new System.Windows.Forms.ComboBox();

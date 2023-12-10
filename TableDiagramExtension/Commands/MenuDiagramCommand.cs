@@ -1,4 +1,5 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using DatabaseDiagram;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.ComponentModel.Design;
@@ -91,6 +92,9 @@ namespace TableDiagramExtension.Commands
             ThreadHelper.ThrowIfNotOnUIThread();
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
             string title = "Generate Dependency Diagram";
+
+            ViewDependency vwDepend = new ViewDependency();
+            vwDepend.Show();
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(

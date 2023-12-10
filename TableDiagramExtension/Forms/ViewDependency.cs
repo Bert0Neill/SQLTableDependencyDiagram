@@ -25,11 +25,12 @@ using System.Collections;
 using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Xml;
-using SQLTableDependencyDiagram.Models;
+using TableDiagramExtension.Models;
+//using SQLTableDependencyDiagram.Models;
 
 namespace DatabaseDiagram
 {
-    public partial class Form1 : Form
+    public partial class ViewDependency : Form
     {
         #region Members
 
@@ -48,7 +49,7 @@ namespace DatabaseDiagram
         #endregion
 
         #region Form initialize
-        public Form1()
+        public ViewDependency()
         {
             InitializeComponent();
             diagram1.BeginUpdate();
