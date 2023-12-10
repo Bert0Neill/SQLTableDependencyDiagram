@@ -59,13 +59,13 @@
           <ButtonText>Invoke ToolsMenu</ButtonText>
         </Strings>
       </Button>
-      <Button guid="guidToolsMenuPackageCmdSet" id="cmdidTestCommand2" priority="0x0100" type="Button">
+      <!--<Button guid="guidToolsMenuPackageCmdSet" id="cmdidTestCommand2" priority="0x0100" type="Button">
         <Parent guid="guidToolsMenuPackageCmdSet" id="MyMenuGroup" />
         <Icon guid="guidImages1" id="bmpPic1" />
         <Strings>
           <ButtonText>Invoke TestCommand2</ButtonText>
         </Strings>
-      </Button>
+      </Button>-->
     </Buttons>
 
     <!--The bitmaps section is used to define the bitmaps that are used for the commands.-->
