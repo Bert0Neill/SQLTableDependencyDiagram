@@ -27,7 +27,7 @@ namespace TableDiagramExtension
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(TableDiagramExtensionPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    [ProvideAutoLoad(UIContextGuids80.NoSolution)] // add for redering on SQL 17- versions
+    //[ProvideAutoLoad(UIContextGuids80.NoSolution)] // add for redering on SQL 17- versions
     public sealed class TableDiagramExtensionPackage : AsyncPackage
     {
         /// <summary>
