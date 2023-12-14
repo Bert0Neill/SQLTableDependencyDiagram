@@ -49,6 +49,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Commands\MenuDiagramCommand.cs" />
+    <Compile Include="Commands\TableContextMenuDiagram.cs" />
     <Compile Include="Forms\Diagram.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -60,12 +61,6 @@
     </Compile>
     <Compile Include="Forms\Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Forms\ViewDependency.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Forms\ViewDependency.Designer.cs">
-      <DependentUpon>ViewDependency.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\DataSymbol.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -140,6 +135,7 @@
     <Content Include="class diagram\6.png" />
     <Content Include="class diagram\7.png" />
     <Content Include="class diagram\key.png" />
+    <Content Include="Commands\Resources\Diagram.png" />
     <Content Include="Commands\Resources\MenuDiagramCommand.png" />
     <Content Include="Data\Database.xml" />
     <Content Include="Data\Database1.xml" />
@@ -158,9 +154,6 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Forms\ViewDependency.resx">
-      <DependentUpon>ViewDependency.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
