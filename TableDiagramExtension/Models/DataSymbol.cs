@@ -63,7 +63,8 @@ namespace TableDiagramExtension.Models
                 if (primaryKey == txtNode.Text)
                 {
 #if !NETCORE
-                    Bitmap bmp = new Bitmap(@"..\..\..\..\..\..\common\Images\Diagram\class diagram\key.png");
+                    //Bitmap bmp = new Bitmap(@"..\..\..\..\..\..\common\Images\Diagram\class diagram\key.png");
+                    Bitmap bmp = new Bitmap(@"..\..\class diagram\key.png");
 #else
                     Bitmap bmp = new Bitmap(@"..\..\..\..\..\..\..\common\Images\Diagram\class diagram\key.png");
 #endif

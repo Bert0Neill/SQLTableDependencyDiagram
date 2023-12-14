@@ -39,7 +39,8 @@ namespace DatabaseDiagram
         private Node prevbNode = null;
         private OpenFileDialog fileDialog = new OpenFileDialog();
 #if !NETCORE
-        private string datasrcpath = @"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
+        //private string datasrcpath = @"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
+        private string datasrcpath = @"..\..\Data\Database.xml";
 #else
         //private string datasrcpath = @"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
         private string datasrcpath = @"C:\Private\SQL Diagram\winforms-demos-master\common\Data\Diagram\xml\Database.xml";
@@ -714,7 +715,8 @@ namespace DatabaseDiagram
             if (cboDatabaseDiagram.SelectedIndex == 0)
             {
 #if !NETCORE
-                InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
+                //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
+                InitializeDiagramFromXMLData(@"..\..\Data\Database.xml");
 #else
                 //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
                 InitializeDiagramFromXMLData(@"C:\Private\SQL Diagram\winforms-demos-master\common\Data\Diagram\xml\Database.xml");

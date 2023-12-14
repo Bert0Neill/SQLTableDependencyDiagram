@@ -163,9 +163,23 @@
     <VSCTCompile Include="Commands\ToolsMenu\TestCommand\ToolsMenuPackage.vsct">
       <ResourceName>Menus.ctmenu</ResourceName>
     </VSCTCompile>
+    <Content Include="class diagram\1.png" />
+    <Content Include="class diagram\2.png" />
+    <Content Include="class diagram\3.png" />
+    <Content Include="class diagram\5.png" />
+    <Content Include="class diagram\6.png" />
+    <Content Include="class diagram\7.png" />
+    <Content Include="class diagram\key.png" />
     <Content Include="Commands\ToolsMenu\TestCommand2\Resources\TestCommand2.png" />
     <Content Include="Commands\ToolsMenu\TestCommand\Resources\ToolsMenu.png" />
     <Content Include="Commands\ToolsMenu\TestCommand\Resources\ToolsMenuPackage.ico" />
+    <Content Include="Data\Database.xml" />
+    <Content Include="Data\Database1.xml" />
+    <Content Include="Data\Database2.xml" />
+    <Content Include="Data\DynamicProperties.xml" />
+    <Content Include="Data\OrgLayout.xml" />
+    <Content Include="Data\XML Binding.xml" />
+    <Content Include="Data\XML Binding1.xml" />
     <Content Include="MockData\DBSchema.xml" />
     <Content Include="Resources\1453477379_Calculator.png" />
     <Content Include="Resources\1453477392_hammer_screwdriver.png" />

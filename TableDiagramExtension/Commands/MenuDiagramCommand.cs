@@ -1,11 +1,13 @@
 ﻿using DatabaseDiagram;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Syncfusion.Licensing;
 using System;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Task = System.Threading.Tasks.Task;
 
 namespace TableDiagramExtension.Commands
@@ -104,7 +106,14 @@ namespace TableDiagramExtension.Commands
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
-            ViewDependency vwDepend = new ViewDependency();
+            //ViewDependency vwDepend = new ViewDependency();
+            //vwDepend.Show();
+
+            SyncfusionLicenseProvider.RegisterLicense(Syncfusion.Licensing.DemoCommon.FindLicenseKey());
+            Application.EnableVisualStyles();
+            //Application.SetCompatibleTextRenderingDefault(false);
+
+            Form1 vwDepend = new Form1();
             vwDepend.Show();
         }
     }
