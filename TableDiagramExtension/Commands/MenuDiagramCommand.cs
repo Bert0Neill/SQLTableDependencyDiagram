@@ -93,8 +93,7 @@ namespace TableDiagramExtension.Commands
             string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
             string title = "Generate Dependency Diagram";
 
-            ViewDependency vwDepend = new ViewDependency();
-            vwDepend.Show();
+          
 
             // Show a message box to prove we were here
             VsShellUtilities.ShowMessageBox(
@@ -104,6 +103,9 @@ namespace TableDiagramExtension.Commands
                 OLEMSGICON.OLEMSGICON_INFO,
                 OLEMSGBUTTON.OLEMSGBUTTON_OK,
                 OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+
+            ViewDependency vwDepend = new ViewDependency();
+            vwDepend.Show();
         }
     }
 }
