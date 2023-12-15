@@ -78,6 +78,10 @@
       <HintPath>..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\Windows\22.1.34\Assemblies\4.6\DemoCommon.dll</HintPath>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="SqlWorkbench.Interfaces, Version=16.200.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>Misc\SqlWorkbench.Interfaces.dll</HintPath>
+    </Reference>
     <Reference Include="Syncfusion.Core.WinForms, Version=22.1460.34.0, Culture=neutral, PublicKeyToken=3d67ed1f87d44c89, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\Program Files (x86)\Syncfusion\Essential Studio\Windows\22.1.34\Assemblies\4.6\Syncfusion.Core.WinForms.dll</HintPath>

@@ -1,7 +1,11 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Syncfusion.Licensing;
 using System;
+using System.ComponentModel;
+using System.Diagnostics;
+using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
@@ -48,16 +52,90 @@ namespace TableDiagramExtension
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
-           
-
-
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await TableDiagramExtension.Commands.MenuDiagramCommand.InitializeAsync(this);
             await TableDiagramExtension.Commands.TableContextMenuDiagram.InitializeAsync(this);
+
+            SetObjectExplorerEventProvider();
         }
 
         #endregion
+
+        private IObjectExplorerService GetObjectExplorer()
+        {
+            return this.GetService(typeof(IObjectExplorerService)) as IObjectExplorerService;
+        }
+
+
+
+
+        public void SetObjectExplorerEventProvider()
+        {
+            try
+            {
+                var mi = GetType().GetMethod("Provider_SelectionChanged", BindingFlags.NonPublic | BindingFlags.Instance);
+                var objectExplorer = GetObjectExplorer();
+                if (objectExplorer == null) return;
+                var t = Assembly.Load("Microsoft.SqlServer.Management.SqlStudio.Explorer").GetType("Microsoft.SqlServer.Management.SqlStudio.Explorer.ObjectExplorerService");
+
+                objectExplorer.GetSelectedNodes(out int nodeCount, out INodeInformation[] nodes);
+
+                var piContainer = t.GetProperty("Container", BindingFlags.Public | BindingFlags.Instance);
+                var objectExplorerContainer = piContainer.GetValue(objectExplorer, null);
+                var piContextService = objectExplorerContainer.GetType().GetProperty("Components", BindingFlags.Public | BindingFlags.Instance);
+                var objectExplorerComponents = piContextService.GetValue(objectExplorerContainer, null) as ComponentCollection;
+                object contextService = null;
+
+                if (objectExplorerComponents != null)
+                    foreach (Component component in objectExplorerComponents)
+                    {
+                        if (component.GetType().FullName.Contains("ContextService"))
+                        {
+                            contextService = component;
+                            break;
+                        }
+                    }
+                if (contextService == null)
+                    throw new NullReferenceException("Can't find ObjectExplorer ContextService.");
+
+                var piObjectExplorerContext = contextService.GetType().GetProperty("ObjectExplorerContext", BindingFlags.Public | BindingFlags.Instance);
+                var objectExplorerContext = piObjectExplorerContext.GetValue(contextService, null);
+                var ei = objectExplorerContext.GetType().GetEvent("CurrentContextChanged", BindingFlags.Public | BindingFlags.Instance);
+                if (ei == null) return;
+                var del = Delegate.CreateDelegate(ei.EventHandlerType, this, mi);
+                ei.AddEventHandler(objectExplorerContext, del);
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
+        private void Provider_SelectionChanged(object sender, NodesChangedEventArgs args)
+        {
+            try
+            {
+                if (args.ChangedNodes.Count <= 0) return;
+                var node = args.ChangedNodes[0];
+                if (node == null) return;
+                Debug.WriteLine(node.UrnPath); // type of object (DB or table)
+                Debug.WriteLine(node.InvariantName); // table name
+                Debug.WriteLine(node.Context);
+                //Debug.WriteLine(node.Connection.ServerName);
+
+                //_sharedData.IsTable = node.UrnPath.EndsWith("Table");
+                //_sharedData.TableName = node.InvariantName;
+                //_sharedData.SelectedServerName = node.Connection.ServerName;
+                //_sharedData.IsEnabled = (node.Name == "ErrorLog");
+                //_sharedData.SqlOlapConnectionInfoBase = node.Connection;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+        }
+
     }
 }
