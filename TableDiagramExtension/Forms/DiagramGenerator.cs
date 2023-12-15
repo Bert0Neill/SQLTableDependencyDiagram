@@ -29,7 +29,7 @@ using TableDiagramExtension.Models;
 
 namespace DatabaseDiagram
 {
-    public partial class Form1 : Form
+    public partial class DiagramGenerator : Form
     {
         #region Members
 
@@ -47,7 +47,7 @@ namespace DatabaseDiagram
         #endregion
 
         #region Form initialize
-        public Form1()
+        public DiagramGenerator()
         {
             InitializeComponent();
             diagram1.BeginUpdate();

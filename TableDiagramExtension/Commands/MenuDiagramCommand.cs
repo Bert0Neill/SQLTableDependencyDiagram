@@ -92,29 +92,22 @@ namespace TableDiagramExtension.Commands
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "Generate Dependency Diagram";
-
-          
-
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
-            //ViewDependency vwDepend = new ViewDependency();
-            //vwDepend.Show();
+            //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
+            //string title = "Generate Dependency Diagram";
+            //// Show a message box to prove we were here
+            //VsShellUtilities.ShowMessageBox(
+            //    this.package,
+            //    message,
+            //    title,
+            //    OLEMSGICON.OLEMSGICON_INFO,
+            //    OLEMSGBUTTON.OLEMSGBUTTON_OK,
+            //    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
 
             SyncfusionLicenseProvider.RegisterLicense(Syncfusion.Licensing.DemoCommon.FindLicenseKey());
             Application.EnableVisualStyles();
-            //Application.SetCompatibleTextRenderingDefault(false);
 
-            Form1 vwDepend = new Form1();
-            vwDepend.Show();
+            DiagramGenerator frmDiagramGenerator = new DiagramGenerator();
+            frmDiagramGenerator.Show();
         }
     }
 }

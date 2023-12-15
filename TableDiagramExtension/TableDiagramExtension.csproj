@@ -56,11 +56,11 @@
     <Compile Include="Forms\Diagram.Designer.cs">
       <DependentUpon>Diagram.cs</DependentUpon>
     </Compile>
-    <Compile Include="Forms\Form1.cs">
+    <Compile Include="Forms\DiagramGenerator.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Forms\Form1.Designer.cs">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <Compile Include="Forms\DiagramGenerator.Designer.cs">
+      <DependentUpon>DiagramGenerator.cs</DependentUpon>
     </Compile>
     <Compile Include="Models\DataSymbol.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -152,8 +152,8 @@
     <EmbeddedResource Include="Forms\Diagram.resx">
       <DependentUpon>Diagram.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Forms\Form1.resx">
-      <DependentUpon>Form1.cs</DependentUpon>
+    <EmbeddedResource Include="Forms\DiagramGenerator.resx">
+      <DependentUpon>DiagramGenerator.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
