@@ -123,7 +123,7 @@ namespace TableDiagramExtension
                 Debug.WriteLine(node.UrnPath); // type of object (DB or table)
                 Debug.WriteLine(node.InvariantName); // table name
                 Debug.WriteLine(node.Context);
-                //Debug.WriteLine(node.Connection.ServerName);
+                Debug.WriteLine(node.Connection.ServerName);
 
                 //_sharedData.IsTable = node.UrnPath.EndsWith("Table");
                 //_sharedData.TableName = node.InvariantName;
