@@ -22,14 +22,14 @@ namespace TableDiagramExtension.Resources {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "17.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class SQL {
+    internal class SqlStatements {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal SQL() {
+        internal SqlStatements() {
         }
         
         /// <summary>
@@ -39,7 +39,7 @@ namespace TableDiagramExtension.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TableDiagramExtension.Resources.SQL", typeof(SQL).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TableDiagramExtension.Resources.SqlStatements", typeof(SqlStatements).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

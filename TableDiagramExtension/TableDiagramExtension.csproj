@@ -48,6 +48,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\LoggerController.cs" />
+    <Compile Include="Controllers\SQLController.cs" />
     <Compile Include="Commands\MenuDiagramCommand.cs" />
     <Compile Include="Commands\TableContextMenuDiagram.cs" />
     <Compile Include="Forms\Diagram.cs">
@@ -66,10 +69,10 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\SharedData.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Resources\SQL.Designer.cs">
+    <Compile Include="Resources\SqlStatements.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>SQL.resx</DependentUpon>
+      <DependentUpon>SqlStatements.resx</DependentUpon>
     </Compile>
     <Compile Include="Resources\TextStrings.Designer.cs">
       <AutoGen>True</AutoGen>
@@ -165,9 +168,7 @@
     <Content Include="Misc\Misc.txt" />
     <Content Include="Misc\SqlWorkbench.Interfaces.dll" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Classes\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <EmbeddedResource Include="Forms\Diagram.resx">
       <DependentUpon>Diagram.cs</DependentUpon>
@@ -175,9 +176,9 @@
     <EmbeddedResource Include="Forms\DiagramGenerator.resx">
       <DependentUpon>DiagramGenerator.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Resources\SQL.resx">
+    <EmbeddedResource Include="Resources\SqlStatements.resx">
       <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>SQL.Designer.cs</LastGenOutput>
+      <LastGenOutput>SqlStatements.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\TextStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>

@@ -1,4 +1,7 @@
 ﻿using DatabaseDiagram;
+using EnvDTE;
+using EnvDTE80;
+using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using Syncfusion.Licensing;
@@ -57,16 +60,6 @@ namespace TableDiagramExtension.Commands
             private set;
         }
 
-        /// <summary>
-        /// Gets the service provider from the owner package.
-        /// </summary>
-        private Microsoft.VisualStudio.Shell.IAsyncServiceProvider ServiceProvider
-        {
-            get
-            {
-                return this.package;
-            }
-        }
 
         /// <summary>
         /// Initializes the singleton instance of the command.
@@ -74,8 +67,7 @@ namespace TableDiagramExtension.Commands
         /// <param name="package">Owner package, not null.</param>
         public static async Task InitializeAsync(AsyncPackage package)
         {
-            // Switch to the main thread - the call to AddCommand in MenuDiagramCommand's constructor requires
-            // the UI thread.
+            // Switch to the main thread - the call to AddCommand in MenuDiagramCommand's constructor requires the UI thread.
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
@@ -92,21 +84,11 @@ namespace TableDiagramExtension.Commands
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            //string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            //string title = "Generate Dependency Diagram";
-            //// Show a message box to prove we were here
-            //VsShellUtilities.ShowMessageBox(
-            //    this.package,
-            //    message,
-            //    title,
-            //    OLEMSGICON.OLEMSGICON_INFO,
-            //    OLEMSGBUTTON.OLEMSGBUTTON_OK,
-            //    OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
-
+            
             SyncfusionLicenseProvider.RegisterLicense(Syncfusion.Licensing.DemoCommon.FindLicenseKey());
             Application.EnableVisualStyles();
 
-            DiagramGenerator frmDiagramGenerator = new DiagramGenerator();
+            DiagramGenerator frmDiagramGenerator = new DiagramGenerator(((TableDiagramExtensionPackage)package)._sharedData);
             frmDiagramGenerator.Show();
         }
     }

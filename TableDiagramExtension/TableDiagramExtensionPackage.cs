@@ -1,7 +1,9 @@
 ﻿using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.VisualStudio.TextManager.Interop;
 using Syncfusion.Licensing;
+using Syncfusion.Windows.Forms.Diagram;
 using System;
 using System.ComponentModel;
 using System.Diagnostics;
@@ -9,6 +11,7 @@ using System.Reflection;
 using System.Runtime.InteropServices;
 using System.Threading;
 using System.Windows.Forms;
+using TableDiagramExtension.Classes;
 using Task = System.Threading.Tasks.Task;
 
 namespace TableDiagramExtension
@@ -30,16 +33,17 @@ namespace TableDiagramExtension
     /// To get loaded into VS, the package must be referred by &lt;Asset Type="Microsoft.VisualStudio.VsPackage" ...&gt; in .vsixmanifest file.
     /// </para>
     /// </remarks>
+    [InstalledProductRegistration("#110", "#112", "1.0", IconResourceID = 400)] // Info on this package for Help/About
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(TableDiagramExtensionPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    //[ProvideAutoLoad(UIContextGuids80.NoSolution)] // add for redering on SQL 17- versions
+    //[ProvideAutoLoad(UIContextGuids80.NoSolution)] // add for redering on SQL 17- versions    
     public sealed class TableDiagramExtensionPackage : AsyncPackage
     {
-        /// <summary>
-        /// TableDiagramExtensionPackage GUID string.
-        /// </summary>
+        #region Class Variables
         public const string PackageGuidString = "1bc97246-6e95-4741-88c7-e6b2496e371f";
+        internal SharedData _sharedData { get; set; }
+        #endregion
 
         #region Package Members
 
@@ -52,24 +56,47 @@ namespace TableDiagramExtension
         /// <returns>A task representing the async work of package initialization, or an already completed task if there is none. Do not return null from this method.</returns>
         protected override async Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
+            _sharedData = new SharedData();
+
+            SetObjectExplorerEventProvider(); // register SMO node selection event
+
+            GetSelectedExplorerNode(); // get the initial selected node from SMO
+
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
             await TableDiagramExtension.Commands.MenuDiagramCommand.InitializeAsync(this);
             await TableDiagramExtension.Commands.TableContextMenuDiagram.InitializeAsync(this);
+        }
 
-            SetObjectExplorerEventProvider();
+        private void GetSelectedExplorerNode()
+        {
+            var objectExplorer = GetObjectExplorer();
+
+            if (objectExplorer != null)
+            {
+                // Get the selected nodes in Object Explorer
+                int arraySize;
+                INodeInformation[] nodes;
+
+                // Call the GetSelectedNodes method
+                objectExplorer.GetSelectedNodes(out arraySize, out nodes);
+
+                var node = nodes[0];
+                // use the first node as default SMO node
+                _sharedData.IsTable = node.UrnPath.EndsWith("Table");
+                _sharedData.TableName = node.InvariantName;
+                _sharedData.SelectedServerName = node.Connection.ServerName;
+                _sharedData.SqlOlapConnectionInfoBase = node.Connection;
+            }
         }
 
         #endregion
 
         private IObjectExplorerService GetObjectExplorer()
         {
-            return this.GetService(typeof(IObjectExplorerService)) as IObjectExplorerService;
+            return this.GetService(typeof(IObjectExplorerService)) as IObjectExplorerService;            
         }
-
-
-
 
         public void SetObjectExplorerEventProvider()
         {
@@ -120,22 +147,21 @@ namespace TableDiagramExtension
                 if (args.ChangedNodes.Count <= 0) return;
                 var node = args.ChangedNodes[0];
                 if (node == null) return;
+
                 Debug.WriteLine(node.UrnPath); // type of object (DB or table)
                 Debug.WriteLine(node.InvariantName); // table name
                 Debug.WriteLine(node.Context);
                 Debug.WriteLine(node.Connection.ServerName);
 
-                //_sharedData.IsTable = node.UrnPath.EndsWith("Table");
-                //_sharedData.TableName = node.InvariantName;
-                //_sharedData.SelectedServerName = node.Connection.ServerName;
-                //_sharedData.IsEnabled = (node.Name == "ErrorLog");
-                //_sharedData.SqlOlapConnectionInfoBase = node.Connection;
+                _sharedData.IsTable = node.UrnPath.EndsWith("Table");
+                _sharedData.TableName = node.InvariantName;
+                _sharedData.SelectedServerName = node.Connection.ServerName;                
+                _sharedData.SqlOlapConnectionInfoBase = node.Connection;
             }
             catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
             }
         }
-
     }
 }

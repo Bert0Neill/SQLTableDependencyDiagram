@@ -26,13 +26,14 @@ using System.Data.OleDb;
 using System.Data.SqlClient;
 using System.Xml;
 using TableDiagramExtension.Models;
+using TableDiagramExtension.Classes;
 
 namespace DatabaseDiagram
 {
     public partial class DiagramGenerator : Form
     {
         #region Members
-
+        SharedData _sharedData = null;
         bool needSave = false;
         public string fileName;
         private Point mousePt;
@@ -61,7 +62,23 @@ namespace DatabaseDiagram
             // Wire up OnIdle processing
             Application.Idle += new EventHandler(Application_Idle);
         }
- 
+
+        public DiagramGenerator(SharedData sharedData)
+        {
+            InitializeComponent();
+            diagram1.BeginUpdate();
+            this.diagram1.Model.BoundaryConstraintsEnabled = false;
+            this.diagram1.Model.LineStyle.LineColor = Color.LightGray;
+            this.diagram1.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
+            InitailizeDiagram();
+            diagram1.EndUpdate();
+            cboDatabaseDiagram.SelectedIndex = 0;
+            diagram1.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
+            // Wire up OnIdle processing
+            Application.Idle += new EventHandler(Application_Idle);
+            _sharedData = sharedData;
+        }
+
 
         #endregion
 
