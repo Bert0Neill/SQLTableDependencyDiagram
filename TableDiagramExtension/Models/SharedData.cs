@@ -12,7 +12,7 @@ namespace TableDiagramExtension.Classes
     {
         public string SelectedServerName { get; set; }
         public bool IsTable { get; internal set; }
-        public string TableName { get; internal set; }
+        public string DatabaseOrTableName { get; internal set; }
         public SqlOlapConnectionInfoBase SqlOlapConnectionInfoBase { get; internal set; }
     }
 }

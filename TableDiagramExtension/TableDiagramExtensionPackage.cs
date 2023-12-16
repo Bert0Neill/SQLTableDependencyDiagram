@@ -85,7 +85,7 @@ namespace TableDiagramExtension
                 var node = nodes[0];
                 // use the first node as default SMO node
                 _sharedData.IsTable = node.UrnPath.EndsWith("Table");
-                _sharedData.TableName = node.InvariantName;
+                _sharedData.DatabaseOrTableName = node.InvariantName;
                 _sharedData.SelectedServerName = node.Connection.ServerName;
                 _sharedData.SqlOlapConnectionInfoBase = node.Connection;
             }
@@ -154,7 +154,7 @@ namespace TableDiagramExtension
                 Debug.WriteLine(node.Connection.ServerName);
 
                 _sharedData.IsTable = node.UrnPath.EndsWith("Table");
-                _sharedData.TableName = node.InvariantName;
+                _sharedData.DatabaseOrTableName = node.InvariantName;
                 _sharedData.SelectedServerName = node.Connection.ServerName;                
                 _sharedData.SqlOlapConnectionInfoBase = node.Connection;
             }
