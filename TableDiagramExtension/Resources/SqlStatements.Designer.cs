@@ -70,7 +70,8 @@ namespace TableDiagramExtension.Resources {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SELECT 
+        ///   Looks up a localized string similar to USE {0}
+        ///SELECT 
         ///TABLE_CATALOG,
         ///TABLE_SCHEMA,
         ///TABLE_NAME, 

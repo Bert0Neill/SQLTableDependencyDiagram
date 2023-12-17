@@ -33,6 +33,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.VisualStudio.Shell;
 using System.Windows.Forms.Design;
 using TableDiagramExtension.Interfaces;
+using System.Linq;
 
 namespace DatabaseDiagram
 {
@@ -519,8 +520,14 @@ namespace DatabaseDiagram
             //    diagram1.SaveBinary(saveFileDialog1.FileName);
             //}
 
-            DataTable initialData = _sqlController.RetrieveDatabaseMetaData(this._sharedData);
-            MessageBox.Show($"Records {initialData.Rows.Count}", "DB Call", MessageBoxButtons.OK, MessageBoxIcon.Information);
+            List<string> activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString);
+            List<DatabaseMetaData> initialData = new List<DatabaseMetaData>();
+
+            //DataTable initialData = new DataTable();
+            //initialData.TableName = "DBSchema";
+            initialData = _sqlController.RetrieveDatabaseMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, activeDBs.FirstOrDefault());
+            //initialData.WriteXml("DBSchema.xml");
+            MessageBox.Show($"Records {initialData.Count}", "DB Call", MessageBoxButtons.OK, MessageBoxIcon.Information);
         } 
         
         private void saveAsToolStripButton_Click(object sender, EventArgs e)

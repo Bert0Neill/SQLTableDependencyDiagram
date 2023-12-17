@@ -48,6 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Controllers\ConvertController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Interfaces\ISQLController.cs" />
     <Compile Include="Controllers\SQLController.cs" />
@@ -65,6 +66,7 @@
     <Compile Include="Forms\DiagramGenerator.Designer.cs">
       <DependentUpon>DiagramGenerator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\DatabaseMetaData.cs" />
     <Compile Include="Models\DataSymbol.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\SharedData.cs" />
