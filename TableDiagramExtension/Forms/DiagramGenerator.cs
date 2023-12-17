@@ -27,6 +27,12 @@ using System.Data.SqlClient;
 using System.Xml;
 using TableDiagramExtension.Models;
 using TableDiagramExtension.Classes;
+using Microsoft.VisualStudio.Shell.Interop;
+using TableDiagramExtension.Controllers;
+using Microsoft.Extensions.Logging;
+using Microsoft.VisualStudio.Shell;
+using System.Windows.Forms.Design;
+using TableDiagramExtension.Interfaces;
 
 namespace DatabaseDiagram
 {
@@ -39,6 +45,8 @@ namespace DatabaseDiagram
         private Point mousePt;
         private Node prevbNode = null;
         private OpenFileDialog fileDialog = new OpenFileDialog();
+        private readonly ISQLController _sqlController;
+        private readonly ILogger _logger;   
 #if !NETCORE
         //private string datasrcpath = @"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
         private string datasrcpath = @"..\..\Data\Database.xml";
@@ -76,7 +84,10 @@ namespace DatabaseDiagram
             diagram1.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
             // Wire up OnIdle processing
             Application.Idle += new EventHandler(Application_Idle);
+
             _sharedData = sharedData;
+            _sqlController = new SQLController();
+            
         }
 
 
@@ -498,16 +509,18 @@ namespace DatabaseDiagram
               
             }
         }
-
        
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
-            this.saveFileDialog1.FileName = "Diagram";
-            saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-                diagram1.SaveBinary(saveFileDialog1.FileName);
-            }
+            //this.saveFileDialog1.FileName = "Diagram";
+            //saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
+            //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            //{
+            //    diagram1.SaveBinary(saveFileDialog1.FileName);
+            //}
+
+            DataTable initialData = _sqlController.RetrieveDatabaseMetaData(this._sharedData);
+            MessageBox.Show($"Records {initialData.Rows.Count}", "DB Call", MessageBoxButtons.OK, MessageBoxIcon.Information);
         } 
         
         private void saveAsToolStripButton_Click(object sender, EventArgs e)

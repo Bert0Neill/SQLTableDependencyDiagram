@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
@@ -8,25 +9,28 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 using TableDiagramExtension.Classes;
+using TableDiagramExtension.Interfaces;
 using TableDiagramExtension.Resources;
 
 namespace TableDiagramExtension.Controllers
 {
-    internal class SQLController
+    internal class SQLController : ISQLController
     {
         public SQLController()
         {
-
+            
         }
 
         public DataTable RetrieveDatabaseMetaData(SharedData sharedData)
         {
             try
             {
+                string connectionString = sharedData.SqlOlapConnectionInfoBase.ConnectionString.Replace("Multiple Active Result Sets", "MultipleActiveResultSets").Replace("Trust Server Certificate", "TrustServerCertificate");
                 string sql = SqlStatements.SelectDatabaseTables;
-                DataTable results = null;
-                using (SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, new SqlConnection(sharedData.SqlOlapConnectionInfoBase.ConnectionString)))
-                {                    
+                DataTable results = new DataTable() ;
+                //using (SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, new SqlConnection(sharedData.SqlOlapConnectionInfoBase.ConnectionString)))
+                using (SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, new SqlConnection(connectionString)))
+                {
                     dataAdapter.Fill(results);
                 }
 

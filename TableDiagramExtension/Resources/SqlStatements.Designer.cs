@@ -61,6 +61,15 @@ namespace TableDiagramExtension.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to select Name AS DataBaseName from sys.databases WHERE name NOT IN (&apos;master&apos;, &apos;tempdb&apos;, &apos;model&apos;, &apos;msdb&apos;);.
+        /// </summary>
+        internal static string RetrieveDatabases {
+            get {
+                return ResourceManager.GetString("RetrieveDatabases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to SELECT 
         ///TABLE_CATALOG,
         ///TABLE_SCHEMA,

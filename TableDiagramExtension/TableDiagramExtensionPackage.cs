@@ -60,7 +60,7 @@ namespace TableDiagramExtension
 
             SetObjectExplorerEventProvider(); // register SMO node selection event
 
-            GetSelectedExplorerNode(); // get the initial selected node from SMO
+            RetrieveSelectedExplorerNode(); // determine the server\database selected (use it's connection string)
 
             // When initialized asynchronously, the current thread may be a background thread at this point.
             // Do any initialization that requires the UI thread after switching to the UI thread.
@@ -69,7 +69,7 @@ namespace TableDiagramExtension
             await TableDiagramExtension.Commands.TableContextMenuDiagram.InitializeAsync(this);
         }
 
-        private void GetSelectedExplorerNode()
+        private void RetrieveSelectedExplorerNode()
         {
             var objectExplorer = GetObjectExplorer();
 

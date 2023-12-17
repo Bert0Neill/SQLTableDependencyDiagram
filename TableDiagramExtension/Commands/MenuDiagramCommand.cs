@@ -1,6 +1,7 @@
 ﻿using DatabaseDiagram;
 using EnvDTE;
 using EnvDTE80;
+using Microsoft.Extensions.Logging;
 using Microsoft.SqlServer.Management.UI.VSIntegration.ObjectExplorer;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
@@ -11,6 +12,7 @@ using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using TableDiagramExtension.Controllers;
 using Task = System.Threading.Tasks.Task;
 
 namespace TableDiagramExtension.Commands
@@ -83,8 +85,8 @@ namespace TableDiagramExtension.Commands
         /// <param name="e">Event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
-            
+            ThreadHelper.ThrowIfNotOnUIThread();            
+
             SyncfusionLicenseProvider.RegisterLicense(Syncfusion.Licensing.DemoCommon.FindLicenseKey());
             Application.EnableVisualStyles();
 
