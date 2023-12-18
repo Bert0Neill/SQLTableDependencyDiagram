@@ -34,6 +34,7 @@ using Microsoft.VisualStudio.Shell;
 using System.Windows.Forms.Design;
 using TableDiagramExtension.Interfaces;
 using System.Linq;
+using TableDiagramExtension.Resources;
 
 namespace DatabaseDiagram
 {
@@ -46,8 +47,13 @@ namespace DatabaseDiagram
         private Point mousePt;
         private Node prevbNode = null;
         private OpenFileDialog fileDialog = new OpenFileDialog();
+
         private readonly ISQLController _sqlController;
-        private readonly ILogger _logger;   
+        private readonly ILogger _logger;
+        private readonly IErrorController _errorController;
+        private readonly SQLDiagramController _sqlDiagramController;
+        
+
 #if !NETCORE
         //private string datasrcpath = @"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
         private string datasrcpath = @"..\..\Data\Database.xml";
@@ -60,37 +66,37 @@ namespace DatabaseDiagram
         public DiagramGenerator()
         {
             InitializeComponent();
-            diagram1.BeginUpdate();
-            this.diagram1.Model.BoundaryConstraintsEnabled = false;
-            this.diagram1.Model.LineStyle.LineColor = Color.LightGray;
-            this.diagram1.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
+            sqlDependencyDiagram.BeginUpdate();
+            this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
+            this.sqlDependencyDiagram.Model.LineStyle.LineColor = Color.LightGray;
+            this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
             InitailizeDiagram();
-            diagram1.EndUpdate();
+            sqlDependencyDiagram.EndUpdate();
+
             cboDatabaseDiagram.SelectedIndex = 0;
-            diagram1.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
-            // Wire up OnIdle processing
-            Application.Idle += new EventHandler(Application_Idle);
+            sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);            
+            Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
         }
 
         public DiagramGenerator(SharedData sharedData)
         {
             InitializeComponent();
-            diagram1.BeginUpdate();
-            this.diagram1.Model.BoundaryConstraintsEnabled = false;
-            this.diagram1.Model.LineStyle.LineColor = Color.LightGray;
-            this.diagram1.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
+            sqlDependencyDiagram.BeginUpdate();
+            this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
+            this.sqlDependencyDiagram.Model.LineStyle.LineColor = Color.LightGray;
+            this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
             InitailizeDiagram();
-            diagram1.EndUpdate();
+
+            sqlDependencyDiagram.EndUpdate();
             cboDatabaseDiagram.SelectedIndex = 0;
-            diagram1.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
-            // Wire up OnIdle processing
-            Application.Idle += new EventHandler(Application_Idle);
+            sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);            
+            Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
 
             _sharedData = sharedData;
             _sqlController = new SQLController();
-            
+            _errorController = new ErrorController();
+            _sqlDiagramController = new SQLDiagramController();
         }
-
 
         #endregion
 
@@ -101,22 +107,22 @@ namespace DatabaseDiagram
         /// </summary>
         private void DiagramAppearance()
         {
-            
-            this.diagram1.HorizontalRuler.BackgroundColor = Color.White;
-            this.diagram1.VerticalRuler.BackgroundColor = Color.White;
-            this.diagram1.View.Grid.GridStyle = GridStyle.Line;
-            this.diagram1.View.Grid.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
-            this.diagram1.View.Grid.Color = Color.LightGray;
-            this.diagram1.View.Grid.VerticalSpacing = 15;
-            this.diagram1.View.Grid.HorizontalSpacing = 15;
-            this.diagram1.Model.BackgroundStyle.GradientCenter = 0.5f;
-            this.diagram1.View.HandleRenderer.HandleColor = Color.AliceBlue;
-            this.diagram1.View.HandleRenderer.HandleOutlineColor = Color.SkyBlue;           
-            this.diagram1.Model.DocumentSize = new PageSize(this.diagram1.View.ClientRectangle.Size.Width, diagram1.View.ClientRectangle.Size.Height);
-            this.diagram1.Model.BoundaryConstraintsEnabled = false;
-            this.diagram1.Model.MinimumSize = diagram1.View.ClientRectangle.Size;
-            this.diagram1.Model.SizeToContent = true;
-            this.diagram1.View.SelectionList.Clear();
+
+            this.sqlDependencyDiagram.HorizontalRuler.BackgroundColor = Color.White;
+            this.sqlDependencyDiagram.VerticalRuler.BackgroundColor = Color.White;
+            this.sqlDependencyDiagram.View.Grid.GridStyle = GridStyle.Line;
+            this.sqlDependencyDiagram.View.Grid.DashStyle = System.Drawing.Drawing2D.DashStyle.Dot;
+            this.sqlDependencyDiagram.View.Grid.Color = Color.LightGray;
+            this.sqlDependencyDiagram.View.Grid.VerticalSpacing = 15;
+            this.sqlDependencyDiagram.View.Grid.HorizontalSpacing = 15;
+            this.sqlDependencyDiagram.Model.BackgroundStyle.GradientCenter = 0.5f;
+            this.sqlDependencyDiagram.View.HandleRenderer.HandleColor = Color.AliceBlue;
+            this.sqlDependencyDiagram.View.HandleRenderer.HandleOutlineColor = Color.SkyBlue;
+            this.sqlDependencyDiagram.Model.DocumentSize = new PageSize(this.sqlDependencyDiagram.View.ClientRectangle.Size.Width, sqlDependencyDiagram.View.ClientRectangle.Size.Height);
+            this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
+            this.sqlDependencyDiagram.Model.MinimumSize = sqlDependencyDiagram.View.ClientRectangle.Size;
+            this.sqlDependencyDiagram.Model.SizeToContent = true;
+            this.sqlDependencyDiagram.View.SelectionList.Clear();
         }
         #endregion
 
@@ -127,7 +133,7 @@ namespace DatabaseDiagram
         private void InitailizeDiagram()
         {
             InitializeDiagramFromXMLData(datasrcpath);
-            diagram1.View.SelectionList.Clear();
+            sqlDependencyDiagram.View.SelectionList.Clear();
         }
 
         /// <summary>
@@ -137,90 +143,94 @@ namespace DatabaseDiagram
         {
             if (cboDatabaseDiagram.SelectedIndex == 0)
             {
-                diagram1.Model.Nodes["Employee"].PinPoint = new PointF(450, 150);
-                diagram1.Model.Nodes["Publishers"].PinPoint = new PointF(100, 150);
-                diagram1.Model.Nodes["Titles"].PinPoint = new PointF(100, 480);
-                diagram1.Model.Nodes["PubInfo"].PinPoint = new PointF(300, 350);
-                diagram1.Model.Nodes["Sales"].PinPoint = new PointF(750, 480);
-                diagram1.Model.Nodes["Stores"].PinPoint = new PointF(750, 310);
-                diagram1.Model.Nodes["Discounts"].PinPoint = new PointF(750, 100);
+                sqlDependencyDiagram.Model.Nodes["Employee"].PinPoint = new PointF(450, 150);
+                sqlDependencyDiagram.Model.Nodes["Publishers"].PinPoint = new PointF(100, 150);
+                sqlDependencyDiagram.Model.Nodes["Titles"].PinPoint = new PointF(100, 480);
+                sqlDependencyDiagram.Model.Nodes["PubInfo"].PinPoint = new PointF(300, 350);
+                sqlDependencyDiagram.Model.Nodes["Sales"].PinPoint = new PointF(750, 480);
+                sqlDependencyDiagram.Model.Nodes["Stores"].PinPoint = new PointF(750, 310);
+                sqlDependencyDiagram.Model.Nodes["Discounts"].PinPoint = new PointF(750, 100);
 
-                ConnectNodes(diagram1.Model.Nodes["Employee"], diagram1.Model.Nodes["Publishers"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Publishers"], diagram1.Model.Nodes["Titles"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Publishers"], diagram1.Model.Nodes["PubInfo"], "OneToOne");
-                ConnectNodes(diagram1.Model.Nodes["Titles"], diagram1.Model.Nodes["Sales"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Stores"], diagram1.Model.Nodes["Sales"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Stores"], diagram1.Model.Nodes["Discounts"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Employee"], sqlDependencyDiagram.Model.Nodes["Publishers"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Publishers"], sqlDependencyDiagram.Model.Nodes["Titles"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Publishers"], sqlDependencyDiagram.Model.Nodes["PubInfo"], "OneToOne");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Titles"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Stores"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Stores"], sqlDependencyDiagram.Model.Nodes["Discounts"], "OneToMany");
             }
             else if (cboDatabaseDiagram.SelectedIndex == 1)
             {
-                diagram1.Model.Nodes["Course"].PinPoint = new PointF(200, 200);
-                diagram1.Model.Nodes["Department"].PinPoint = new PointF(200, 500);
-                diagram1.Model.Nodes["CourseInstructor"].PinPoint = new PointF(500, 100);
-                diagram1.Model.Nodes["Person"].PinPoint = new PointF(500, 300);
-                diagram1.Model.Nodes["Enrollment"].PinPoint = new PointF(500, 550);
-                ConnectNodes(diagram1.Model.Nodes["Course"], diagram1.Model.Nodes["Department"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Course"], diagram1.Model.Nodes["CourseInstructor"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Course"], diagram1.Model.Nodes["Enrollment"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["CourseInstructor"], diagram1.Model.Nodes["Person"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Person"], diagram1.Model.Nodes["Enrollment"], "OneToMany");
+                sqlDependencyDiagram.Model.Nodes["Course"].PinPoint = new PointF(200, 200);
+                sqlDependencyDiagram.Model.Nodes["Department"].PinPoint = new PointF(200, 500);
+                sqlDependencyDiagram.Model.Nodes["CourseInstructor"].PinPoint = new PointF(500, 100);
+                sqlDependencyDiagram.Model.Nodes["Person"].PinPoint = new PointF(500, 300);
+                sqlDependencyDiagram.Model.Nodes["Enrollment"].PinPoint = new PointF(500, 550);
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Course"], sqlDependencyDiagram.Model.Nodes["Department"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Course"], sqlDependencyDiagram.Model.Nodes["CourseInstructor"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Course"], sqlDependencyDiagram.Model.Nodes["Enrollment"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["CourseInstructor"], sqlDependencyDiagram.Model.Nodes["Person"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Person"], sqlDependencyDiagram.Model.Nodes["Enrollment"], "OneToMany");
             }
             else if (cboDatabaseDiagram.SelectedIndex == 2)
             {
-                diagram1.Model.Nodes["Payments"].PinPoint = new PointF(200, 150);
-                diagram1.Model.Nodes["Employees"].PinPoint = new PointF(600, 150);
-                diagram1.Model.Nodes["LoanTypes"].PinPoint = new PointF(175, 450);
-                diagram1.Model.Nodes["LoanAllocations"].PinPoint = new PointF(400, 450);
-                diagram1.Model.Nodes["Customers"].PinPoint = new PointF(610, 450);
-                ConnectNodes(diagram1.Model.Nodes["Payments"], diagram1.Model.Nodes["Employees"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["LoanAllocations"], diagram1.Model.Nodes["LoanTypes"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["LoanAllocations"], diagram1.Model.Nodes["Customers"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["Payments"], diagram1.Model.Nodes["LoanAllocations"], "OneToMany");
-                ConnectNodes(diagram1.Model.Nodes["LoanAllocations"], diagram1.Model.Nodes["Employees"], "OneToMany");
+                sqlDependencyDiagram.Model.Nodes["Payments"].PinPoint = new PointF(200, 150);
+                sqlDependencyDiagram.Model.Nodes["Employees"].PinPoint = new PointF(600, 150);
+                sqlDependencyDiagram.Model.Nodes["LoanTypes"].PinPoint = new PointF(175, 450);
+                sqlDependencyDiagram.Model.Nodes["LoanAllocations"].PinPoint = new PointF(400, 450);
+                sqlDependencyDiagram.Model.Nodes["Customers"].PinPoint = new PointF(610, 450);
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Payments"], sqlDependencyDiagram.Model.Nodes["Employees"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["LoanAllocations"], sqlDependencyDiagram.Model.Nodes["LoanTypes"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["LoanAllocations"], sqlDependencyDiagram.Model.Nodes["Customers"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Payments"], sqlDependencyDiagram.Model.Nodes["LoanAllocations"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["LoanAllocations"], sqlDependencyDiagram.Model.Nodes["Employees"], "OneToMany");
             }
 
         }
-       
+
         /// <summary>
         /// Initialize the Diagram from XML file
         /// </summary>
         protected void InitializeDiagramFromXMLData(string path)
         {
-            diagram1.Model.Clear();
-            diagram1.Model.BeginUpdate();
+            sqlDependencyDiagram.Model.Clear();
+            sqlDependencyDiagram.Model.BeginUpdate();
             RoundRect rrect = new RoundRect(900, 30, 250, 70, MeasureUnits.Pixel);
             rrect.FillStyle.Color = Color.Transparent;
             rrect.EditStyle.AllowSelect = false;
             rrect.LineStyle.LineColor = Color.Gray;
+            
             Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rrect, "Relationships");
             lbl.Position = Position.TopLeft;
             lbl.FontStyle.Family = "Segoe UI";
             lbl.FontStyle.Size = 9;
             rrect.Labels.Add(lbl);
+
             Syncfusion.Windows.Forms.Diagram.Label lblOneToOne = new Syncfusion.Windows.Forms.Diagram.Label(rrect, ": OneToOne");
             lblOneToOne.FontStyle.Family = "Segoe UI";
             lblOneToOne.FontStyle.Size = 9;
             lblOneToOne.OffsetX = 120;
             lblOneToOne.OffsetY = 10;
             rrect.Labels.Add(lblOneToOne);
+
             Syncfusion.Windows.Forms.Diagram.Label lblOneToMany = new Syncfusion.Windows.Forms.Diagram.Label(rrect, ": OneToMany");
             lblOneToMany.FontStyle.Family = "Segoe UI";
             lblOneToMany.FontStyle.Size = 9;
             lblOneToMany.OffsetX = 120;
             lblOneToMany.OffsetY = 40;
             rrect.Labels.Add(lblOneToMany);
-            diagram1.Model.AppendChild(rrect);
+
+            sqlDependencyDiagram.Model.AppendChild(rrect);
             LineConnector oneToOne = new LineConnector(new PointF(910, 50), new PointF(1010, 50));
             oneToOne.EditStyle.AllowSelect = false;
             oneToOne.TailDecorator.DecoratorShape = DecoratorShape.FilledDiamond;
             oneToOne.HeadDecorator.DecoratorShape = DecoratorShape.FilledDiamond;
-            diagram1.Model.AppendChild(oneToOne);
+            sqlDependencyDiagram.Model.AppendChild(oneToOne);
 
             LineConnector oneToMany = new LineConnector(new PointF(910, 80), new PointF(1010, 80));
             oneToMany.EditStyle.AllowSelect = false;
             oneToMany.TailDecorator.DecoratorShape = DecoratorShape.Diamond;
             oneToMany.HeadDecorator.DecoratorShape = DecoratorShape.FilledDiamond;
-            diagram1.Model.AppendChild(oneToMany);
+            sqlDependencyDiagram.Model.AppendChild(oneToMany);
 
 
             // Read data from the XML data file and populate a Hashtable using the employee ID as the key
@@ -241,8 +251,8 @@ namespace DatabaseDiagram
 
             //Make connection between nodes
             ConnectNodes();
-            diagram1.Model.EndUpdate();
-            diagram1.View.SelectionList.Clear();
+            sqlDependencyDiagram.Model.EndUpdate();
+            sqlDependencyDiagram.View.SelectionList.Clear();
         }
 
         /// <summary>
@@ -351,7 +361,6 @@ namespace DatabaseDiagram
             return sortedlist;
         }
 
-      
         /// <summary>
         /// Create diagram symbol nodes for each employee in the organization and add these symbols to the diagram
         /// Create links between manager and sub-employees to depict the org structure
@@ -360,7 +369,7 @@ namespace DatabaseDiagram
         private void CreateOrgDiagramFromList(ArrayList alemployees)
         {
             // Temporarily suspend the Diagram Model redrawing
-            this.diagram1.Model.BeginUpdate();
+            this.sqlDependencyDiagram.Model.BeginUpdate();
 
             foreach (Employee emply in alemployees)
             {
@@ -369,7 +378,7 @@ namespace DatabaseDiagram
             }
 
             // ReEnable the Model redraw
-            this.diagram1.Model.EndUpdate();
+            this.sqlDependencyDiagram.Model.EndUpdate();
         }
 
         /// <summary>
@@ -394,12 +403,12 @@ namespace DatabaseDiagram
         /// <returns>returns the node</returns>
         private Group InsertSymbolEmployee(Employee employee)
         {
-            DataSymbol Symbol = new DataSymbol( employee.Coloumns, employee.TableName,employee.PrimaryKeyID);
-            this.diagram1.Model.AppendChild(Symbol);
+            DataSymbol Symbol = new DataSymbol(employee.Coloumns, employee.TableName, employee.PrimaryKeyID);
+            this.sqlDependencyDiagram.Model.AppendChild(Symbol);
             return Symbol;
         }
-      
-        
+
+
         /// <summary>
         /// Connect Nodes with connectors
         /// </summary>
@@ -410,17 +419,17 @@ namespace DatabaseDiagram
         {
             LineConnector ortholink = new LineConnector(PointF.Empty, new PointF(0, 1));
             ortholink.LineStyle.DashStyle = DashStyle.Solid;
-            
+
             ortholink.LineStyle.LineWidth = 1f;
-            ortholink.LineStyle.LineColor = Color.Black; 
-            if( relation == "OneToMany")
+            ortholink.LineStyle.LineColor = Color.Black;
+            if (relation == "OneToMany")
                 ortholink.TailDecorator.DecoratorShape = DecoratorShape.Diamond;
             else
                 ortholink.TailDecorator.DecoratorShape = DecoratorShape.FilledDiamond;
 
             ortholink.HeadDecorator.DecoratorShape = DecoratorShape.FilledDiamond;
-            
-            this.diagram1.Model.AppendChild(ortholink);
+
+            this.sqlDependencyDiagram.Model.AppendChild(ortholink);
 
             if (emplysymbol.CentralPort != null && subemplysymbol.CentralPort != null)
             {
@@ -428,7 +437,7 @@ namespace DatabaseDiagram
                 subemplysymbol.CentralPort.TryConnect(ortholink.HeadEndPoint);
             }
 
-            this.diagram1.Controller.SendToBack();
+            this.sqlDependencyDiagram.Controller.SendToBack();
         }
 
         #endregion
@@ -439,7 +448,7 @@ namespace DatabaseDiagram
         {
             get
             {
-                if (diagram1.Model.Modified || needSave)
+                if (sqlDependencyDiagram.Model.Modified || needSave)
                     return true;
                 else
                     return false;
@@ -463,17 +472,17 @@ namespace DatabaseDiagram
         #region Event Handlers
         void EventSink_NodeClick(NodeMouseEventArgs evtArgs)
         {
-            if (diagram1.Controller.TextEditor.IsEditing)
+            if (sqlDependencyDiagram.Controller.TextEditor.IsEditing)
             {
-                diagram1.Controller.TextEditor.EndEdit(true);
+                sqlDependencyDiagram.Controller.TextEditor.EndEdit(true);
             }
-            NodeCollection nodes = diagram1.Controller.GetAllNodesAtPoint(diagram1.Model, diagram1.Controller.MouseLocation) as NodeCollection;
+            NodeCollection nodes = sqlDependencyDiagram.Controller.GetAllNodesAtPoint(sqlDependencyDiagram.Model, sqlDependencyDiagram.Controller.MouseLocation) as NodeCollection;
 
             foreach (Node gnode in nodes)
             {
                 if (gnode is TextNode)
                 {
-                    diagram1.Controller.TextEditor.BeginEdit(gnode, false);
+                    sqlDependencyDiagram.Controller.TextEditor.BeginEdit(gnode, false);
                 }
                 if (gnode.Name == "BaseNode")
                 {
@@ -496,40 +505,31 @@ namespace DatabaseDiagram
 
         void Application_Idle(object sender, EventArgs e)
         {
-            if (this.diagram1 != null && this.diagram1.Model != null)
+            if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
             {
                 this.saveToolStripButton.Enabled = true;
                 this.saveAsToolStripButton.Enabled = true;
-               
+
 
             }
             else
             {
                 this.saveToolStripButton.Enabled = false;
                 this.saveAsToolStripButton.Enabled = false;
-              
+
             }
         }
-       
+
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
-            //this.saveFileDialog1.FileName = "Diagram";
-            //saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
-            //if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            //{
-            //    diagram1.SaveBinary(saveFileDialog1.FileName);
-            //}
+            this.saveFileDialog1.FileName = "Diagram";
+            saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
+            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
+            {
+                sqlDependencyDiagram.SaveBinary(saveFileDialog1.FileName);
+            }
+        }
 
-            List<string> activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString);
-            List<DatabaseMetaData> initialData = new List<DatabaseMetaData>();
-
-            //DataTable initialData = new DataTable();
-            //initialData.TableName = "DBSchema";
-            initialData = _sqlController.RetrieveDatabaseMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, activeDBs.FirstOrDefault());
-            //initialData.WriteXml("DBSchema.xml");
-            MessageBox.Show($"Records {initialData.Count}", "DB Call", MessageBoxButtons.OK, MessageBoxIcon.Information);
-        } 
-        
         private void saveAsToolStripButton_Click(object sender, EventArgs e)
         {
             this.saveFileDialog1.FileName = "Diagram";
@@ -541,15 +541,15 @@ namespace DatabaseDiagram
                 switch (saveFileDialog1.FilterIndex)
                 {
                     case 1:
-                        diagram1.SaveBinary(saveFileDialog1.FileName);
+                        sqlDependencyDiagram.SaveBinary(saveFileDialog1.FileName);
                         break;
                     case 2:
 #if !NETCORE
-                        diagram1.SaveSoap(saveFileDialog1.FileName);
+                        sqlDependencyDiagram.SaveSoap(saveFileDialog1.FileName);
 #endif
                         break;
                     default:
-                        diagram1.SaveBinary(saveFileDialog1.FileName);
+                        sqlDependencyDiagram.SaveBinary(saveFileDialog1.FileName);
                         break;
                 }
             }
@@ -616,9 +616,9 @@ namespace DatabaseDiagram
 
                 ToSvg tosvg = new ToSvg();
                 // Get Diagram Nodes Bounding Rectangle.
-                RectangleF rectBounding = this.diagram1.Model.GetBoundingRect();
+                RectangleF rectBounding = this.sqlDependencyDiagram.Model.GetBoundingRect();
                 Graphics gfx = tosvg.GetRealGraphics(new Size((int)rectBounding.Width, (int)rectBounding.Height));
-                this.diagram1.ExportDiagramToGraphics(gfx);
+                this.sqlDependencyDiagram.ExportDiagramToGraphics(gfx);
                 tosvg.Save(saveFileDialog1.FileName);
 
             }
@@ -630,30 +630,30 @@ namespace DatabaseDiagram
 
         private void zoomInToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            diagram1.View.ZoomIn();
-            diagram1.Controller.ActivateTool("PanTool");
+            sqlDependencyDiagram.View.ZoomIn();
+            sqlDependencyDiagram.Controller.ActivateTool("PanTool");
         }
 
         private void zoomOutToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            diagram1.View.ZoomOut();
+            sqlDependencyDiagram.View.ZoomOut();
         }
 
         private void resetToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
-            diagram1.View.ZoomToActual();
+            sqlDependencyDiagram.View.ZoomToActual();
         }
-        
-#endregion
 
-#region Helper Methods
+        #endregion
+
+        #region Helper Methods
         /// Save diagram as Image
         /// </summary>
         /// <param name="filename">Filename </param>
         /// <param name="imageformat">image format</param>
         private void SaveImage(string filename, ImageFormat imageformat)
         {
-            Image img = this.diagram1.View.ExportDiagramAsImage(false);
+            Image img = this.sqlDependencyDiagram.View.ExportDiagramAsImage(false);
             img.Save(filename, imageformat);
         }
 
@@ -667,15 +667,15 @@ namespace DatabaseDiagram
             switch (index)
             {
                 case 1:
-                    diagram1.SaveBinary(filename);
+                    sqlDependencyDiagram.SaveBinary(filename);
                     break;
                 case 2:
 #if !NETCORE
-                    diagram1.SaveSoap(filename);
+                    sqlDependencyDiagram.SaveSoap(filename);
 #endif
                     break;
                 default:
-                    diagram1.SaveBinary(filename);
+                    sqlDependencyDiagram.SaveBinary(filename);
                     break;
             }
         }
@@ -690,15 +690,15 @@ namespace DatabaseDiagram
             switch (index)
             {
                 case 1:
-                    diagram1.LoadBinary(filename);
+                    sqlDependencyDiagram.LoadBinary(filename);
                     break;
                 case 2:
 #if !NETCORE
-                    diagram1.LoadSoap(filename);
+                    sqlDependencyDiagram.LoadSoap(filename);
 #endif
                     break;
                 default:
-                    diagram1.LoadBinary(filename);
+                    sqlDependencyDiagram.LoadBinary(filename);
                     break;
             }
         }
@@ -709,9 +709,9 @@ namespace DatabaseDiagram
         /// <param name="toolName">Tool</param>
         private void SetActiveTool(string toolName)
         {
-            this.diagram1.Controller.ActivateTool(toolName);
+            this.sqlDependencyDiagram.Controller.ActivateTool(toolName);
         }
-#endregion
+        #endregion
 
         private void cboDatabaseDiagram_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -741,5 +741,80 @@ namespace DatabaseDiagram
 #endif
             }
         }
+        
+        private void DiagramGenerator_Load(object sender, EventArgs e)
+        {
+            try
+            {
+                List<string> activeDBs;
+                this.cboDatabase.Enabled = false;
+                this.cboTable.Enabled = false;
+
+                // retrieve dropdown values
+                activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString);
+
+                activeDBs.Insert(0, "Please select database");
+
+                if (activeDBs.Count > 1)
+                {
+                    this.cboDatabase.ComboBox.DataSource = null;
+                    this.cboDatabase.ComboBox.DataSource = activeDBs;
+                    this.cboDatabase.Enabled = true;
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+        private void cboTable_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                //DatabaseMetaData selectedTable = this.cboTable.ComboBox.SelectedValue as DatabaseMetaData;
+                string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
+                if (selectedTable == TextStrings.PleaseSelectTable) return;
+
+                // get dependency - _sqlDiagramController
+
+                // enable buttons
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+        private void cboDatabase_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            try { 
+            List<DatabaseMetaData> initialData;
+            string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();            
+
+            if (selectedDatabase == TextStrings.PleaseSelectDatabase) return;
+
+            initialData = _sqlController.RetrieveDatabaseMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase);
+
+            initialData.Insert(0, new DatabaseMetaData() {TABLE_NAME = TextStrings.PleaseSelectTable });
+
+            if (initialData.Count > 1)
+            {
+                    var comboData = initialData.Select(tbl => tbl.TABLE_NAME).Distinct().ToList(); 
+                    this.cboTable.ComboBox.DataSource = null;
+                this.cboTable.ComboBox.DataSource = comboData;
+                this.cboTable.Enabled = true;
+                //this.cboTable.ComboBox.DisplayMember = "TABLE_NAME";
+                //this.cboTable.ComboBox.DisplayMember = "TABLE_NAME";
+                //this.cboTable.ComboBox.ValueMember = "TABLE_NAME";
+            }
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+      
     }
 }

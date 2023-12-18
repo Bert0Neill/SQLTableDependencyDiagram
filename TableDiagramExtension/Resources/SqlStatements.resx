@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="MultipleActiveResultSets" xml:space="preserve">
+    <value>MultipleActiveResultSets</value>
+  </data>
+  <data name="Multiple_Active_Result_Sets" xml:space="preserve">
+    <value>Multiple Active Result Sets</value>
+  </data>
   <data name="RetrieveDatabases" xml:space="preserve">
     <value>select Name AS DataBaseName from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb');</value>
   </data>
@@ -132,5 +138,11 @@ FROM INFORMATION_SCHEMA.COLUMNS</value>
   </data>
   <data name="SelectDatabaseTablesWhere" xml:space="preserve">
     <value>WHERE TABLE_CATALOG = '{0}'</value>
+  </data>
+  <data name="TrustServerCertificate" xml:space="preserve">
+    <value>TrustServerCertificate</value>
+  </data>
+  <data name="Trust_Server_Certificate" xml:space="preserve">
+    <value>Trust Server Certificate</value>
   </data>
 </root>

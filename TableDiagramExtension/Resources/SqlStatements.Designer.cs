@@ -61,6 +61,24 @@ namespace TableDiagramExtension.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Multiple Active Result Sets.
+        /// </summary>
+        internal static string Multiple_Active_Result_Sets {
+            get {
+                return ResourceManager.GetString("Multiple_Active_Result_Sets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to MultipleActiveResultSets.
+        /// </summary>
+        internal static string MultipleActiveResultSets {
+            get {
+                return ResourceManager.GetString("MultipleActiveResultSets", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to select Name AS DataBaseName from sys.databases WHERE name NOT IN (&apos;master&apos;, &apos;tempdb&apos;, &apos;model&apos;, &apos;msdb&apos;);.
         /// </summary>
         internal static string RetrieveDatabases {
@@ -91,6 +109,24 @@ namespace TableDiagramExtension.Resources {
         internal static string SelectDatabaseTablesWhere {
             get {
                 return ResourceManager.GetString("SelectDatabaseTablesWhere", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Trust Server Certificate.
+        /// </summary>
+        internal static string Trust_Server_Certificate {
+            get {
+                return ResourceManager.GetString("Trust_Server_Certificate", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TrustServerCertificate.
+        /// </summary>
+        internal static string TrustServerCertificate {
+            get {
+                return ResourceManager.GetString("TrustServerCertificate", resourceCulture);
             }
         }
     }

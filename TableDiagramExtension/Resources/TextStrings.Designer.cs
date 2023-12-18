@@ -59,5 +59,43 @@ namespace TableDiagramExtension.Resources {
                 resourceCulture = value;
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select database.
+        /// </summary>
+        internal static string PleaseSelectDatabase {
+            get {
+                return ResourceManager.GetString("PleaseSelectDatabase", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Please select table.
+        /// </summary>
+        internal static string PleaseSelectTable {
+            get {
+                return ResourceManager.GetString("PleaseSelectTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to An error has occured. 
+        ///Message: {0}
+        ///Please review the ActivityLog.xml file for more information..
+        /// </summary>
+        internal static string StandardErrorMessage {
+            get {
+                return ResourceManager.GetString("StandardErrorMessage", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Application Error.
+        /// </summary>
+        internal static string StandardErrorMessageTitle {
+            get {
+                return ResourceManager.GetString("StandardErrorMessageTitle", resourceCulture);
+            }
+        }
     }
 }

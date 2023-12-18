@@ -19,10 +19,12 @@ namespace TableDiagramExtension.Controllers
     internal class SQLController : ISQLController
     {
         ConvertController _convertController;
+        ErrorController _errorController;
 
         public SQLController()
         {
             _convertController = new ConvertController();
+            _errorController = new ErrorController();
         }
 
         public List<DatabaseMetaData> RetrieveDatabaseMetaData(string initialConnectionString, string activeDatabase)
@@ -30,7 +32,7 @@ namespace TableDiagramExtension.Controllers
             try
             {
                 List<DatabaseMetaData> metadata = new List<DatabaseMetaData>();
-                string connectionString = initialConnectionString.Replace("Multiple Active Result Sets", "MultipleActiveResultSets").Replace("Trust Server Certificate", "TrustServerCertificate");
+                string connectionString = initialConnectionString.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
                 string sql = String.Format(SqlStatements.SelectDatabaseTables, activeDatabase);
                 DataTable results = new DataTable() ;
                 using (SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, new SqlConnection(connectionString)))
@@ -44,8 +46,8 @@ namespace TableDiagramExtension.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return null;
+                _errorController.DisplayErrorMessage(ex.Message);
+                return Enumerable.Empty<DatabaseMetaData>().ToList();
             }
         }
 
@@ -53,7 +55,7 @@ namespace TableDiagramExtension.Controllers
         {
             try
             {
-                string connectionString = initialConnectionString.Replace("Multiple Active Result Sets", "MultipleActiveResultSets").Replace("Trust Server Certificate", "TrustServerCertificate");
+                string connectionString = initialConnectionString.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
                 string sql = SqlStatements.RetrieveDatabases;
                 DataTable results = new DataTable();
                 using (SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, new SqlConnection(connectionString)))
@@ -65,8 +67,8 @@ namespace TableDiagramExtension.Controllers
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                return null;
+                _errorController.DisplayErrorMessage(ex.Message);
+                return Enumerable.Empty<string>().ToList();
             }
         }
     }
