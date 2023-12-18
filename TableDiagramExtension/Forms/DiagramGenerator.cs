@@ -90,7 +90,7 @@ namespace DatabaseDiagram
             sqlDependencyDiagram.EndUpdate();
             cboDatabaseDiagram.SelectedIndex = 0;
             sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);            
-            Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
+            //Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
 
             _sharedData = sharedData;
             _sqlController = new SQLController();
@@ -132,7 +132,7 @@ namespace DatabaseDiagram
         /// </summary>
         private void InitailizeDiagram()
         {
-            InitializeDiagramFromXMLData(datasrcpath);
+            //InitializeDiagramFromXMLData(datasrcpath);
             sqlDependencyDiagram.View.SelectionList.Clear();
         }
 
@@ -719,7 +719,7 @@ namespace DatabaseDiagram
             {
 #if !NETCORE
                 //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
-                InitializeDiagramFromXMLData(@"..\..\Data\Database.xml");
+                // InitializeDiagramFromXMLData(@"..\..\Data\Database.xml"); // this called on startup
 #else
                 InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
 #endif
@@ -779,6 +779,7 @@ namespace DatabaseDiagram
                 // get dependency - _sqlDiagramController
 
                 // enable buttons
+                //this.AreToolStripButtonsEnabled();
             }
             catch (Exception ex)
             {
@@ -812,6 +813,23 @@ namespace DatabaseDiagram
             catch (Exception ex)
             {
                 _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+        private void AreToolStripButtonsEnabled()
+        {
+            if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
+            {
+                this.saveToolStripButton.Enabled = true;
+                this.saveAsToolStripButton.Enabled = true;
+
+
+            }
+            else
+            {
+                this.saveToolStripButton.Enabled = false;
+                this.saveAsToolStripButton.Enabled = false;
+
             }
         }
 
