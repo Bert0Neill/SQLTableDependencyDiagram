@@ -6,6 +6,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
+using System.IO;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
@@ -102,18 +103,24 @@ namespace TableDiagramExtension.Controllers
         {
             try
             {
+                StringBuilder dependencyXml = new StringBuilder();
+                DataTable results = new DataTable() { TableName = "Tables" };
                 string delimTables = "'" + String.Join("','", dependencyTables) + "'";
-
                 string connectionString = initialConnectionString.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
                 string sql = String.Format(SqlStatements.SelectDependencyTableInfo, activeDatabase, delimTables);
-
-                DataTable results = new DataTable();
+                
                 using (SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, new SqlConnection(connectionString)))
                 {
                     dataAdapter.Fill(results);
-                }
 
-                return results.Rows[0][0].ToString(); // return XML                
+                    // retrieve XML from multiple rows
+                    foreach (DataRow row in results.Rows)
+                    {
+                        dependencyXml.Append(row[0].ToString());
+                    }
+                }
+              
+                return dependencyXml.ToString();
             }
             catch (Exception ex)
             {

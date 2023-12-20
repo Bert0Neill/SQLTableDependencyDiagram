@@ -851,7 +851,7 @@ namespace DatabaseDiagram
                 //string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
 
                 // call SQL to get dependency tables
-                var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}.[{selectedTable.TABLE_NAME}]");
+                var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}].[{selectedTable.TABLE_NAME}]");
                 dependencyTables.Add(selectedTable.TABLE_NAME);
 
                 // call SQL to build XML of dependency tables (inc. selected table)
