@@ -113,6 +113,47 @@ namespace TableDiagramExtension.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to use {0}
+        ///SELECT
+        ///s.name AS &apos;@Schema&apos;,
+        ///t.name AS &apos;@Name&apos;,
+        ///t.object_id AS &apos;@ColumnId&apos;,
+        ///(
+        ///SELECT c.name AS &apos;@Name&apos;,
+        ///    c.column_id AS &apos;@ColumnId&apos;,
+        ///    IIF(i.object_id IS NOT NULL,1,0) AS &apos;@IsPrimaryKey&apos;,
+        ///    f.referenced_object_id AS &apos;@ReferencesTableId&apos;,
+        ///    f.referenced_column_id AS &apos;@ReferencesColumnId&apos;
+        ///FROM sys.columns AS c
+        ///	LEFT OUTER JOIN sys.index_columns AS i ON c.object_id = i.object_id
+        ///	  AND c.column_id = i.column_id
+        ///	  AND i.index_id = 1
+        ///		LEFT OUTER JOIN sys.foreign_key_columns AS f  [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string SelectDependencyTableInfo {
+            get {
+                return ResourceManager.GetString("SelectDependencyTableInfo", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to use {0}
+        ///Select
+        ///S.[name] as &apos;Dependent_Tables&apos;
+        ///From
+        ///sys.objects S inner join sys.sysreferences R
+        ///on S.object_id = R.rkeyid
+        ///Where
+        ///S.[type] = &apos;U&apos; AND
+        ///R.fkeyid = OBJECT_ID(&apos;{1}&apos;).
+        /// </summary>
+        internal static string SelectDependencyTableName {
+            get {
+                return ResourceManager.GetString("SelectDependencyTableName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Trust Server Certificate.
         /// </summary>
         internal static string Trust_Server_Certificate {

@@ -52,6 +52,10 @@ namespace DatabaseDiagram
             this.cboTable = new System.Windows.Forms.ToolStripComboBox();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
+            this.zoomInToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.zoomOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.exportToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.pNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jPEGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,15 +63,12 @@ namespace DatabaseDiagram
             this.sVGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.saveAsToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.zoomInToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zoomOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.panel2 = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
+            this.submitStripButton = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.sqlDependencyDiagram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.model1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -168,6 +169,7 @@ namespace DatabaseDiagram
             this.toolStripSeparator2,
             this.toolStripLabel2,
             this.cboTable,
+            this.submitStripButton,
             this.toolStripSeparator3,
             this.saveToolStripButton,
             this.zoomInToolStripButton,
@@ -232,6 +234,47 @@ namespace DatabaseDiagram
             this.saveToolStripButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
             this.saveToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+            // 
+            // zoomInToolStripButton
+            // 
+            this.zoomInToolStripButton.AutoSize = false;
+            this.zoomInToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.zoomInToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.zoomInToolStripMenuItem,
+            this.zoomOutToolStripMenuItem,
+            this.resetToolStripMenuItem});
+            this.zoomInToolStripButton.Enabled = false;
+            this.zoomInToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomInToolStripButton.Image")));
+            this.zoomInToolStripButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
+            this.zoomInToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.zoomInToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.zoomInToolStripButton.Name = "zoomInToolStripButton";
+            this.zoomInToolStripButton.ShowDropDownArrow = false;
+            this.zoomInToolStripButton.Size = new System.Drawing.Size(77, 55);
+            this.zoomInToolStripButton.Text = "Zoom";
+            this.zoomInToolStripButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
+            this.zoomInToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
+            // 
+            // zoomInToolStripMenuItem
+            // 
+            this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
+            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(137, 24);
+            this.zoomInToolStripMenuItem.Text = "ZoomIn";
+            this.zoomInToolStripMenuItem.Click += new System.EventHandler(this.zoomInToolStripMenuItem_Click_1);
+            // 
+            // zoomOutToolStripMenuItem
+            // 
+            this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
+            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(137, 24);
+            this.zoomOutToolStripMenuItem.Text = "ZoomOut";
+            this.zoomOutToolStripMenuItem.Click += new System.EventHandler(this.zoomOutToolStripMenuItem_Click_1);
+            // 
+            // resetToolStripMenuItem
+            // 
+            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            this.resetToolStripMenuItem.Size = new System.Drawing.Size(137, 24);
+            this.resetToolStripMenuItem.Text = "Reset";
+            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click_1);
             // 
             // exportToolStripButton
             // 
@@ -302,47 +345,6 @@ namespace DatabaseDiagram
             this.saveAsToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
             this.saveAsToolStripButton.Visible = false;
             this.saveAsToolStripButton.Click += new System.EventHandler(this.saveAsToolStripButton_Click);
-            // 
-            // zoomInToolStripButton
-            // 
-            this.zoomInToolStripButton.AutoSize = false;
-            this.zoomInToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.zoomInToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zoomInToolStripMenuItem,
-            this.zoomOutToolStripMenuItem,
-            this.resetToolStripMenuItem});
-            this.zoomInToolStripButton.Enabled = false;
-            this.zoomInToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomInToolStripButton.Image")));
-            this.zoomInToolStripButton.ImageAlign = System.Drawing.ContentAlignment.TopCenter;
-            this.zoomInToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.zoomInToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomInToolStripButton.Name = "zoomInToolStripButton";
-            this.zoomInToolStripButton.ShowDropDownArrow = false;
-            this.zoomInToolStripButton.Size = new System.Drawing.Size(77, 55);
-            this.zoomInToolStripButton.Text = "Zoom";
-            this.zoomInToolStripButton.TextAlign = System.Drawing.ContentAlignment.BottomCenter;
-            this.zoomInToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.Overlay;
-            // 
-            // zoomInToolStripMenuItem
-            // 
-            this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
-            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
-            this.zoomInToolStripMenuItem.Text = "ZoomIn";
-            this.zoomInToolStripMenuItem.Click += new System.EventHandler(this.zoomInToolStripMenuItem_Click_1);
-            // 
-            // zoomOutToolStripMenuItem
-            // 
-            this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
-            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
-            this.zoomOutToolStripMenuItem.Text = "ZoomOut";
-            this.zoomOutToolStripMenuItem.Click += new System.EventHandler(this.zoomOutToolStripMenuItem_Click_1);
-            // 
-            // resetToolStripMenuItem
-            // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
-            this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click_1);
             // 
             // panel2
             // 
@@ -4525,6 +4527,15 @@ namespace DatabaseDiagram
             this.ImageList.Images.SetKeyName(4161, "ZoomToggle.png");
             this.ImageList.Images.SetKeyName(4162, "ZoomToWidth.png");
             // 
+            // submitStripButton
+            // 
+            this.submitStripButton.Image = ((System.Drawing.Image)(resources.GetObject("submitStripButton.Image")));
+            this.submitStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.submitStripButton.Name = "submitStripButton";
+            this.submitStripButton.Size = new System.Drawing.Size(70, 55);
+            this.submitStripButton.Text = "Submit";
+            this.submitStripButton.Click += new System.EventHandler(this.submitStripButton_Click);
+            // 
             // DiagramGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -4578,6 +4589,7 @@ namespace DatabaseDiagram
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripComboBox cboTable;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripButton submitStripButton;
     }
 }
 

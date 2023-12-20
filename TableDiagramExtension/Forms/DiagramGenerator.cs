@@ -52,7 +52,7 @@ namespace DatabaseDiagram
         private readonly ILogger _logger;
         private readonly IErrorController _errorController;
         private readonly SQLDiagramController _sqlDiagramController;
-        
+
 
 #if !NETCORE
         //private string datasrcpath = @"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
@@ -74,7 +74,7 @@ namespace DatabaseDiagram
             sqlDependencyDiagram.EndUpdate();
 
             cboDatabaseDiagram.SelectedIndex = 0;
-            sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);            
+            sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
             Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
         }
 
@@ -89,7 +89,7 @@ namespace DatabaseDiagram
 
             sqlDependencyDiagram.EndUpdate();
             cboDatabaseDiagram.SelectedIndex = 0;
-            sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);            
+            sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
             //Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
 
             _sharedData = sharedData;
@@ -198,7 +198,7 @@ namespace DatabaseDiagram
             rrect.FillStyle.Color = Color.Transparent;
             rrect.EditStyle.AllowSelect = false;
             rrect.LineStyle.LineColor = Color.Gray;
-            
+
             Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rrect, "Relationships");
             lbl.Position = Position.TopLeft;
             lbl.FontStyle.Family = "Segoe UI";
@@ -741,7 +741,7 @@ namespace DatabaseDiagram
 #endif
             }
         }
-        
+
         private void DiagramGenerator_Load(object sender, EventArgs e)
         {
             try
@@ -772,11 +772,13 @@ namespace DatabaseDiagram
         {
             try
             {
-                //DatabaseMetaData selectedTable = this.cboTable.ComboBox.SelectedValue as DatabaseMetaData;
-                string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
-                if (selectedTable == TextStrings.PleaseSelectTable) return;
+                this.submitStripButton.Enabled = false;
+                //string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
+                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
 
-                // get dependency - _sqlDiagramController
+                if (selectedTable.TABLE_NAME == TextStrings.PleaseSelectTable) return;
+
+                this.submitStripButton.Enabled = true;
 
                 // enable buttons
                 //this.AreToolStripButtonsEnabled();
@@ -789,26 +791,28 @@ namespace DatabaseDiagram
 
         private void cboDatabase_SelectedIndexChanged(object sender, EventArgs e)
         {
-            try { 
-            List<DatabaseMetaData> initialData;
-            string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();            
-
-            if (selectedDatabase == TextStrings.PleaseSelectDatabase) return;
-
-            initialData = _sqlController.RetrieveDatabaseMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase);
-
-            initialData.Insert(0, new DatabaseMetaData() {TABLE_NAME = TextStrings.PleaseSelectTable });
-
-            if (initialData.Count > 1)
+            try
             {
-                    var comboData = initialData.Select(tbl => tbl.TABLE_NAME).Distinct().ToList(); 
+                List<DatabaseMetaData> initialData;
+                string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
+                this.cboTable.Enabled = false;
+
+                if (selectedDatabase == TextStrings.PleaseSelectDatabase) return;
+
+                initialData = _sqlController.RetrieveDatabaseMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase);
+
+                initialData.Insert(0, new DatabaseMetaData() { TABLE_NAME = TextStrings.PleaseSelectTable });
+
+                if (initialData.Count > 1)
+                {
+                    var distinctTables = initialData.GroupBy(p => p.TABLE_NAME).Select(g => g.First()).ToList();
+
+                    //var comboData = initialData.Select(tbl => tbl.TABLE_NAME).Distinct().ToList();
                     this.cboTable.ComboBox.DataSource = null;
-                this.cboTable.ComboBox.DataSource = comboData;
-                this.cboTable.Enabled = true;
-                //this.cboTable.ComboBox.DisplayMember = "TABLE_NAME";
-                //this.cboTable.ComboBox.DisplayMember = "TABLE_NAME";
-                //this.cboTable.ComboBox.ValueMember = "TABLE_NAME";
-            }
+                    this.cboTable.ComboBox.DataSource = distinctTables;
+                    this.cboTable.ComboBox.DisplayMember = "TABLE_NAME";
+                    this.cboTable.Enabled = true;
+                }
             }
             catch (Exception ex)
             {
@@ -818,21 +822,50 @@ namespace DatabaseDiagram
 
         private void AreToolStripButtonsEnabled()
         {
-            if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
+            try
             {
-                this.saveToolStripButton.Enabled = true;
-                this.saveAsToolStripButton.Enabled = true;
-
-
+                if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
+                {
+                    this.saveToolStripButton.Enabled = true;
+                    this.saveAsToolStripButton.Enabled = true;
+                }
+                else
+                {
+                    this.saveToolStripButton.Enabled = false;
+                    this.saveAsToolStripButton.Enabled = false;
+                }
             }
-            else
+            catch (Exception ex)
             {
-                this.saveToolStripButton.Enabled = false;
-                this.saveAsToolStripButton.Enabled = false;
-
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
-      
+        private void submitStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                // get server & table name
+                string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
+                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;                
+                //string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
+
+                // call SQL to get dependency tables
+                var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}.[{selectedTable.TABLE_NAME}]");
+                dependencyTables.Add(selectedTable.TABLE_NAME);
+
+                // call SQL to build XML of dependency tables (inc. selected table)
+                var dependencyTablesMetaDataXML = _sqlController.RetrieveDependencyTablesMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
+                
+                // Replace XML ColumnID in Table node with TableID
+                // Remove unwanted nodes from XML
+                // get dependency - _sqlDiagramController
+                // call generate diagram with new XML string (alter fnx to load from string not file)
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
     }
 }

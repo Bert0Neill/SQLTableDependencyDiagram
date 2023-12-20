@@ -9,5 +9,7 @@ namespace TableDiagramExtension.Interfaces
     {
         List<DatabaseMetaData> RetrieveDatabaseMetaData(string initialConnectionString, string activeDatabase);
         List<string> RetrieveDatabases(string initialConnectionString);
+        List<string> RetrieveDependencyTables(string connectionString, string selectedDatabase, string selectedTable);
+        string RetrieveDependencyTablesMetaData(string initialConnectionString, string activeDatabase, List<string> dependencyTables);
     }
 }
