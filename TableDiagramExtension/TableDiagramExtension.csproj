@@ -50,7 +50,6 @@
   <ItemGroup>
     <Compile Include="Controllers\ConvertController.cs" />
     <Compile Include="Interfaces\IXMLController.cs" />
-    <Compile Include="Controllers\SQLDiagramController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\XMLController.cs" />
     <Compile Include="Interfaces\IErrorController.cs" />

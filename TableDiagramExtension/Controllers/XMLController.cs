@@ -17,30 +17,6 @@ namespace TableDiagramExtension.Controllers
 
         }
 
-        private string GenerateXmlFilter(List<string> acceptableTables)
-        {
-            //const string BEGIN_FILTER = "//Table[not(@TableName='Customer' or @TableName='Address')]";
-            const string END_FILTER = "or @TableName='{0}'";
-            const string BEGIN_FILTER = "//Table[not(@TableName='{0} {1}')]";
-
-            string buildFilter = string.Empty;
-            string extraFilter = string.Empty;
-            string initialTable = string.Empty;
-
-            for (int loop = 0; loop < acceptableTables.Count(); loop++)
-            {
-                if (loop == 0) initialTable = acceptableTables[loop]; //String.Format(BEGIN_FILTER, acceptableTables[loop]);
-                else
-                {
-                    extraFilter += String.Format(END_FILTER, acceptableTables[loop]);
-                }
-            }
-
-            buildFilter += String.Format(BEGIN_FILTER, initialTable, extraFilter);
-
-            return buildFilter;
-        }
-
         public string RenameNodes(string xmlString)
         {
             try
@@ -160,9 +136,9 @@ namespace TableDiagramExtension.Controllers
 
                 // Create the root element <dataroot>
                 XmlElement datarootElement = xmlDocFormatted.CreateElement("dataroot");
-                //datarootElement.SetAttribute("xmlns:od", "urn:schemas-microsoft-com:officedata");
-                //datarootElement.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");                
-                //datarootElement.SetAttribute("generated", "2005-01-18T15:03:23");
+                datarootElement.SetAttribute("xmlns:od", "urn:schemas-microsoft-com:officedata");
+                datarootElement.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");                
+                datarootElement.SetAttribute("generated", "2005-01-18T15:03:23");
                 
                 xmlDocFormatted.AppendChild(datarootElement);
 
@@ -222,56 +198,6 @@ namespace TableDiagramExtension.Controllers
                 }
 
                 return xmlDocFormatted.OuterXml;
-
-
-                /*
-                 // Load the XML
-        XmlDocument originalXml = new XmlDocument();
-        originalXml.LoadXml(@"<Tables>
-                                <Table Schema=""SalesLT"" Name=""Address"" TableId=""69575286"">
-                                    <Column Name=""AddressID"" IsPrimaryKey=""1""/>
-                                    <!-- Add more columns as needed -->
-                                </Table>
-                                <!-- Add more tables as needed -->
-                            </Tables>");
-
-        // Create a new XmlDocument for the result
-        XmlDocument newXmlDocument = new XmlDocument();
-
-        // Create the root element
-        XmlElement tablesElement = newXmlDocument.CreateElement("Tables");
-        newXmlDocument.AppendChild(tablesElement);
-
-        // Loop through tables in the original XML
-        foreach (XmlNode tableNode in originalXml.SelectNodes("//Table"))
-        {
-            XmlElement tableElement = newXmlDocument.CreateElement("Table");
-
-            // Copy attributes from the original table to the new table
-            foreach (XmlAttribute attribute in tableNode.Attributes)
-            {
-                tableElement.SetAttribute(attribute.Name, attribute.Value);
-            }
-
-            // Loop through columns in the original table
-            foreach (XmlNode columnNode in tableNode.SelectNodes("Column"))
-            {
-                XmlElement columnElement = newXmlDocument.CreateElement("Column");
-
-                // Copy attributes from the original column to the new column
-                foreach (XmlAttribute attribute in columnNode.Attributes)
-                {
-                    columnElement.SetAttribute(attribute.Name, attribute.Value);
-                }
-
-                // Add the new column to the new table
-                tableElement.AppendChild(columnElement);
-            }
-
-            // Add the new table to the root element
-            tablesElement.AppendChild(tableElement);
-        }
-                  */
             }
             catch (Exception ex)
             {

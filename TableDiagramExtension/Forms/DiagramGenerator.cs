@@ -35,6 +35,8 @@ using System.Windows.Forms.Design;
 using TableDiagramExtension.Interfaces;
 using System.Linq;
 using TableDiagramExtension.Resources;
+using System.Data.SqlTypes;
+using System.Xml.Linq;
 
 namespace DatabaseDiagram
 {
@@ -51,8 +53,8 @@ namespace DatabaseDiagram
         private readonly ISQLController _sqlController;
         private readonly ILogger _logger;
         private readonly IErrorController _errorController;
-        private readonly SQLDiagramController _sqlDiagramController;
         private readonly XMLController _xmlController;
+        
 
 
 #if !NETCORE
@@ -96,7 +98,6 @@ namespace DatabaseDiagram
             _sharedData = sharedData;
             _sqlController = new SQLController();
             _errorController = new ErrorController();
-            _sqlDiagramController = new SQLDiagramController();
             _xmlController = new XMLController();
         }
 
@@ -192,7 +193,7 @@ namespace DatabaseDiagram
         /// <summary>
         /// Initialize the Diagram from XML file
         /// </summary>
-        protected void InitializeDiagramFromXMLData(string path)
+        protected void InitializeDiagramFromXMLData(string updatedXml)
         {
             sqlDependencyDiagram.Model.Clear();
             sqlDependencyDiagram.Model.BeginUpdate();
@@ -236,7 +237,7 @@ namespace DatabaseDiagram
 
 
             // Read data from the XML data file and populate a Hashtable using the employee ID as the key
-            Hashtable lstEmployees = this.ReadEmployeeDataFromXMLFile(path);
+            Hashtable lstEmployees = this.ReadEmployeeDataFromXMLFile(updatedXml);
 
             // Create a manager-employee nested list with top-level employees forming the root nodes
             ArrayList sortedlist = this.GetSortedEmployeesList(lstEmployees);
@@ -276,7 +277,7 @@ namespace DatabaseDiagram
         /// </summary>
         /// <param name="datasrc">XML file</param>
         /// <returns>returns the table</returns>
-        protected Hashtable ReadEmployeeDataFromXMLFile(string datasrc)
+        protected Hashtable ReadEmployeeDataFromXMLFile(string updatedXml)
         {
             Hashtable lstEmployee = new Hashtable();
 
@@ -284,7 +285,9 @@ namespace DatabaseDiagram
             XmlDocument xmldoc = new XmlDocument();
             try
             {
-                xmldoc.Load(datasrc);
+                xmldoc.LoadXml(updatedXml);
+                //xmldoc.Load(datasrc);
+
                 if (xmldoc.DocumentElement.HasChildNodes)
                 {
                     XmlNodeList employeelist = xmldoc.DocumentElement.ChildNodes;
@@ -326,9 +329,9 @@ namespace DatabaseDiagram
                     }
                 }
             }
-            catch
+            catch (Exception ex)
             {
-                MessageBox.Show("Could not able to load the xml file");
+                MessageBox.Show(ex.Message);
             }
 
             return lstEmployee;
@@ -862,7 +865,9 @@ namespace DatabaseDiagram
                 // Replace XML ColumnID in Table node with TableID
                 string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
 
-                // Remove unwanted nodes from XML
+                InitializeDiagramFromXMLData(updatedXml);
+                sqlDependencyDiagram.View.SelectionList.Clear();
+
                 // get dependency - _sqlDiagramController
                 // call generate diagram with new XML string (alter fnx to load from string not file)
             }
