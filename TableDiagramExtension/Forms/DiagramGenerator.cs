@@ -52,6 +52,7 @@ namespace DatabaseDiagram
         private readonly ILogger _logger;
         private readonly IErrorController _errorController;
         private readonly SQLDiagramController _sqlDiagramController;
+        private readonly XMLController _xmlController;
 
 
 #if !NETCORE
@@ -96,6 +97,7 @@ namespace DatabaseDiagram
             _sqlController = new SQLController();
             _errorController = new ErrorController();
             _sqlDiagramController = new SQLDiagramController();
+            _xmlController = new XMLController();
         }
 
         #endregion
@@ -719,7 +721,7 @@ namespace DatabaseDiagram
             {
 #if !NETCORE
                 //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
-                // InitializeDiagramFromXMLData(@"..\..\Data\Database.xml"); // this called on startup
+                 InitializeDiagramFromXMLData(@"..\..\Data\Database.xml"); // this called on startup
 #else
                 InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
 #endif
@@ -856,8 +858,10 @@ namespace DatabaseDiagram
 
                 // call SQL to build XML of dependency tables (inc. selected table)
                 var dependencyTablesMetaDataXML = _sqlController.RetrieveDependencyTablesMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
-                
+
                 // Replace XML ColumnID in Table node with TableID
+                string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
+
                 // Remove unwanted nodes from XML
                 // get dependency - _sqlDiagramController
                 // call generate diagram with new XML string (alter fnx to load from string not file)

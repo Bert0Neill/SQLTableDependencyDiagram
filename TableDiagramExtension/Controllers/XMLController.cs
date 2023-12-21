@@ -15,63 +15,33 @@ namespace TableDiagramExtension.Controllers
 
         }
 
-        public void DeleteNodes()
+        
+
+        private string GenerateXmlFilter(List<string> acceptableTables)
         {
-            try
+            //const string BEGIN_FILTER = "//Table[not(@TableName='Customer' or @TableName='Address')]";
+            const string END_FILTER = "or @TableName='{0}'";
+            const string BEGIN_FILTER = "//Table[not(@TableName='{0} {1}')]";
+
+            string buildFilter = string.Empty;
+            string extraFilter = string.Empty;
+            string initialTable = string.Empty;
+
+            for (int loop = 0; loop < acceptableTables.Count(); loop++)
             {
-                // Load the XML document
-                XmlDocument xmlDoc = new XmlDocument();
-                xmlDoc.LoadXml(@"<?xml version=""1.0"" encoding=""utf-8"" ?>
-                            <Tables>
-                                <!-- ... (your XML content) ... -->
-                            </Tables>");
-
-                // Select nodes with TableName not equal to "Customer" or "Address"
-                XmlNodeList nodesToDelete = xmlDoc.SelectNodes("//Table[not(@TableName='Customer' or @TableName='Address')]");
-
-                // Delete the selected nodes
-                foreach (XmlNode node in nodesToDelete)
+                if (loop == 0) initialTable = acceptableTables[loop]; //String.Format(BEGIN_FILTER, acceptableTables[loop]);
+                else
                 {
-                    node.ParentNode.RemoveChild(node);
+                    extraFilter += String.Format(END_FILTER, acceptableTables[loop]);
                 }
-
-                // Save the modified XML document
-                xmlDoc.Save("path/to/your/xml/modified_example.xml");
-
-                //********************************
-
-                //                <? xml version = "1.0" encoding = "UTF-8" ?>
-                //< root >
-                //  < person id = "1" name = "John" age = "25" />
-                //  < person id = "2" name = "Alice" age = "30" />
-                //  < person id = "3" name = "Bob" age = "22" />
-                //  < person id = "4" name = "Eve" age = "35" />
-                //</ root >
-
-
-                //            // Specify the attribute name and values for filtering
-                //            string attributeName = "age";
-                //                string[] filterValues = { "30", "35" };
-
-                //                // Select nodes with the specified attribute not equal to the filter values
-                //                XmlNodeList nodesToDelete = xmlDoc.SelectNodes($"//person[not(@{attributeName}='{string.Join("' or not(@", filterValues)}')]");
-
-                //                // Delete the selected nodes
-                //                foreach (XmlNode node in nodesToDelete)
-                //                {
-                //                    node.ParentNode.RemoveChild(node);
-                //                }
-
-
-
             }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Error: {ex.Message}");
-            }
+
+            buildFilter += String.Format(BEGIN_FILTER, initialTable, extraFilter);
+
+            return buildFilter;
         }
 
-        public void RenameNodes()
+        public string RenameNodes(string xmlString)
         {
             try
             {
@@ -120,9 +90,6 @@ namespace TableDiagramExtension.Controllers
                     }
                 }
 
-                // Save the modified XML document
-                xmlDoc.Save("path/to/your/xml/modified_example.xml");
-
                 /*
                  * <?xml version="1.0" encoding="UTF-8"?>
 <root oldAttribute="oldValue">
@@ -156,22 +123,82 @@ namespace TableDiagramExtension.Controllers
             }
                  */
 
+                return string.Empty;
+
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"Error: {ex.Message}");
+                return string.Empty;
             }
         }
 
-        public void LoadXMLString()
+        public XmlDocument LoadXMLString(string xmlString)
         {
-
-            string xmlString = "<root><element1>value1</element1><element2>value2</element2></root>";
             // Create a new XmlDocument
             XmlDocument xmlDoc = new XmlDocument();
-            // Load the XML string into the XmlDocument
-            xmlDoc.LoadXml(xmlString);
+
+            try
+            {
+                // Load the XML string into the XmlDocument
+                xmlDoc.LoadXml(xmlString);
+                return xmlDoc;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return xmlDoc;
+            }
         }
 
+        public string GenerateXmlDocFromDBData(string xmlString)
+        {
+            // Create an XmlDocument
+            XmlDocument xmlDoc = new XmlDocument();
+
+            // Create the root element <dataroot>
+            XmlElement datarootElement = xmlDoc.CreateElement("dataroot");
+            datarootElement.SetAttribute("xmlns:od", "urn:schemas-microsoft-com:officedata");
+            datarootElement.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
+            //datarootElement.SetAttribute("xsi:noNamespaceSchemaLocation", "Employees.xsd");
+            datarootElement.SetAttribute("generated", "2005-01-18T15:03:23");
+
+            // Create the child element <Employee>
+            XmlElement employeeElement = xmlDoc.CreateElement("Employee");
+
+            // Array of column names
+            string[] columnNames = { "emp_id", "FName", "minit", "lname", "job_id", "job_lvl", "pub_id", "hire_date" };
+
+            // Add individual elements for each column
+            foreach (var columnName in columnNames)
+            {
+                XmlElement columnElement = xmlDoc.CreateElement(columnName);
+                columnElement.InnerText = columnName;
+                employeeElement.AppendChild(columnElement);
+            }
+
+            // loop collection again and create element for PK's
+            // Add <PrimaryKey> element
+            XmlElement primaryKeyElement = xmlDoc.CreateElement("PrimaryKey");
+            primaryKeyElement.InnerText = "emp_id";
+            employeeElement.AppendChild(primaryKeyElement);
+
+            // Add <ForeignKey> element (empty in this example, customize as needed)
+            XmlElement foreignKeyElement = xmlDoc.CreateElement("ForeignKey");
+            employeeElement.AppendChild(foreignKeyElement);
+
+            // Add <TableID> element
+            XmlElement tableIdElement = xmlDoc.CreateElement("TableID");
+            tableIdElement.InnerText = "123"; // Replace with your actual TableID
+            employeeElement.AppendChild(tableIdElement);
+
+            // Append the <Employee> element to the <dataroot> element
+            datarootElement.AppendChild(employeeElement);
+
+            // Append the root element to the XmlDocument
+            xmlDoc.AppendChild(employeeElement);
+
+            return string.Empty;
+        }
     }
 }
