@@ -1,9 +1,11 @@
-﻿using System;
+﻿using Microsoft.SqlServer.Management.Smo;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Xml;
+using System.Xml.Linq;
 using TableDiagramExtension.Interfaces;
 
 namespace TableDiagramExtension.Controllers
@@ -14,8 +16,6 @@ namespace TableDiagramExtension.Controllers
         {
 
         }
-
-        
 
         private string GenerateXmlFilter(List<string> acceptableTables)
         {
@@ -153,52 +153,132 @@ namespace TableDiagramExtension.Controllers
 
         public string GenerateXmlDocFromDBData(string xmlString)
         {
-            // Create an XmlDocument
-            XmlDocument xmlDoc = new XmlDocument();
-
-            // Create the root element <dataroot>
-            XmlElement datarootElement = xmlDoc.CreateElement("dataroot");
-            datarootElement.SetAttribute("xmlns:od", "urn:schemas-microsoft-com:officedata");
-            datarootElement.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");
-            //datarootElement.SetAttribute("xsi:noNamespaceSchemaLocation", "Employees.xsd");
-            datarootElement.SetAttribute("generated", "2005-01-18T15:03:23");
-
-            // Create the child element <Employee>
-            XmlElement employeeElement = xmlDoc.CreateElement("Employee");
-
-            // Array of column names
-            string[] columnNames = { "emp_id", "FName", "minit", "lname", "job_id", "job_lvl", "pub_id", "hire_date" };
-
-            // Add individual elements for each column
-            foreach (var columnName in columnNames)
+            try
             {
-                XmlElement columnElement = xmlDoc.CreateElement(columnName);
-                columnElement.InnerText = columnName;
-                employeeElement.AppendChild(columnElement);
+                // Create an XmlDocument
+                XmlDocument xmlDocFormatted = new XmlDocument();
+
+                // Create the root element <dataroot>
+                XmlElement datarootElement = xmlDocFormatted.CreateElement("dataroot");
+                //datarootElement.SetAttribute("xmlns:od", "urn:schemas-microsoft-com:officedata");
+                //datarootElement.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");                
+                //datarootElement.SetAttribute("generated", "2005-01-18T15:03:23");
+                
+                xmlDocFormatted.AppendChild(datarootElement);
+
+                // craete xmlDoc for parsing current format - to retrieve data
+                XDocument xmlDoc = XDocument.Parse(xmlString);
+
+                // Accessing Table elements and attributes
+                var tableElements = xmlDoc.Descendants("Table");
+                foreach (var tableElement in tableElements)
+                {
+                    //string schema = tableElement.Attribute("Schema").Value;
+                    string tableName = tableElement.Attribute("Name").Value;
+                    string tableId = tableElement.Attribute("TableId").Value;
+
+                    // add <Address>
+                    XmlElement xmlFormattedTableRoot = xmlDocFormatted.CreateElement(tableName);
+
+                    // add to xmlDocFormatted node <TableID>123</TableID> to <Address> node
+                    XmlElement tableElementID = xmlDocFormatted.CreateElement("TableId");
+                    tableElementID.InnerText = tableId;
+                    xmlFormattedTableRoot.AppendChild(tableElementID);
+
+                    // Accessing Column elements and attributes within each Table
+                    var columnElements = tableElement.Elements("Column");
+
+                    foreach (var columnElement in columnElements)
+                    {
+                        string columnName = columnElement.Attribute("Name").Value;
+                        string isPrimaryKey = columnElement.Attribute("IsPrimaryKey").Value;
+                        string foreignKey = columnElement.Attribute("ForeignKey")?.Value ?? "N/A";
+
+                        // add column node <EmpID>EmpID</EmpID>
+                        XmlElement columnElementName = xmlDocFormatted.CreateElement(columnName);
+                        columnElementName.InnerText = columnName;
+                        xmlFormattedTableRoot.AppendChild(columnElementName);
+
+                        if (foreignKey != "N/A")
+                        {
+                            // add <ForeignKey> 123 </ForeignKey>
+                            XmlElement foreignKeyElementName = xmlDocFormatted.CreateElement("ForeignKey");
+                            foreignKeyElementName.InnerText = foreignKey;
+                            xmlFormattedTableRoot.AppendChild(foreignKeyElementName);
+                        }
+
+                        if (isPrimaryKey == "1")
+                        {
+                            // add <PrimaryKey> empID </PrimaryKey>
+                            XmlElement primaryKeyElementName = xmlDocFormatted.CreateElement("PrimaryKey");
+                            primaryKeyElementName.InnerText = columnName;
+                            xmlFormattedTableRoot.AppendChild(primaryKeyElementName);
+                        }
+
+                    }
+
+                    // finally add to <dataroot>
+                    datarootElement.AppendChild(xmlFormattedTableRoot);
+                }
+
+                return xmlDocFormatted.OuterXml;
+
+
+                /*
+                 // Load the XML
+        XmlDocument originalXml = new XmlDocument();
+        originalXml.LoadXml(@"<Tables>
+                                <Table Schema=""SalesLT"" Name=""Address"" TableId=""69575286"">
+                                    <Column Name=""AddressID"" IsPrimaryKey=""1""/>
+                                    <!-- Add more columns as needed -->
+                                </Table>
+                                <!-- Add more tables as needed -->
+                            </Tables>");
+
+        // Create a new XmlDocument for the result
+        XmlDocument newXmlDocument = new XmlDocument();
+
+        // Create the root element
+        XmlElement tablesElement = newXmlDocument.CreateElement("Tables");
+        newXmlDocument.AppendChild(tablesElement);
+
+        // Loop through tables in the original XML
+        foreach (XmlNode tableNode in originalXml.SelectNodes("//Table"))
+        {
+            XmlElement tableElement = newXmlDocument.CreateElement("Table");
+
+            // Copy attributes from the original table to the new table
+            foreach (XmlAttribute attribute in tableNode.Attributes)
+            {
+                tableElement.SetAttribute(attribute.Name, attribute.Value);
             }
 
-            // loop collection again and create element for PK's
-            // Add <PrimaryKey> element
-            XmlElement primaryKeyElement = xmlDoc.CreateElement("PrimaryKey");
-            primaryKeyElement.InnerText = "emp_id";
-            employeeElement.AppendChild(primaryKeyElement);
+            // Loop through columns in the original table
+            foreach (XmlNode columnNode in tableNode.SelectNodes("Column"))
+            {
+                XmlElement columnElement = newXmlDocument.CreateElement("Column");
 
-            // Add <ForeignKey> element (empty in this example, customize as needed)
-            XmlElement foreignKeyElement = xmlDoc.CreateElement("ForeignKey");
-            employeeElement.AppendChild(foreignKeyElement);
+                // Copy attributes from the original column to the new column
+                foreach (XmlAttribute attribute in columnNode.Attributes)
+                {
+                    columnElement.SetAttribute(attribute.Name, attribute.Value);
+                }
 
-            // Add <TableID> element
-            XmlElement tableIdElement = xmlDoc.CreateElement("TableID");
-            tableIdElement.InnerText = "123"; // Replace with your actual TableID
-            employeeElement.AppendChild(tableIdElement);
+                // Add the new column to the new table
+                tableElement.AppendChild(columnElement);
+            }
 
-            // Append the <Employee> element to the <dataroot> element
-            datarootElement.AppendChild(employeeElement);
-
-            // Append the root element to the XmlDocument
-            xmlDoc.AppendChild(employeeElement);
-
-            return string.Empty;
+            // Add the new table to the root element
+            tablesElement.AppendChild(tableElement);
         }
+                  */
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                return string.Empty;
+            }
+        }
+
     }
 }

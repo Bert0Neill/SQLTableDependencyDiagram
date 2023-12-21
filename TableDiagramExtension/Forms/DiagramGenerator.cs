@@ -721,7 +721,7 @@ namespace DatabaseDiagram
             {
 #if !NETCORE
                 //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
-                 InitializeDiagramFromXMLData(@"..\..\Data\Database.xml"); // this called on startup
+                 //InitializeDiagramFromXMLData(@"..\..\Data\Database.xml"); // this called on startup
 #else
                 InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
 #endif
