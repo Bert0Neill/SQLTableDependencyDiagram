@@ -128,12 +128,23 @@
   </data>
   <data name="RetrieveTableRelationships" xml:space="preserve">
     <value>USE {0}
+--USE [AdventureWorksLT2014]
 SELECT 
     fk.name AS ForeignKeyName,
     tp.name AS ParentTableName,
     cp.name AS ParentColumnName,
     rf.name AS ReferencedTableName,
-    cr.name AS ReferencedColumnName
+    cr.name AS ReferencedColumnName,
+	CASE 
+            WHEN OBJECTPROPERTY(fk.object_id, 'CnstIsPrimaryKey') = 1 THEN 'OneToOne'
+            WHEN (
+                SELECT COUNT(DISTINCT rp.name)
+                FROM sys.foreign_key_columns AS fkc
+                JOIN sys.objects AS rp ON fkc.referenced_object_id = rp.object_id
+                WHERE fk.parent_object_id = fkc.parent_object_id
+            ) = 1 THEN 'OneToOne'
+            ELSE 'OneToMany'
+        END AS 'RelationshipType'
 FROM 
     sys.foreign_keys AS fk
 INNER JOIN 
@@ -146,19 +157,22 @@ INNER JOIN
     sys.columns AS cp ON fkc.parent_column_id = cp.column_id AND fkc.parent_object_id = cp.object_id
 INNER JOIN 
     sys.columns AS cr ON fkc.referenced_column_id = cr.column_id AND fkc.referenced_object_id = cr.object_id
---where tp.name  in ('CustomerAddress','Customer','Address')
+--where tp.name  in ('CustomerAddress','Customer','Address') AND rf.name  in ('CustomerAddress','Customer','Address') 
 where tp.name  in ({1}) AND rf.name in ({1})</value>
     <comment>Pass in server name and dependency tables In clause with single quotes - --AND tp.Name IN ('CustomerAddress', 'Address', 'Customer')</comment>
   </data>
   <data name="SelectDatabaseTables" xml:space="preserve">
     <value>USE {0}
 SELECT 
-TABLE_CATALOG,
-TABLE_SCHEMA,
-TABLE_NAME, 
-COLUMN_NAME, 
-DATA_TYPE 
-FROM INFORMATION_SCHEMA.COLUMNS</value>
+sc.TABLE_CATALOG,
+sc.TABLE_SCHEMA,
+sc.TABLE_NAME, 
+sc.COLUMN_NAME, 
+sc.DATA_TYPE 
+FROM INFORMATION_SCHEMA.COLUMNS sc
+	INNER JOIN INFORMATION_SCHEMA.TABLES st ON sc.TABLE_NAME = st.TABLE_NAME
+WHERE st.TABLE_TYPE = 'BASE TABLE'
+      AND sc.TABLE_NAME != 'sysdiagrams';</value>
   </data>
   <data name="SelectDatabaseTablesWhere" xml:space="preserve">
     <value>WHERE TABLE_CATALOG = '{0}'</value>

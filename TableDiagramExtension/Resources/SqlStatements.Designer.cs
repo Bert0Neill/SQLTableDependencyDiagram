@@ -89,22 +89,19 @@ namespace TableDiagramExtension.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to USE {0}
+        ///--USE [AdventureWorksLT2014]
         ///SELECT 
         ///    fk.name AS ForeignKeyName,
         ///    tp.name AS ParentTableName,
         ///    cp.name AS ParentColumnName,
         ///    rf.name AS ReferencedTableName,
-        ///    cr.name AS ReferencedColumnName
-        ///FROM 
-        ///    sys.foreign_keys AS fk
-        ///INNER JOIN 
-        ///    sys.tables AS tp ON fk.parent_object_id = tp.object_id
-        ///INNER JOIN 
-        ///    sys.tables AS rf ON fk.referenced_object_id = rf.object_id
-        ///INNER JOIN 
-        ///    sys.foreign_key_columns AS fkc ON fk.object_id = fkc.constraint_object_id
-        ///INNER JOIN 
-        ///    sys.columns AS cp ON fkc.pa [rest of string was truncated]&quot;;.
+        ///    cr.name AS ReferencedColumnName,
+        ///	CASE 
+        ///            WHEN OBJECTPROPERTY(fk.object_id, &apos;CnstIsPrimaryKey&apos;) = 1 THEN &apos;OneToOne&apos;
+        ///            WHEN (
+        ///                SELECT COUNT(DISTINCT rp.name)
+        ///                FROM sys.foreign_key_columns AS fkc
+        ///                JOIN sys.objects AS rp ON fkc.referenced_object_id = rp.ob [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string RetrieveTableRelationships {
             get {
@@ -115,12 +112,15 @@ namespace TableDiagramExtension.Resources {
         /// <summary>
         ///   Looks up a localized string similar to USE {0}
         ///SELECT 
-        ///TABLE_CATALOG,
-        ///TABLE_SCHEMA,
-        ///TABLE_NAME, 
-        ///COLUMN_NAME, 
-        ///DATA_TYPE 
-        ///FROM INFORMATION_SCHEMA.COLUMNS.
+        ///sc.TABLE_CATALOG,
+        ///sc.TABLE_SCHEMA,
+        ///sc.TABLE_NAME, 
+        ///sc.COLUMN_NAME, 
+        ///sc.DATA_TYPE 
+        ///FROM INFORMATION_SCHEMA.COLUMNS sc
+        ///	INNER JOIN INFORMATION_SCHEMA.TABLES st ON sc.TABLE_NAME = st.TABLE_NAME
+        ///WHERE st.TABLE_TYPE = &apos;BASE TABLE&apos;
+        ///      AND sc.TABLE_NAME != &apos;sysdiagrams&apos;;.
         /// </summary>
         internal static string SelectDatabaseTables {
             get {
