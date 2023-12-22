@@ -90,6 +90,31 @@ namespace TableDiagramExtension.Resources {
         /// <summary>
         ///   Looks up a localized string similar to USE {0}
         ///SELECT 
+        ///    fk.name AS ForeignKeyName,
+        ///    tp.name AS ParentTableName,
+        ///    cp.name AS ParentColumnName,
+        ///    rf.name AS ReferencedTableName,
+        ///    cr.name AS ReferencedColumnName
+        ///FROM 
+        ///    sys.foreign_keys AS fk
+        ///INNER JOIN 
+        ///    sys.tables AS tp ON fk.parent_object_id = tp.object_id
+        ///INNER JOIN 
+        ///    sys.tables AS rf ON fk.referenced_object_id = rf.object_id
+        ///INNER JOIN 
+        ///    sys.foreign_key_columns AS fkc ON fk.object_id = fkc.constraint_object_id
+        ///INNER JOIN 
+        ///    sys.columns AS cp ON fkc.pa [rest of string was truncated]&quot;;.
+        /// </summary>
+        internal static string RetrieveTableRelationships {
+            get {
+                return ResourceManager.GetString("RetrieveTableRelationships", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to USE {0}
+        ///SELECT 
         ///TABLE_CATALOG,
         ///TABLE_SCHEMA,
         ///TABLE_NAME, 

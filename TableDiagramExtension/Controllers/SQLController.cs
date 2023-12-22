@@ -128,5 +128,30 @@ namespace TableDiagramExtension.Controllers
                 return string.Empty;
             }
         }
+
+        public DataTable RetrieveRelationshipData(string initialConnectionString, string activeDatabase, List<string> dependencyTables)
+        {
+            DataTable results = new DataTable() { TableName = "Relationships" };
+
+            try
+            {
+                StringBuilder dependencyXml = new StringBuilder();
+                string delimTables = "'" + String.Join("','", dependencyTables) + "'";
+                string connectionString = initialConnectionString.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
+                string sql = String.Format(SqlStatements.RetrieveTableRelationships, activeDatabase, delimTables);
+
+                using (SqlDataAdapter dataAdapter = new SqlDataAdapter(sql, new SqlConnection(connectionString)))
+                {
+                    dataAdapter.Fill(results);
+                }
+
+                return results;
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+                return results;
+            }
+        }
     }
 }

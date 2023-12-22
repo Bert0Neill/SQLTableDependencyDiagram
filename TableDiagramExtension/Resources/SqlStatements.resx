@@ -126,6 +126,30 @@
   <data name="RetrieveDatabases" xml:space="preserve">
     <value>select Name AS DataBaseName from sys.databases WHERE name NOT IN ('master', 'tempdb', 'model', 'msdb');</value>
   </data>
+  <data name="RetrieveTableRelationships" xml:space="preserve">
+    <value>USE {0}
+SELECT 
+    fk.name AS ForeignKeyName,
+    tp.name AS ParentTableName,
+    cp.name AS ParentColumnName,
+    rf.name AS ReferencedTableName,
+    cr.name AS ReferencedColumnName
+FROM 
+    sys.foreign_keys AS fk
+INNER JOIN 
+    sys.tables AS tp ON fk.parent_object_id = tp.object_id
+INNER JOIN 
+    sys.tables AS rf ON fk.referenced_object_id = rf.object_id
+INNER JOIN 
+    sys.foreign_key_columns AS fkc ON fk.object_id = fkc.constraint_object_id
+INNER JOIN 
+    sys.columns AS cp ON fkc.parent_column_id = cp.column_id AND fkc.parent_object_id = cp.object_id
+INNER JOIN 
+    sys.columns AS cr ON fkc.referenced_column_id = cr.column_id AND fkc.referenced_object_id = cr.object_id
+--where tp.name  in ('CustomerAddress','Customer','Address')
+where tp.name  in ({1})</value>
+    <comment>Pass in server name and dependency tables In clause with single quotes - --AND tp.Name IN ('CustomerAddress', 'Address', 'Customer')</comment>
+  </data>
   <data name="SelectDatabaseTables" xml:space="preserve">
     <value>USE {0}
 SELECT 

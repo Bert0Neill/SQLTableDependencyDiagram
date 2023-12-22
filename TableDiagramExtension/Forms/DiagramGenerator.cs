@@ -142,10 +142,11 @@ namespace DatabaseDiagram
         /// <summary>
         /// Make connection establishment between nodes
         /// </summary>
-        private void ConnectNodes()
+        private void ConnectNodes(DataTable Relationships)
         {
             if (cboDatabaseDiagram.SelectedIndex == 0)
             {
+                // position tables in columns of 4 and disjointed on each row
                 sqlDependencyDiagram.Model.Nodes["Employee"].PinPoint = new PointF(450, 150);
                 sqlDependencyDiagram.Model.Nodes["Publishers"].PinPoint = new PointF(100, 150);
                 sqlDependencyDiagram.Model.Nodes["Titles"].PinPoint = new PointF(100, 480);
@@ -153,6 +154,9 @@ namespace DatabaseDiagram
                 sqlDependencyDiagram.Model.Nodes["Sales"].PinPoint = new PointF(750, 480);
                 sqlDependencyDiagram.Model.Nodes["Stores"].PinPoint = new PointF(750, 310);
                 sqlDependencyDiagram.Model.Nodes["Discounts"].PinPoint = new PointF(750, 100);
+
+                // loop Relationships datarows ReferencedTableName | ParentTableName
+                //ConnectNodes(sqlDependencyDiagram.Model.Nodes[ReferencedTableName], sqlDependencyDiagram.Model.Nodes[ParentTableName], "OneToMany");
 
                 ConnectNodes(sqlDependencyDiagram.Model.Nodes["Employee"], sqlDependencyDiagram.Model.Nodes["Publishers"], "OneToMany");
                 ConnectNodes(sqlDependencyDiagram.Model.Nodes["Publishers"], sqlDependencyDiagram.Model.Nodes["Titles"], "OneToMany");
@@ -193,7 +197,7 @@ namespace DatabaseDiagram
         /// <summary>
         /// Initialize the Diagram from XML file
         /// </summary>
-        protected void InitializeDiagramFromXMLData(string updatedXml)
+        protected void InitializeDiagramFromXMLData(string updatedXml, DataTable Relationships)
         {
             sqlDependencyDiagram.Model.Clear();
             sqlDependencyDiagram.Model.BeginUpdate();
@@ -253,7 +257,7 @@ namespace DatabaseDiagram
             sortedlist.Clear();
 
             //Make connection between nodes
-            ConnectNodes();
+            ConnectNodes(Relationships); // pass in array of tables and relationship[s
             sqlDependencyDiagram.Model.EndUpdate();
             sqlDependencyDiagram.View.SelectionList.Clear();
         }
@@ -732,7 +736,7 @@ namespace DatabaseDiagram
             else if (cboDatabaseDiagram.SelectedIndex == 1)
             {
 #if !NETCORE
-                InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database1.xml");
+                //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database1.xml");
 #else
                 InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database1.xml");
 #endif
@@ -740,7 +744,7 @@ namespace DatabaseDiagram
             else if (cboDatabaseDiagram.SelectedIndex == 2)
             {
 #if !NETCORE
-                InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database2.xml");
+                //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database2.xml");
 #else
                 InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database2.xml");
 #endif
@@ -852,7 +856,7 @@ namespace DatabaseDiagram
             {
                 // get server & table name
                 string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
-                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;                
+                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
                 //string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
 
                 // call SQL to get dependency tables
@@ -865,7 +869,10 @@ namespace DatabaseDiagram
                 // Replace XML ColumnID in Table node with TableID
                 string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
 
-                InitializeDiagramFromXMLData(updatedXml);
+                // get relationship data
+                DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
+
+                InitializeDiagramFromXMLData(updatedXml, Relationships);
                 sqlDependencyDiagram.View.SelectionList.Clear();
 
                 // get dependency - _sqlDiagramController
@@ -876,5 +883,7 @@ namespace DatabaseDiagram
                 _errorController.DisplayErrorMessage(ex.Message);
             }
         }
+
+       
     }
 }

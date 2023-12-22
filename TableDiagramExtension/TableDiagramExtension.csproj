@@ -63,6 +63,7 @@
     <Compile Include="Forms\DiagramGenerator.Designer.cs">
       <DependentUpon>DiagramGenerator.cs</DependentUpon>
     </Compile>
+    <Compile Include="Models\ForeignKeyInfo.cs" />
     <Compile Include="Models\DatabaseMetaData.cs" />
     <Compile Include="Models\DataSymbol.cs" />
     <Compile Include="Models\Employee.cs" />
