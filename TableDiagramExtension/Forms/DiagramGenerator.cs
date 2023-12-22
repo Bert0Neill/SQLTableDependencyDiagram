@@ -148,10 +148,17 @@ namespace DatabaseDiagram
             {
                 // loop dependencyTables and create each table
                 // position tables in columns of 4 and disjointed on each row
+                int pointLeft = 100, pointRight = 150;
+                foreach(string table in dependencyTables)
+                {
+                    pointLeft += 150;
+                    pointRight = +100;
 
-                sqlDependencyDiagram.Model.Nodes["Address"].PinPoint = new PointF(450, 150);
-                sqlDependencyDiagram.Model.Nodes["Customer"].PinPoint = new PointF(100, 150);
-                sqlDependencyDiagram.Model.Nodes["CustomerAddress"].PinPoint = new PointF(100, 480);
+                    sqlDependencyDiagram.Model.Nodes[table].PinPoint = new PointF(pointLeft, pointRight);
+                }
+                //sqlDependencyDiagram.Model.Nodes["Address"].PinPoint = new PointF(450, 150);
+                //sqlDependencyDiagram.Model.Nodes["Customer"].PinPoint = new PointF(100, 150);
+                //sqlDependencyDiagram.Model.Nodes["CustomerAddress"].PinPoint = new PointF(100, 480);
                 
 
                 //// position tables in columns of 4 and disjointed on each row
@@ -166,8 +173,13 @@ namespace DatabaseDiagram
                 // loop Relationships datarows ReferencedTableName | ParentTableName
                 //ConnectNodes(sqlDependencyDiagram.Model.Nodes[ReferencedTableName], sqlDependencyDiagram.Model.Nodes[ParentTableName], "OneToMany");
 
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Address"], sqlDependencyDiagram.Model.Nodes["CustomerAddress"], "OneToMany");
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Customer"], sqlDependencyDiagram.Model.Nodes["CustomerAddress"], "OneToMany");
+                foreach (DataRow row in Relationships.Rows)
+                {
+                    
+                    ConnectNodes(sqlDependencyDiagram.Model.Nodes[(string)row["ReferencedTableName"]], sqlDependencyDiagram.Model.Nodes[(string)row["ParentTableName"]], "OneToMany");
+                }
+                //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Address"], sqlDependencyDiagram.Model.Nodes["CustomerAddress"], "OneToMany");
+                //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Customer"], sqlDependencyDiagram.Model.Nodes["CustomerAddress"], "OneToMany");
                 //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Publishers"], sqlDependencyDiagram.Model.Nodes["PubInfo"], "OneToOne");
                 //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Titles"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
                 //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Stores"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
@@ -329,7 +341,7 @@ namespace DatabaseDiagram
                                     emply.PrimaryKeyID.Add(dataelement.InnerText);
                                     break;
                                 case "ForeignKey":
-                                    emply.ForeignKeyID = dataelement.InnerText;
+                                    emply.ForeignKeyID.Add(dataelement.InnerText);
                                     break;
                                 case "TableId":
                                     emply.EmployeeID = dataelement.InnerText;
@@ -423,7 +435,7 @@ namespace DatabaseDiagram
         /// <returns>returns the node</returns>
         private Group InsertSymbolEmployee(Employee employee)
         {
-            DataSymbol Symbol = new DataSymbol(employee.Coloumns, employee.TableName, employee.PrimaryKeyID);
+            DataSymbol Symbol = new DataSymbol(employee.Coloumns, employee.TableName, employee.PrimaryKeyID, employee.ForeignKeyID);
             this.sqlDependencyDiagram.Model.AppendChild(Symbol);
             return Symbol;
         }

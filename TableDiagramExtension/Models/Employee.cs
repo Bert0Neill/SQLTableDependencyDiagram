@@ -25,7 +25,8 @@ namespace TableDiagramExtension.Models
         private String strID = String.Empty;
         //private String[] strPrimaryKeyID = new String[] { }; // String.Empty;
         public List<string> PrimaryKeyID = new List<string>();
-        private String strForeignKeyID = String.Empty;
+        public List<string> ForeignKeyID = new List<string>();
+        //private String strForeignKeyID = String.Empty;
         private String strGender = String.Empty;
         private ArrayList alSubEmployees = new ArrayList();
         private int nRecSubEmployeeCount = 0;
@@ -63,11 +64,11 @@ namespace TableDiagramExtension.Models
             set { this.strColumns = value; }
         }
 
-        public String ForeignKeyID
-        {
-            get { return this.strForeignKeyID; }
-            set { this.strForeignKeyID = value; }
-        }
+        //public String ForeignKeyID
+        //{
+        //    get { return this.strForeignKeyID; }
+        //    set { this.strForeignKeyID = value; }
+        //}
 
         public string ImageName
         {
@@ -103,7 +104,7 @@ namespace TableDiagramExtension.Models
             this.strID = id;
             this.strColumns = Coloumn;
             this.PrimaryKeyID.Add(primaryKey);
-            this.strForeignKeyID = foreignKey;
+            this.ForeignKeyID .Add(foreignKey);
         }
     }
 }

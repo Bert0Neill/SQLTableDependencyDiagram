@@ -26,7 +26,7 @@ namespace TableDiagramExtension.Models
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Assert, Name = "FullTrust")]
     public class DataSymbol:Group
     {
-        public DataSymbol( ArrayList strColumnName, string strTableName, List<string> primaryKey)
+        public DataSymbol( ArrayList strColumnName, string strTableName, List<string> primaryKey, List<string> foreignKey)
             : base()
         {
             this.Name = strTableName;
@@ -63,18 +63,22 @@ namespace TableDiagramExtension.Models
                 this.AppendChild(symRect);
                 if (primaryKey.Contains(txtNode.Text))
                 {
-#if !NETCORE
-                    //Bitmap bmp = new Bitmap(@"..\..\..\..\..\..\common\Images\Diagram\class diagram\key.png");
                     Bitmap bmp = new Bitmap(@"..\..\class diagram\key.png");
-#else
-                    Bitmap bmp = new Bitmap(@"..\..\..\..\..\..\..\common\Images\Diagram\class diagram\key.png");
-#endif
                     BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X+5, symRect.BoundingRectangle.Y +5, symRect.BoundingRectangle.Width-10, symRect.BoundingRectangle.Height-10));
                     bmpNode.LineStyle.LineColor = Color.Transparent;
                     bmpNode.EditStyle.AllowSelect = false;
                     this.AppendChild(bmpNode);
                 }
-               
+
+                if (foreignKey.Contains(txtNode.Text))
+                {
+                    Bitmap bmp = new Bitmap(@"..\..\class diagram\ForeignKey.png");
+                    BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
+                    bmpNode.LineStyle.LineColor = Color.Transparent;
+                    bmpNode.EditStyle.AllowSelect = false;
+                    this.AppendChild(bmpNode);
+                }
+
                 z = z + 20;
             }
           
