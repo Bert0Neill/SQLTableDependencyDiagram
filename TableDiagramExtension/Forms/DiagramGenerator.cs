@@ -76,7 +76,6 @@ namespace DatabaseDiagram
             InitailizeDiagram();
             sqlDependencyDiagram.EndUpdate();
 
-            cboDatabaseDiagram.SelectedIndex = 0;
             sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
             Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
         }
@@ -91,9 +90,7 @@ namespace DatabaseDiagram
             InitailizeDiagram();
 
             sqlDependencyDiagram.EndUpdate();
-            cboDatabaseDiagram.SelectedIndex = 0;
             sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
-            //Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
 
             _sharedData = sharedData;
             _sqlController = new SQLController();
@@ -686,35 +683,6 @@ namespace DatabaseDiagram
         }
         #endregion
 
-        private void cboDatabaseDiagram_SelectedIndexChanged(object sender, EventArgs e)
-        {
-            if (cboDatabaseDiagram.SelectedIndex == 0)
-            {
-#if !NETCORE
-                //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
-                 //InitializeDiagramFromXMLData(@"..\..\Data\Database.xml"); // this called on startup
-#else
-                InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml");
-#endif
-            }
-            else if (cboDatabaseDiagram.SelectedIndex == 1)
-            {
-#if !NETCORE
-                //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database1.xml");
-#else
-                InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database1.xml");
-#endif
-            }
-            else if (cboDatabaseDiagram.SelectedIndex == 2)
-            {
-#if !NETCORE
-                //InitializeDiagramFromXMLData(@"..\..\..\..\..\..\common\Data\Diagram\xml\Database2.xml");
-#else
-                InitializeDiagramFromXMLData(@"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database2.xml");
-#endif
-            }
-        }
-
         private void DiagramGenerator_Load(object sender, EventArgs e)
         {
             try
@@ -752,9 +720,6 @@ namespace DatabaseDiagram
                 if (selectedTable.TABLE_NAME == TextStrings.PleaseSelectTable) return;
 
                 this.submitStripButton.Enabled = true;
-
-                // enable buttons
-                //this.AreToolStripButtonsEnabled();
             }
             catch (Exception ex)
             {
@@ -799,13 +764,11 @@ namespace DatabaseDiagram
             {
                 if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
                 {
-                    this.saveToolStripButton.Enabled = true;
-                    this.saveAsToolStripButton.Enabled = true;
+                    this.zoomInToolStripButton.Enabled = this.saveAsToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = true;
                 }
                 else
                 {
-                    this.saveToolStripButton.Enabled = false;
-                    this.saveAsToolStripButton.Enabled = false;
+                    this.zoomInToolStripButton.Enabled = this.saveAsToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -839,8 +802,8 @@ namespace DatabaseDiagram
                 InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables);
                 sqlDependencyDiagram.View.SelectionList.Clear();
 
-                // get dependency - _sqlDiagramController
-                // call generate diagram with new XML string (alter fnx to load from string not file)
+                // enable buttons
+                this.AreToolStripButtonsEnabled();
             }
             catch (Exception ex)
             {
