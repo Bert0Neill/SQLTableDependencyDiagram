@@ -142,28 +142,36 @@ namespace DatabaseDiagram
         /// <summary>
         /// Make connection establishment between nodes
         /// </summary>
-        private void ConnectNodes(DataTable Relationships)
+        private void ConnectNodes(DataTable Relationships, List<string> dependencyTables)
         {
             if (cboDatabaseDiagram.SelectedIndex == 0)
             {
+                // loop dependencyTables and create each table
                 // position tables in columns of 4 and disjointed on each row
-                sqlDependencyDiagram.Model.Nodes["Employee"].PinPoint = new PointF(450, 150);
-                sqlDependencyDiagram.Model.Nodes["Publishers"].PinPoint = new PointF(100, 150);
-                sqlDependencyDiagram.Model.Nodes["Titles"].PinPoint = new PointF(100, 480);
-                sqlDependencyDiagram.Model.Nodes["PubInfo"].PinPoint = new PointF(300, 350);
-                sqlDependencyDiagram.Model.Nodes["Sales"].PinPoint = new PointF(750, 480);
-                sqlDependencyDiagram.Model.Nodes["Stores"].PinPoint = new PointF(750, 310);
-                sqlDependencyDiagram.Model.Nodes["Discounts"].PinPoint = new PointF(750, 100);
+
+                sqlDependencyDiagram.Model.Nodes["Address"].PinPoint = new PointF(450, 150);
+                sqlDependencyDiagram.Model.Nodes["Customer"].PinPoint = new PointF(100, 150);
+                sqlDependencyDiagram.Model.Nodes["CustomerAddress"].PinPoint = new PointF(100, 480);
+                
+
+                //// position tables in columns of 4 and disjointed on each row
+                //sqlDependencyDiagram.Model.Nodes["Employee"].PinPoint = new PointF(450, 150);
+                //sqlDependencyDiagram.Model.Nodes["Publishers"].PinPoint = new PointF(100, 150);
+                //sqlDependencyDiagram.Model.Nodes["Titles"].PinPoint = new PointF(100, 480);
+                //sqlDependencyDiagram.Model.Nodes["PubInfo"].PinPoint = new PointF(300, 350);
+                //sqlDependencyDiagram.Model.Nodes["Sales"].PinPoint = new PointF(750, 480);
+                //sqlDependencyDiagram.Model.Nodes["Stores"].PinPoint = new PointF(750, 310);
+                //sqlDependencyDiagram.Model.Nodes["Discounts"].PinPoint = new PointF(750, 100);
 
                 // loop Relationships datarows ReferencedTableName | ParentTableName
                 //ConnectNodes(sqlDependencyDiagram.Model.Nodes[ReferencedTableName], sqlDependencyDiagram.Model.Nodes[ParentTableName], "OneToMany");
 
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Employee"], sqlDependencyDiagram.Model.Nodes["Publishers"], "OneToMany");
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Publishers"], sqlDependencyDiagram.Model.Nodes["Titles"], "OneToMany");
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Publishers"], sqlDependencyDiagram.Model.Nodes["PubInfo"], "OneToOne");
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Titles"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Stores"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
-                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Stores"], sqlDependencyDiagram.Model.Nodes["Discounts"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Address"], sqlDependencyDiagram.Model.Nodes["CustomerAddress"], "OneToMany");
+                ConnectNodes(sqlDependencyDiagram.Model.Nodes["Customer"], sqlDependencyDiagram.Model.Nodes["CustomerAddress"], "OneToMany");
+                //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Publishers"], sqlDependencyDiagram.Model.Nodes["PubInfo"], "OneToOne");
+                //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Titles"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
+                //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Stores"], sqlDependencyDiagram.Model.Nodes["Sales"], "OneToMany");
+                //ConnectNodes(sqlDependencyDiagram.Model.Nodes["Stores"], sqlDependencyDiagram.Model.Nodes["Discounts"], "OneToMany");
             }
             else if (cboDatabaseDiagram.SelectedIndex == 1)
             {
@@ -197,7 +205,7 @@ namespace DatabaseDiagram
         /// <summary>
         /// Initialize the Diagram from XML file
         /// </summary>
-        protected void InitializeDiagramFromXMLData(string updatedXml, DataTable Relationships)
+        protected void InitializeDiagramFromXMLData(string updatedXml, DataTable Relationships, List<string> dependencyTables)
         {
             sqlDependencyDiagram.Model.Clear();
             sqlDependencyDiagram.Model.BeginUpdate();
@@ -245,6 +253,7 @@ namespace DatabaseDiagram
 
             // Create a manager-employee nested list with top-level employees forming the root nodes
             ArrayList sortedlist = this.GetSortedEmployeesList(lstEmployees);
+            
 
             foreach (Employee emply in sortedlist)
             {
@@ -257,7 +266,7 @@ namespace DatabaseDiagram
             sortedlist.Clear();
 
             //Make connection between nodes
-            ConnectNodes(Relationships); // pass in array of tables and relationship[s
+            ConnectNodes(Relationships, dependencyTables); // pass in array of tables and relationship[s
             sqlDependencyDiagram.Model.EndUpdate();
             sqlDependencyDiagram.View.SelectionList.Clear();
         }
@@ -302,6 +311,7 @@ namespace DatabaseDiagram
 
                         XmlNode employeenode = employeelist[i];
                         emply.TableName = employeenode.Name;
+                        emply.EmployeeID = employeenode.Name; // added
                         string strTableName = employeenode.Name;
                         ArrayList strColoumnName = new ArrayList();
 
@@ -352,19 +362,20 @@ namespace DatabaseDiagram
             ArrayList sortedlist = new ArrayList();
             foreach (Employee emply in employees)
             {
-                if (emply.ForeignKeyID == string.Empty)
-                {
-                    // Employees without a ManagerID are top-level nodes in the org tree
-                    sortedlist.Add(emply);
-                }
-                else
-                {
-                    // Find the employee instance associated with the managerID and add this object as 
-                    // a subemployee of the manager node.
-                    Employee manager = (Employee)htemployees[emply.ForeignKeyID];
-                    if (manager != null)
-                        manager.SubEmployees.Add(emply);
-                }
+                sortedlist.Add(emply);
+                //if (emply.ForeignKeyID == string.Empty)
+                //{
+                //    // Employees without a ManagerID are top-level nodes in the org tree
+                //    sortedlist.Add(emply);
+                //}
+                //else
+                //{
+                //    // Find the employee instance associated with the managerID and add this object as 
+                //    // a subemployee of the manager node.
+                //    Employee manager = (Employee)htemployees[emply.ForeignKeyID];
+                //    if (manager != null)
+                //        manager.SubEmployees.Add(emply);
+                //}
             }
 
             return sortedlist;
@@ -872,7 +883,7 @@ namespace DatabaseDiagram
                 // get relationship data
                 DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
 
-                InitializeDiagramFromXMLData(updatedXml, Relationships);
+                InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables);
                 sqlDependencyDiagram.View.SelectionList.Clear();
 
                 // get dependency - _sqlDiagramController
