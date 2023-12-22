@@ -255,10 +255,10 @@ namespace DatabaseDiagram
             ArrayList sortedlist = this.GetSortedEmployeesList(lstEmployees);
             
 
-            foreach (Employee emply in sortedlist)
-            {
-                this.IterUpdateSubEmployeeCount(emply);
-            }
+            //foreach (Employee emply in sortedlist)
+            //{
+            //    this.IterUpdateSubEmployeeCount(emply);
+            //}
 
             // Create diagram symbol nodes for each employee and initialize the diagram
             this.CreateOrgDiagramFromList(sortedlist);
@@ -311,7 +311,7 @@ namespace DatabaseDiagram
 
                         XmlNode employeenode = employeelist[i];
                         emply.TableName = employeenode.Name;
-                        emply.EmployeeID = employeenode.Name; // added
+                        //emply.EmployeeID = employeenode.Name; // added
                         string strTableName = employeenode.Name;
                         ArrayList strColoumnName = new ArrayList();
 
@@ -326,12 +326,12 @@ namespace DatabaseDiagram
                             switch (dataelement.Name)
                             {
                                 case "PrimaryKey":
-                                    emply.PrimaryKeyID = dataelement.InnerText;
+                                    emply.PrimaryKeyID.Add(dataelement.InnerText);
                                     break;
                                 case "ForeignKey":
                                     emply.ForeignKeyID = dataelement.InnerText;
                                     break;
-                                case "TableID":
+                                case "TableId":
                                     emply.EmployeeID = dataelement.InnerText;
                                     break;
                                 default:
@@ -877,7 +877,7 @@ namespace DatabaseDiagram
                 // call SQL to build XML of dependency tables (inc. selected table)
                 var dependencyTablesMetaDataXML = _sqlController.RetrieveDependencyTablesMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
 
-                // Replace XML ColumnID in Table node with TableID
+                // add multiple PK's to XML
                 string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
 
                 // get relationship data

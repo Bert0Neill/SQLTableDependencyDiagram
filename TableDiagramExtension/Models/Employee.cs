@@ -11,6 +11,7 @@
 
 using System;
 using System.Collections;
+using System.Collections.Generic;
 
 namespace TableDiagramExtension.Models
 {
@@ -22,7 +23,8 @@ namespace TableDiagramExtension.Models
     {
         private String strName = String.Empty;
         private String strID = String.Empty;
-        private String strPrimaryKeyID = String.Empty;
+        //private String[] strPrimaryKeyID = new String[] { }; // String.Empty;
+        public List<string> PrimaryKeyID = new List<string>();
         private String strForeignKeyID = String.Empty;
         private String strGender = String.Empty;
         private ArrayList alSubEmployees = new ArrayList();
@@ -43,11 +45,11 @@ namespace TableDiagramExtension.Models
             set { this.strID = value; }
         }
 
-        public String PrimaryKeyID
-        {
-            get { return this.strPrimaryKeyID; }
-            set { this.strPrimaryKeyID = value; }
-        }
+        //public String[] PrimaryKeyID
+        //{
+        //    get { return this.strPrimaryKeyID; }
+        //    set { this.strPrimaryKeyID = value; }
+        //}
 
         public String Gender
         {
@@ -100,7 +102,7 @@ namespace TableDiagramExtension.Models
             this.strName = name;
             this.strID = id;
             this.strColumns = Coloumn;
-            this.strPrimaryKeyID = primaryKey;
+            this.PrimaryKeyID.Add(primaryKey);
             this.strForeignKeyID = foreignKey;
         }
     }

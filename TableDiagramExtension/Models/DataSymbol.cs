@@ -18,6 +18,7 @@ using Syncfusion.Windows.Forms;
 using System.Collections;
 using System.Drawing;
 using System;
+using System.Collections.Generic;
 
 namespace TableDiagramExtension.Models
 {
@@ -25,7 +26,7 @@ namespace TableDiagramExtension.Models
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Assert, Name = "FullTrust")]
     public class DataSymbol:Group
     {
-        public DataSymbol( ArrayList strColumnName, string strTableName, string primaryKey)
+        public DataSymbol( ArrayList strColumnName, string strTableName, List<string> primaryKey)
             : base()
         {
             this.Name = strTableName;
@@ -60,7 +61,7 @@ namespace TableDiagramExtension.Models
                 symRect.EditStyle.AllowSelect = false;
                 this.AppendChild(txtNode);
                 this.AppendChild(symRect);
-                if (primaryKey == txtNode.Text)
+                if (primaryKey.Contains(txtNode.Text))
                 {
 #if !NETCORE
                     //Bitmap bmp = new Bitmap(@"..\..\..\..\..\..\common\Images\Diagram\class diagram\key.png");
