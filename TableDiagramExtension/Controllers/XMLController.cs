@@ -168,18 +168,19 @@ namespace TableDiagramExtension.Controllers
                     {
                         string columnName = columnElement.Attribute("Name").Value;
                         string isPrimaryKey = columnElement.Attribute("IsPrimaryKey").Value;
-                        string foreignKey = columnElement.Attribute("ForeignKey")?.Value ?? "N/A";
+                        string isForeignKey = columnElement.Attribute("ForeignKey")?.Value ?? "N/A";
 
                         // add column node <EmpID>EmpID</EmpID>
                         XmlElement columnElementName = xmlDocFormatted.CreateElement(columnName);
                         columnElementName.InnerText = columnName;
                         xmlFormattedTableRoot.AppendChild(columnElementName);
 
-                        if (foreignKey != "N/A")
+                        if (isForeignKey != "N/A")
                         {
                             // add <ForeignKey> 123 </ForeignKey>
                             XmlElement foreignKeyElementName = xmlDocFormatted.CreateElement("ForeignKey");
-                            foreignKeyElementName.InnerText = foreignKey;
+                            //foreignKeyElementName.InnerText = foreignKey;
+                            foreignKeyElementName.InnerText = columnName;
                             xmlFormattedTableRoot.AppendChild(foreignKeyElementName);
                         }
 

@@ -31,7 +31,11 @@ namespace TableDiagramExtension.Models
         {
             this.Name = strTableName;
             float rectHeight = (strColumnName.Count * 20) + 40;
-            Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, 150, rectHeight);
+
+            float tmpWidth = (strTableName.Length * 10);
+            float rectWidth = Math.Max(tmpWidth, 150);
+
+            Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, rectWidth, rectHeight);
             rect.FillStyle.Color = Color.WhiteSmoke;
             rect.Name = "BaseNode";
             Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rect, strTableName);
@@ -63,7 +67,7 @@ namespace TableDiagramExtension.Models
                 this.AppendChild(symRect);
                 if (primaryKey.Contains(txtNode.Text))
                 {
-                    Bitmap bmp = new Bitmap(@"..\..\class diagram\key.png");
+                    Bitmap bmp = new Bitmap(@"..\..\class diagram\DBPrimaryKey.png");
                     BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X+5, symRect.BoundingRectangle.Y +5, symRect.BoundingRectangle.Width-10, symRect.BoundingRectangle.Height-10));
                     bmpNode.LineStyle.LineColor = Color.Transparent;
                     bmpNode.EditStyle.AllowSelect = false;
