@@ -109,8 +109,6 @@ namespace DatabaseDiagram
         private void InitailizeDiagram()
         {
             sqlDependencyDiagram.View.SelectionList.Clear();
-            //sqlDependencyDiagram.ShowRulers = true;
-
         }
 
         /// <summary>
@@ -126,25 +124,20 @@ namespace DatabaseDiagram
 
             foreach (string table in dependencyTables)
             {
-                // is this the third table in a row
+                // is this the fifth table in a row, if so, add to row but reset for next row of tables
                 if (tableCount == 4)
                 {
-
-                    pointLeft = 70; //over
+                    pointLeft = 150; //over
                     pointRight += 300; // down
-
                     tableCount = 0; // rest for next row
                 }
                 else
                 {
                     tableCount++;
                     pointLeft += 250; // over
-                    //pointRight += 200; //down
                 }
                 
-
                 sqlDependencyDiagram.Model.Nodes[table].EditStyle.AllowDelete = false;
-
                 sqlDependencyDiagram.Model.Nodes[table].PinPoint = new PointF(pointLeft, pointRight);
             }
 
