@@ -1,42 +1,26 @@
-#region Copyright Syncfusion Inc. 2001-2023.
-// Copyright Syncfusion Inc. 2001-2023. All rights reserved.
+#region Copyright Bert O'Neill
+// Copyright Bert O'Neill 2024. All rights reserved.
 // Use of this code is subject to the terms of our license.
-// A copy of the current license can be obtained at any time by e-mailing
-// licensing@syncfusion.com. Any infringement will be prosecuted under
-// applicable laws. 
+// Any infringement will be prosecuted under applicable laws. 
 #endregion
+using Microsoft.Extensions.Logging;
+using Syncfusion.SVG.IO;
+using Syncfusion.Windows.Forms.Diagram;
 using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Data;
 using System.Drawing;
-using System.Text;
-using System.Windows.Forms;
-using Syncfusion.Windows.Forms.Tools;
-using Syncfusion.Windows.Forms.Diagram.Controls;
-using Syncfusion.Windows.Forms.Diagram;
 using System.Drawing.Drawing2D;
-using System.IO;
-using System.Drawing.Printing;
 using System.Drawing.Imaging;
-using Syncfusion.SVG.IO;
-using Syncfusion.Windows.Forms;
-using System.Collections;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using System.Xml;
-using TableDiagramExtension.Models;
-using TableDiagramExtension.Classes;
-using Microsoft.VisualStudio.Shell.Interop;
-using TableDiagramExtension.Controllers;
-using Microsoft.Extensions.Logging;
-using Microsoft.VisualStudio.Shell;
-using System.Windows.Forms.Design;
-using TableDiagramExtension.Interfaces;
 using System.Linq;
+using System.Windows.Forms;
+using System.Xml;
+using TableDiagramExtension.Classes;
+using TableDiagramExtension.Controllers;
+using TableDiagramExtension.Interfaces;
+using TableDiagramExtension.Models;
 using TableDiagramExtension.Resources;
-using System.Data.SqlTypes;
-using System.Xml.Linq;
 
 namespace DatabaseDiagram
 {
@@ -54,15 +38,7 @@ namespace DatabaseDiagram
         private readonly ILogger _logger;
         private readonly IErrorController _errorController;
         private readonly XMLController _xmlController;
-        
 
-
-#if !NETCORE
-        //private string datasrcpath = @"..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
-        private string datasrcpath = @"..\..\Data\Database.xml";
-#else
-        private string datasrcpath = @"..\..\..\..\..\..\..\common\Data\Diagram\xml\Database.xml";
-#endif
         #endregion
 
         #region Form initialize
@@ -627,60 +603,6 @@ namespace DatabaseDiagram
             img.Save(filename, imageformat);
         }
 
-        /// <summary>
-        /// Save diagram
-        /// </summary>
-        /// <param name="filename">file name</param>
-        /// <param name="index">index</param>
-        private void SaveDiagramAs(string filename, int index)
-        {
-            switch (index)
-            {
-                case 1:
-                    sqlDependencyDiagram.SaveBinary(filename);
-                    break;
-                case 2:
-#if !NETCORE
-                    sqlDependencyDiagram.SaveSoap(filename);
-#endif
-                    break;
-                default:
-                    sqlDependencyDiagram.SaveBinary(filename);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Open Diagram
-        /// </summary>
-        /// <param name="filename">file name</param>
-        /// <param name="index">index</param>
-        private void OpenDiagramAs(string filename, int index)
-        {
-            switch (index)
-            {
-                case 1:
-                    sqlDependencyDiagram.LoadBinary(filename);
-                    break;
-                case 2:
-#if !NETCORE
-                    sqlDependencyDiagram.LoadSoap(filename);
-#endif
-                    break;
-                default:
-                    sqlDependencyDiagram.LoadBinary(filename);
-                    break;
-            }
-        }
-
-        /// <summary>
-        /// Activates the given tool
-        /// </summary>
-        /// <param name="toolName">Tool</param>
-        private void SetActiveTool(string toolName)
-        {
-            this.sqlDependencyDiagram.Controller.ActivateTool(toolName);
-        }
         #endregion
 
         private void DiagramGenerator_Load(object sender, EventArgs e)
@@ -784,7 +706,6 @@ namespace DatabaseDiagram
                 // get server & table name
                 string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
                 DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
-                //string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
 
                 // call SQL to get dependency tables
                 var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}].[{selectedTable.TABLE_NAME}]");
@@ -810,7 +731,5 @@ namespace DatabaseDiagram
                 _errorController.DisplayErrorMessage(ex.Message);
             }
         }
-
-       
     }
 }
