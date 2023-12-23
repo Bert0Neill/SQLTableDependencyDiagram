@@ -109,19 +109,41 @@ namespace DatabaseDiagram
         private void InitailizeDiagram()
         {
             sqlDependencyDiagram.View.SelectionList.Clear();
+            //sqlDependencyDiagram.ShowRulers = true;
+
         }
 
         /// <summary>
         /// Make connection establishment between nodes
         /// </summary>
         private void ConnectNodes(DataTable Relationships, List<string> dependencyTables)
-        {
+        {            
+            int tableCount = 0;
+
             // loop dependencyTables and create each table
-            int pointLeft = 100, pointRight = 150;
+            int pointLeft = 0; // over
+            int pointRight = 250; // down
+
             foreach (string table in dependencyTables)
             {
-                pointLeft += 150;
-                pointRight = +100;
+                // is this the third table in a row
+                if (tableCount == 4)
+                {
+
+                    pointLeft = 70; //over
+                    pointRight += 300; // down
+
+                    tableCount = 0; // rest for next row
+                }
+                else
+                {
+                    tableCount++;
+                    pointLeft += 250; // over
+                    //pointRight += 200; //down
+                }
+                
+
+                sqlDependencyDiagram.Model.Nodes[table].EditStyle.AllowDelete = false;
 
                 sqlDependencyDiagram.Model.Nodes[table].PinPoint = new PointF(pointLeft, pointRight);
             }
@@ -144,7 +166,7 @@ namespace DatabaseDiagram
             rrect.EditStyle.AllowSelect = false;
             rrect.LineStyle.LineColor = Color.Gray;
 
-            Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rrect, "Relationships");
+            Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rrect, "Table Relationship Ledgend");
             lbl.Position = Position.TopLeft;
             lbl.FontStyle.Bold = true;
             lbl.FontStyle.Underline = true;

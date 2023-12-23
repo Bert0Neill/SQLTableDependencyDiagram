@@ -109,7 +109,6 @@ namespace DatabaseDiagram
             this.sqlDependencyDiagram.View.Grid.Visible = false;
             this.sqlDependencyDiagram.View.ScrollVirtualBounds = ((System.Drawing.RectangleF)(resources.GetObject("resource.ScrollVirtualBounds")));
             this.sqlDependencyDiagram.View.ZoomType = Syncfusion.Windows.Forms.Diagram.ZoomType.Center;
-            this.sqlDependencyDiagram.VScroll = true;
             // 
             // model1
             // 
@@ -172,7 +171,7 @@ namespace DatabaseDiagram
             // 
             this.cboDatabase.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboDatabase.Name = "cboDatabase";
-            this.cboDatabase.Size = new System.Drawing.Size(200, 28);
+            this.cboDatabase.Size = new System.Drawing.Size(200, 25);
             this.cboDatabase.SelectedIndexChanged += new System.EventHandler(this.cboDatabase_SelectedIndexChanged);
             // 
             // toolStripSeparator2
