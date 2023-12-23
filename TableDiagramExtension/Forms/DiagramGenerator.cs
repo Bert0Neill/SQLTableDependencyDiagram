@@ -139,39 +139,41 @@ namespace DatabaseDiagram
         {
             sqlDependencyDiagram.Model.Clear();
             sqlDependencyDiagram.Model.BeginUpdate();
-            RoundRect rrect = new RoundRect(900, 30, 250, 70, MeasureUnits.Pixel);
+            RoundRect rrect = new RoundRect(10, 30, 250, 70, MeasureUnits.Pixel);
             rrect.FillStyle.Color = Color.Transparent;
             rrect.EditStyle.AllowSelect = false;
             rrect.LineStyle.LineColor = Color.Gray;
 
             Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rrect, "Relationships");
             lbl.Position = Position.TopLeft;
+            lbl.FontStyle.Bold = true;
+            lbl.FontStyle.Underline = true;
             lbl.FontStyle.Family = "Segoe UI";
             lbl.FontStyle.Size = 9;
             rrect.Labels.Add(lbl);
 
-            Syncfusion.Windows.Forms.Diagram.Label lblOneToOne = new Syncfusion.Windows.Forms.Diagram.Label(rrect, ": OneToOne");
+            Syncfusion.Windows.Forms.Diagram.Label lblOneToOne = new Syncfusion.Windows.Forms.Diagram.Label(rrect, ": One To One");
             lblOneToOne.FontStyle.Family = "Segoe UI";
             lblOneToOne.FontStyle.Size = 9;
-            lblOneToOne.OffsetX = 120;
+            lblOneToOne.OffsetX = 100;
             lblOneToOne.OffsetY = 10;
             rrect.Labels.Add(lblOneToOne);
 
-            Syncfusion.Windows.Forms.Diagram.Label lblOneToMany = new Syncfusion.Windows.Forms.Diagram.Label(rrect, ": OneToMany");
+            Syncfusion.Windows.Forms.Diagram.Label lblOneToMany = new Syncfusion.Windows.Forms.Diagram.Label(rrect, ": One To Many");
             lblOneToMany.FontStyle.Family = "Segoe UI";
             lblOneToMany.FontStyle.Size = 9;
-            lblOneToMany.OffsetX = 120;
+            lblOneToMany.OffsetX = 100;
             lblOneToMany.OffsetY = 40;
             rrect.Labels.Add(lblOneToMany);
 
             sqlDependencyDiagram.Model.AppendChild(rrect);
-            LineConnector oneToOne = new LineConnector(new PointF(910, 50), new PointF(1010, 50));
+            LineConnector oneToOne = new LineConnector(new PointF(20, 50), new PointF(110, 50));
             oneToOne.EditStyle.AllowSelect = false;
             oneToOne.TailDecorator.DecoratorShape = DecoratorShape.None;
             oneToOne.HeadDecorator.DecoratorShape = DecoratorShape.None;
             sqlDependencyDiagram.Model.AppendChild(oneToOne);
 
-            LineConnector oneToMany = new LineConnector(new PointF(910, 80), new PointF(1010, 80));
+            LineConnector oneToMany = new LineConnector(new PointF(20, 80), new PointF(110, 80));
             oneToMany.EditStyle.AllowSelect = false;
             oneToMany.TailDecorator.DecoratorShape = DecoratorShape.None;
             oneToMany.HeadDecorator.DecoratorShape = DecoratorShape.Circle;
@@ -179,9 +181,6 @@ namespace DatabaseDiagram
 
             // Read data from the XML data file and populate a Hashtable using the employee ID as the key
             Hashtable lstEmployees = this.ReadEmployeeDataFromXMLFile(updatedXml);
-
-            // Create a manager-employee nested list with top-level employees forming the root nodes
-            //ArrayList sortedlist = this.GetSortedEmployeesList(lstEmployees);
 
             // convert for downstream fnx's
             ArrayList sortedlist = new ArrayList(lstEmployees.Values);            
@@ -236,8 +235,7 @@ namespace DatabaseDiagram
                         Employee emply = new Employee();
 
                         XmlNode employeenode = employeelist[i];
-                        emply.TableName = employeenode.Name;
-                        //emply.EmployeeID = employeenode.Name; // added
+                        emply.TableName = employeenode.Name;                        
                         string strTableName = employeenode.Name;
                         ArrayList strColoumnName = new ArrayList();
 

@@ -38,27 +38,35 @@ namespace TableDiagramExtension.Models
             Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, rectWidth, rectHeight);
             rect.FillStyle.Color = Color.WhiteSmoke;
             rect.Name = "BaseNode";
+            rect.EditStyle.AllowChangeHeight = false;
+            rect.EditStyle.AllowChangeWidth = true;
+
             Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rect, strTableName);
+            lbl.ReadOnly = true;
             lbl.FontStyle.Family = "Arial";            
             lbl.FontStyle.Size = 9;
             lbl.FontStyle.Bold = true;
             lbl.Position = Syncfusion.Windows.Forms.Diagram.Position.TopLeft;
-            lbl.OffsetX = 65;
+            lbl.OffsetX = rectWidth <= 150 ? 65: rectWidth/2;
             lbl.OffsetY = 18;
             lbl.UpdatePosition = true;
             rect.Labels.Add(lbl);
-            this.AppendChild(rect);
+
+            this.AppendChild(rect);            
+
             float z = 30;
             for (int i = 0; i < strColumnName.Count; i++)
             {
-                TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, z, 110, 20));
+                var columnField = rectWidth - 40;
+                TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, z, columnField, 20));
+                txtNode.ReadOnly = true;
                 txtNode.FontStyle.Family = "Arial";
                 txtNode.FontStyle.Size = 7;
                 txtNode.VerticalAlignment = StringAlignment.Center;
                 txtNode.BackgroundStyle.Color = Color.White;
                 txtNode.LineStyle.LineColor = Color.LightGray;
                 
-                Syncfusion.Windows.Forms.Diagram.Rectangle symRect = new Syncfusion.Windows.Forms.Diagram.Rectangle(10, z, 20, 20);
+                Syncfusion.Windows.Forms.Diagram.Rectangle symRect = new Syncfusion.Windows.Forms.Diagram.Rectangle(10, z, 20, 20);                
                 symRect.FillStyle.Color = Color.WhiteSmoke;
                 symRect.FillStyle.Type = FillStyleType.LinearGradient;
                 symRect.LineStyle.LineColor = Color.LightGray;

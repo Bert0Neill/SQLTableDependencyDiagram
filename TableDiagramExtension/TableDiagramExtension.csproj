@@ -169,10 +169,9 @@
     <Content Include="class diagram\5.png" />
     <Content Include="class diagram\6.png" />
     <Content Include="class diagram\7.png" />
-    <Content Include="class diagram\DBForeignKey.png" />
     <Content Include="class diagram\DBPrimaryKey.png" />
     <Content Include="class diagram\ForeignKey.png" />
-    <Content Include="class diagram\key.png" />
+    <Content Include="class diagram\TableDependencyDiagram.ico" />
     <Content Include="Commands\Resources\Diagram.png" />
     <Content Include="Commands\Resources\MenuDiagramCommand.png" />
     <Content Include="Data\Database.xml" />
