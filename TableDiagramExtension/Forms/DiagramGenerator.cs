@@ -362,6 +362,7 @@ namespace DatabaseDiagram
         private void ConnectNodes(Node emplysymbol, Node subemplysymbol, string relation)
         {
             LineConnector ortholink = new LineConnector(PointF.Empty, new PointF(0, 1));
+            ortholink.EditStyle.AllowDelete = false;            
             ortholink.LineStyle.DashStyle = DashStyle.Solid;
 
             ortholink.LineStyle.LineWidth = 1f;

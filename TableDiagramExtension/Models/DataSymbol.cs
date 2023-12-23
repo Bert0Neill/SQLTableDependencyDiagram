@@ -38,8 +38,10 @@ namespace TableDiagramExtension.Models
             Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, rectWidth, rectHeight);
             rect.FillStyle.Color = Color.WhiteSmoke;
             rect.Name = "BaseNode";
-            rect.EditStyle.AllowChangeHeight = false;
-            rect.EditStyle.AllowChangeWidth = true;
+
+            rect.EditStyle.AllowDelete = false;
+            rect.EditStyle.AllowChangeWidth = rect.EditStyle.AllowChangeHeight = false;
+            //rect.EditStyle.AllowChangeWidth = true;
 
             Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rect, strTableName);
             lbl.ReadOnly = true;
@@ -59,6 +61,10 @@ namespace TableDiagramExtension.Models
             {
                 var columnField = rectWidth - 40;
                 TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, z, columnField, 20));
+                txtNode.EditStyle.AllowDelete = false;
+                txtNode.EditStyle.AllowChangeWidth = txtNode.EditStyle.AllowChangeHeight = false;
+                //txtNode.EditStyle.AllowChangeWidth = true;
+
                 txtNode.ReadOnly = true;
                 txtNode.FontStyle.Family = "Arial";
                 txtNode.FontStyle.Size = 7;
@@ -66,11 +72,17 @@ namespace TableDiagramExtension.Models
                 txtNode.BackgroundStyle.Color = Color.White;
                 txtNode.LineStyle.LineColor = Color.LightGray;
                 
-                Syncfusion.Windows.Forms.Diagram.Rectangle symRect = new Syncfusion.Windows.Forms.Diagram.Rectangle(10, z, 20, 20);                
+                Syncfusion.Windows.Forms.Diagram.Rectangle symRect = new Syncfusion.Windows.Forms.Diagram.Rectangle(10, z, 20, 20);
+
+                symRect.EditStyle.AllowDelete = false;
+                symRect.EditStyle.AllowChangeWidth = symRect.EditStyle.AllowChangeHeight = false;
+                //symRect.EditStyle.AllowChangeWidth = true;
+
                 symRect.FillStyle.Color = Color.WhiteSmoke;
                 symRect.FillStyle.Type = FillStyleType.LinearGradient;
                 symRect.LineStyle.LineColor = Color.LightGray;
                 symRect.EditStyle.AllowSelect = false;
+
                 this.AppendChild(txtNode);
                 this.AppendChild(symRect);
                 if (primaryKey.Contains(txtNode.Text))
