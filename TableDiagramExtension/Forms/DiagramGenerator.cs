@@ -6,6 +6,7 @@
 using Microsoft.Extensions.Logging;
 using Syncfusion.SVG.IO;
 using Syncfusion.Windows.Forms.Diagram;
+using Syncfusion.Windows.Forms.Diagram.Controls;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -30,12 +31,10 @@ namespace DatabaseDiagram
         SharedData _sharedData = null;
         bool needSave = false;
         public string fileName;
-        private Point mousePt;
         private Node prevbNode = null;
         private OpenFileDialog fileDialog = new OpenFileDialog();
 
         private readonly ISQLController _sqlController;
-        private readonly ILogger _logger;
         private readonly IErrorController _errorController;
         private readonly XMLController _xmlController;
 
@@ -108,7 +107,7 @@ namespace DatabaseDiagram
         /// </summary>
         private void InitailizeDiagram()
         {
-            sqlDependencyDiagram.View.SelectionList.Clear();
+            sqlDependencyDiagram.View.SelectionList.Clear();            
         }
 
         /// <summary>
@@ -215,10 +214,10 @@ namespace DatabaseDiagram
         /// Generates the SubEmployee count
         /// </summary>
         /// <param name="empl">Employee</param>
-        protected void IterUpdateSubEmployeeCount(Employee empl)
+        protected void IterUpdateSubEmployeeCount(CustomDiagramTable empl)
         {
             empl.RecSubEmployeeCount = empl.SubEmployees.Count;
-            foreach (Employee subempl in empl.SubEmployees)
+            foreach (CustomDiagramTable subempl in empl.SubEmployees)
             {
                 this.IterUpdateSubEmployeeCount(subempl);
                 empl.RecSubEmployeeCount += subempl.RecSubEmployeeCount;
@@ -238,8 +237,7 @@ namespace DatabaseDiagram
             XmlDocument xmldoc = new XmlDocument();
             try
             {
-                xmldoc.LoadXml(updatedXml);
-                //xmldoc.Load(datasrc);
+                xmldoc.LoadXml(updatedXml);                
 
                 if (xmldoc.DocumentElement.HasChildNodes)
                 {
@@ -247,7 +245,7 @@ namespace DatabaseDiagram
                     for (int i = 0; i < employeelist.Count; i++)
                     {
                         // Create an Employee instance to represent each employee
-                        Employee emply = new Employee();
+                        CustomDiagramTable emply = new CustomDiagramTable();
 
                         XmlNode employeenode = employeelist[i];
                         emply.TableName = employeenode.Name;                        
@@ -291,36 +289,6 @@ namespace DatabaseDiagram
         }
 
         /// <summary>
-        ///  Rearrange the employees collection as a manager-subemployee nested tree
-        /// </summary>
-        /// <param name="htemployees">List of data</param>
-        /// <returns>returns sorted data list</returns>
-        private ArrayList GetSortedEmployeesList(Hashtable htemployees)
-        {
-            ICollection employees = htemployees.Values;
-            ArrayList sortedlist = new ArrayList();
-            foreach (Employee emply in employees)
-            {
-                sortedlist.Add(emply);
-                //if (emply.ForeignKeyID == string.Empty)
-                //{
-                //    // Employees without a ManagerID are top-level nodes in the org tree
-                //    sortedlist.Add(emply);
-                //}
-                //else
-                //{
-                //    // Find the employee instance associated with the managerID and add this object as 
-                //    // a subemployee of the manager node.
-                //    Employee manager = (Employee)htemployees[emply.ForeignKeyID];
-                //    if (manager != null)
-                //        manager.SubEmployees.Add(emply);
-                //}
-            }
-
-            return sortedlist;
-        }
-
-        /// <summary>
         /// Create diagram symbol nodes for each employee in the organization and add these symbols to the diagram
         /// Create links between manager and sub-employees to depict the org structure
         /// </summary>
@@ -330,7 +298,7 @@ namespace DatabaseDiagram
             // Temporarily suspend the Diagram Model redrawing
             this.sqlDependencyDiagram.Model.BeginUpdate();
 
-            foreach (Employee emply in alemployees)
+            foreach (CustomDiagramTable emply in alemployees)
             {
                 Group emplysymbol = InsertSymbolEmployee(emply);
                 this.IterCreateEmployeeSymbol(emply, emplysymbol);
@@ -345,9 +313,9 @@ namespace DatabaseDiagram
         /// </summary>
         /// <param name="emply">Employees business object</param>
         /// <param name="emplysymbol">Node</param>
-        private void IterCreateEmployeeSymbol(Employee emply, Group emplysymbol)
+        private void IterCreateEmployeeSymbol(CustomDiagramTable emply, Group emplysymbol)
         {
-            foreach (Employee subemply in emply.SubEmployees)
+            foreach (CustomDiagramTable subemply in emply.SubEmployees)
             {
                 // Create a EmployeeSymbol for each of the sub-employees of the particular employee //Waterfall, Horizontal
                 Group subemplysymbol = InsertSymbolEmployee(subemply);
@@ -360,7 +328,7 @@ namespace DatabaseDiagram
         /// </summary>
         /// <param name="employee">Employee object</param>
         /// <returns>returns the node</returns>
-        private Group InsertSymbolEmployee(Employee employee)
+        private Group InsertSymbolEmployee(CustomDiagramTable employee)
         {
             DataSymbol Symbol = new DataSymbol(employee.Coloumns, employee.TableName, employee.PrimaryKeyID, employee.ForeignKeyID);
             this.sqlDependencyDiagram.Model.AppendChild(Symbol);
@@ -450,8 +418,7 @@ namespace DatabaseDiagram
                         prevbNode = gnode;
                     if (prevbNode == gnode)
                     {
-                        ((FilledPath)gnode).FillStyle.Color = Color.FromArgb(117, 186, 255);
-                        //((FilledPath)prevbNode).FillStyle.Color = Color.WhiteSmoke;
+                        ((FilledPath)gnode).FillStyle.Color = Color.FromArgb(117, 186, 255);                        
                     }
                     else
                     {
@@ -468,15 +435,10 @@ namespace DatabaseDiagram
             if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
             {
                 this.saveToolStripButton.Enabled = true;
-                this.saveAsToolStripButton.Enabled = true;
-
-
             }
             else
             {
                 this.saveToolStripButton.Enabled = false;
-                this.saveAsToolStripButton.Enabled = false;
-
             }
         }
 
@@ -649,8 +611,7 @@ namespace DatabaseDiagram
         {
             try
             {
-                this.submitStripButton.Enabled = false;
-                //string selectedTable = this.cboTable.ComboBox.SelectedValue.ToString();
+                this.submitStripButton.Enabled = false;                
                 DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
 
                 if (selectedTable.TABLE_NAME == TextStrings.PleaseSelectTable) return;
@@ -700,11 +661,11 @@ namespace DatabaseDiagram
             {
                 if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
                 {
-                    this.zoomInToolStripButton.Enabled = this.saveAsToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = true;
+                    this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = true;
                 }
                 else
                 {
-                    this.zoomInToolStripButton.Enabled = this.saveAsToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = false;
+                    this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = false;
                 }
             }
             catch (Exception ex)

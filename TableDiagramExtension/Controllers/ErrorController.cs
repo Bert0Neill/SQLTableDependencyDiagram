@@ -13,8 +13,6 @@ namespace TableDiagramExtension.Controllers
 {
     internal class ErrorController : IErrorController
     {
-        ILogger<ErrorController> _logger;
-
         public ErrorController()
         {
         }
@@ -22,7 +20,6 @@ namespace TableDiagramExtension.Controllers
         public void DisplayErrorMessage(string message)
         {
             MessageBox.Show(String.Format(TextStrings.StandardErrorMessage, message), TextStrings.StandardErrorMessageTitle, MessageBoxButtons.OK, MessageBoxIcon.Error);
-            //_logger.LogError(message);
             Console.WriteLine(message);
         }
 

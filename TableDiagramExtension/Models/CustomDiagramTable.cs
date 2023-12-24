@@ -16,21 +16,17 @@ using System.Collections.Generic;
 namespace TableDiagramExtension.Models
 {
     /// <summary>
-    /// The Employee class represents an employee in the orgranization structure. This class is used only for 
-    /// extracting the oganization structure data and creating the diagram symbol nodes
+    /// This class represents a table withing the ERD diagram structure. This class is used only for 
+    /// extracting the table schema data and creating the diagram symbol nodes.
     /// </summary>
-    public class Employee
+    public class CustomDiagramTable
     {
         private String strName = String.Empty;
         private String strID = String.Empty;
-        //private String[] strPrimaryKeyID = new String[] { }; // String.Empty;
         public List<string> PrimaryKeyID = new List<string>();
         public List<string> ForeignKeyID = new List<string>();
-        //private String strForeignKeyID = String.Empty;
-        private String strGender = String.Empty;
         private ArrayList alSubEmployees = new ArrayList();
         private int nRecSubEmployeeCount = 0;
-        private String strImageName = String.Empty;
         private ArrayList strColumns = new ArrayList();
 
 
@@ -46,34 +42,10 @@ namespace TableDiagramExtension.Models
             set { this.strID = value; }
         }
 
-        //public String[] PrimaryKeyID
-        //{
-        //    get { return this.strPrimaryKeyID; }
-        //    set { this.strPrimaryKeyID = value; }
-        //}
-
-        public String Gender
-        {
-            get { return this.strGender; }
-            set { this.strGender = value; }
-        }
-
         public ArrayList Coloumns
         {
             get { return this.strColumns; }
             set { this.strColumns = value; }
-        }
-
-        //public String ForeignKeyID
-        //{
-        //    get { return this.strForeignKeyID; }
-        //    set { this.strForeignKeyID = value; }
-        //}
-
-        public string ImageName
-        {
-            get { return this.strImageName; }
-            set { this.strImageName = value; }
         }
 
         public ArrayList SubEmployees
@@ -87,18 +59,18 @@ namespace TableDiagramExtension.Models
             set { this.nRecSubEmployeeCount = value; }
         }
 
-        public Employee()
+        public CustomDiagramTable()
         {
         }
 
-        public Employee(string name, string id, ArrayList Coloumn)
+        public CustomDiagramTable(string name, string id, ArrayList Coloumn)
         {
             this.strName = name;
             this.strID = id;
             this.strColumns = Coloumn;
         }
 
-        public Employee(string name, string id, ArrayList Coloumn, string primaryKey, string foreignKey)
+        public CustomDiagramTable(string name, string id, ArrayList Coloumn, string primaryKey, string foreignKey)
         {
             this.strName = name;
             this.strID = id;
