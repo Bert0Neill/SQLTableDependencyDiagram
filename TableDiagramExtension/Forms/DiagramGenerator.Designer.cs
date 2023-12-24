@@ -38,7 +38,7 @@ namespace DatabaseDiagram
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Syncfusion.Windows.Forms.Diagram.Binding binding1 = new Syncfusion.Windows.Forms.Diagram.Binding();
+            Syncfusion.Windows.Forms.Diagram.Binding binding2 = new Syncfusion.Windows.Forms.Diagram.Binding();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DiagramGenerator));
             this.sqlDependencyDiagram = new Syncfusion.Windows.Forms.Diagram.Controls.Diagram(this.components);
             this.model1 = new Syncfusion.Windows.Forms.Diagram.Model(this.components);
@@ -77,13 +77,13 @@ namespace DatabaseDiagram
             // sqlDependencyDiagram
             // 
             this.sqlDependencyDiagram.BackColor = System.Drawing.Color.White;
-            binding1.DefaultConnector = null;
-            binding1.DefaultNode = null;
-            binding1.Diagram = this.sqlDependencyDiagram;
-            binding1.Id = null;
-            binding1.Label = ((System.Collections.Generic.List<string>)(resources.GetObject("binding1.Label")));
-            binding1.ParentId = null;
-            this.sqlDependencyDiagram.Binding = binding1;
+            binding2.DefaultConnector = null;
+            binding2.DefaultNode = null;
+            binding2.Diagram = this.sqlDependencyDiagram;
+            binding2.Id = null;
+            binding2.Label = ((System.Collections.Generic.List<string>)(resources.GetObject("binding2.Label")));
+            binding2.ParentId = null;
+            this.sqlDependencyDiagram.Binding = binding2;
             this.sqlDependencyDiagram.Controller.Constraint = Syncfusion.Windows.Forms.Diagram.Constraints.PageEditable;
             this.sqlDependencyDiagram.Controller.DefaultConnectorTool = Syncfusion.Windows.Forms.Diagram.ConnectorTool.OrgLineConnectorTool;
             this.sqlDependencyDiagram.Controller.PasteOffset = new System.Drawing.SizeF(10F, 10F);
@@ -150,10 +150,10 @@ namespace DatabaseDiagram
             this.cboTable,
             this.submitStripButton,
             this.toolStripSeparator3,
-            this.saveAsToolStripButton,
             this.exportToolStripButton,
             this.zoomInToolStripButton,
-            this.saveToolStripButton});
+            this.saveToolStripButton,
+            this.saveAsToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1136, 25);
@@ -197,8 +197,8 @@ namespace DatabaseDiagram
             this.submitStripButton.Image = ((System.Drawing.Image)(resources.GetObject("submitStripButton.Image")));
             this.submitStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.submitStripButton.Name = "submitStripButton";
-            this.submitStripButton.Size = new System.Drawing.Size(70, 22);
-            this.submitStripButton.Text = "Submit";
+            this.submitStripButton.Size = new System.Drawing.Size(83, 22);
+            this.submitStripButton.Text = "Generate";
             this.submitStripButton.Click += new System.EventHandler(this.submitStripButton_Click);
             // 
             // toolStripSeparator3
@@ -208,7 +208,6 @@ namespace DatabaseDiagram
             // 
             // saveToolStripButton
             // 
-            this.saveToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.saveToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.saveToolStripButton.Enabled = false;
             this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
@@ -217,11 +216,11 @@ namespace DatabaseDiagram
             this.saveToolStripButton.Name = "saveToolStripButton";
             this.saveToolStripButton.Size = new System.Drawing.Size(55, 22);
             this.saveToolStripButton.Text = "Save";
+            this.saveToolStripButton.Visible = false;
             this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
             // 
             // zoomInToolStripButton
             // 
-            this.zoomInToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.zoomInToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.zoomInToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.zoomInToolStripMenuItem,
@@ -261,7 +260,6 @@ namespace DatabaseDiagram
             // 
             // exportToolStripButton
             // 
-            this.exportToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.exportToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
             this.exportToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.pNGToolStripMenuItem,
@@ -307,7 +305,6 @@ namespace DatabaseDiagram
             // 
             // saveAsToolStripButton
             // 
-            this.saveAsToolStripButton.Alignment = System.Windows.Forms.ToolStripItemAlignment.Right;
             this.saveAsToolStripButton.Enabled = false;
             this.saveAsToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveAsToolStripButton.Image")));
             this.saveAsToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -4508,8 +4505,9 @@ namespace DatabaseDiagram
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "DiagramGenerator";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Table Dependency Diagram";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.DiagramGenerator_Load);
             ((System.ComponentModel.ISupportInitialize)(this.sqlDependencyDiagram)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.model1)).EndInit();

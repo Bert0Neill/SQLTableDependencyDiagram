@@ -74,6 +74,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Resources\SqlStatements.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -87,6 +92,11 @@
     <Compile Include="TableDiagramExtensionPackage.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
@@ -163,12 +173,6 @@
     </VSCTCompile>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="class diagram\1.png" />
-    <Content Include="class diagram\2.png" />
-    <Content Include="class diagram\3.png" />
-    <Content Include="class diagram\5.png" />
-    <Content Include="class diagram\6.png" />
-    <Content Include="class diagram\7.png" />
     <Content Include="class diagram\DBPrimaryKey.png" />
     <Content Include="class diagram\ForeignKey.png" />
     <Content Include="class diagram\TableDependencyDiagram.ico" />

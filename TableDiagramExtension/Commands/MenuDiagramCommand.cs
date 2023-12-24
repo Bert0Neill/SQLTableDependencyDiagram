@@ -13,6 +13,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using TableDiagramExtension.Controllers;
+using static System.Windows.Forms.AxHost;
 using Task = System.Threading.Tasks.Task;
 
 namespace TableDiagramExtension.Commands
@@ -85,9 +86,9 @@ namespace TableDiagramExtension.Commands
         /// <param name="e">Event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();            
+            ThreadHelper.ThrowIfNotOnUIThread();
 
-            SyncfusionLicenseProvider.RegisterLicense(Syncfusion.Licensing.DemoCommon.FindLicenseKey());
+            SyncfusionLicenseProvider.RegisterLicense(Properties.Settings.Default.SyncfusionKey);
             Application.EnableVisualStyles();
 
             DiagramGenerator frmDiagramGenerator = new DiagramGenerator(((TableDiagramExtensionPackage)package)._sharedData);
