@@ -86,13 +86,20 @@ namespace TableDiagramExtension.Commands
         /// <param name="e">Event args.</param>
         private void Execute(object sender, EventArgs e)
         {
-            ThreadHelper.ThrowIfNotOnUIThread();
+            try
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
 
-            SyncfusionLicenseProvider.RegisterLicense(Properties.Settings.Default.SyncfusionKey);
-            Application.EnableVisualStyles();
+                SyncfusionLicenseProvider.RegisterLicense(Properties.Settings.Default.SyncfusionKey);
+                Application.EnableVisualStyles();
 
-            DiagramGenerator frmDiagramGenerator = new DiagramGenerator(((TableDiagramExtensionPackage)package)._sharedData);
-            frmDiagramGenerator.Show();
+                DiagramGenerator frmDiagramGenerator = new DiagramGenerator(((TableDiagramExtensionPackage)package)._sharedData);
+                frmDiagramGenerator.Show();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

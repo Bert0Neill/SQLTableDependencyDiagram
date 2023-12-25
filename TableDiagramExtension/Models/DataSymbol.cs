@@ -25,78 +25,84 @@ namespace TableDiagramExtension.Models
 
     [Serializable]
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Assert, Name = "FullTrust")]
-    public class DataSymbol:Group
+    public class DataSymbol : Group
     {
-        public DataSymbol( ArrayList strColumnName, string strTableName, List<string> primaryKey, List<string> foreignKey)
+        public DataSymbol(ArrayList strColumnName, string strTableName, List<string> primaryKey, List<string> foreignKey)
             : base()
         {
-            this.Name = strTableName;
-            float rectHeight = (strColumnName.Count * 20) + 40;
-            float tmpColWidth = (strTableName.Length * 10);
-            float rectWidth = Math.Max(tmpColWidth, 150); // take the largest to give the table width space for name
-
-            Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, rectWidth, rectHeight);
-            rect.FillStyle.Color = Color.WhiteSmoke;
-            rect.Name = "BaseNode";            
-
-            // label - table name
-            Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rect, strTableName);
-            lbl.ReadOnly = true;
-            lbl.FontStyle.Family = "Arial";            
-            lbl.FontStyle.Size = 9;
-            lbl.FontStyle.Bold = true;
-            lbl.Position = Syncfusion.Windows.Forms.Diagram.Position.TopLeft;
-            lbl.OffsetX = rectWidth <= 150 ? 65: rectWidth / 2; // inline calculation for longer table names
-            lbl.OffsetY = 18;
-            lbl.UpdatePosition = true;            
-            rect.Labels.Add(lbl);
-
-            this.AppendChild(rect);
-
-            float y_TextNode = 30;
-            for (int i = 0; i < strColumnName.Count; i++)
+            try
             {
-                var columnField = rectWidth - 40;
-                TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, y_TextNode, columnField, 20));                
-                txtNode.ReadOnly = true;
-                txtNode.FontStyle.Family = "Arial";
-                txtNode.FontStyle.Size = 7;
-                txtNode.VerticalAlignment = StringAlignment.Center;
-                txtNode.BackgroundStyle.Color = Color.White;
-                txtNode.LineStyle.LineColor = Color.LightGray;
-                txtNode.EditStyle.AllowDelete = false;
+                this.Name = strTableName;
+                float rectHeight = (strColumnName.Count * 20) + 40;
+                float tmpColWidth = (strTableName.Length * 10);
+                float rectWidth = Math.Max(tmpColWidth, 150); // take the largest to give the table width space for name
 
-                Syncfusion.Windows.Forms.Diagram.Rectangle symRect = new Syncfusion.Windows.Forms.Diagram.Rectangle(10, y_TextNode, 20, 20);
+                Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, rectWidth, rectHeight);
+                rect.FillStyle.Color = Color.WhiteSmoke;
+                rect.Name = "BaseNode";
 
-                symRect.FillStyle.Color = Color.WhiteSmoke;
-                symRect.FillStyle.Type = FillStyleType.LinearGradient;
-                symRect.LineStyle.LineColor = Color.LightGray;
-                symRect.EditStyle.AllowSelect = false;
-                symRect.EditStyle.AllowDelete = false;
+                // label - table name
+                Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rect, strTableName);
+                lbl.ReadOnly = true;
+                lbl.FontStyle.Family = "Arial";
+                lbl.FontStyle.Size = 9;
+                lbl.FontStyle.Bold = true;
+                lbl.Position = Syncfusion.Windows.Forms.Diagram.Position.TopLeft;
+                lbl.OffsetX = rectWidth <= 150 ? 65 : rectWidth / 2; // inline calculation for longer table names
+                lbl.OffsetY = 18;
+                lbl.UpdatePosition = true;
+                rect.Labels.Add(lbl);
 
-                this.AppendChild(txtNode);
-                this.AppendChild(symRect);
-                if (primaryKey.Contains(txtNode.Text))
+                this.AppendChild(rect);
+
+                float y_TextNode = 30;
+                for (int i = 0; i < strColumnName.Count; i++)
                 {
-                    Bitmap bmp = new Bitmap(@"..\..\class diagram\DBPrimaryKey.png");
-                    BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
-                    bmpNode.LineStyle.LineColor = Color.Transparent;
-                    bmpNode.EditStyle.AllowSelect = false;
-                    this.AppendChild(bmpNode);
-                }
+                    var columnField = rectWidth - 40;
+                    TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, y_TextNode, columnField, 20));
+                    txtNode.ReadOnly = true;
+                    txtNode.FontStyle.Family = "Arial";
+                    txtNode.FontStyle.Size = 7;
+                    txtNode.VerticalAlignment = StringAlignment.Center;
+                    txtNode.BackgroundStyle.Color = Color.White;
+                    txtNode.LineStyle.LineColor = Color.LightGray;
+                    txtNode.EditStyle.AllowDelete = false;
 
-                if (foreignKey.Contains(txtNode.Text))
-                {
-                    Bitmap bmp = new Bitmap(@"..\..\class diagram\ForeignKey.png");
-                    BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
-                    bmpNode.LineStyle.LineColor = Color.Transparent;
-                    bmpNode.EditStyle.AllowSelect = false;
-                    this.AppendChild(bmpNode);
-                }
+                    Syncfusion.Windows.Forms.Diagram.Rectangle symRect = new Syncfusion.Windows.Forms.Diagram.Rectangle(10, y_TextNode, 20, 20);
 
-                y_TextNode = y_TextNode + 20;
+                    symRect.FillStyle.Color = Color.WhiteSmoke;
+                    symRect.FillStyle.Type = FillStyleType.LinearGradient;
+                    symRect.LineStyle.LineColor = Color.LightGray;
+                    symRect.EditStyle.AllowSelect = false;
+                    symRect.EditStyle.AllowDelete = false;
+
+                    this.AppendChild(txtNode);
+                    this.AppendChild(symRect);
+                    if (primaryKey.Contains(txtNode.Text))
+                    {
+                        Bitmap bmp = new Bitmap(@"..\..\class diagram\DBPrimaryKey.png");
+                        BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
+                        bmpNode.LineStyle.LineColor = Color.Transparent;
+                        bmpNode.EditStyle.AllowSelect = false;
+                        this.AppendChild(bmpNode);
+                    }
+
+                    if (foreignKey.Contains(txtNode.Text))
+                    {
+                        Bitmap bmp = new Bitmap(@"..\..\class diagram\ForeignKey.png");
+                        BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
+                        bmpNode.LineStyle.LineColor = Color.Transparent;
+                        bmpNode.EditStyle.AllowSelect = false;
+                        this.AppendChild(bmpNode);
+                    }
+
+                    y_TextNode = y_TextNode + 20;
+                }
             }
-
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
 
     }

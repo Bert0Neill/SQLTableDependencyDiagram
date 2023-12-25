@@ -5,6 +5,7 @@ using System.Linq;
 using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace TableDiagramExtension.Controllers
 {
@@ -18,12 +19,21 @@ namespace TableDiagramExtension.Controllers
         public List<T> ConvertDataTable<T>(DataTable dt)
         {
             List<T> data = new List<T>();
-            foreach (DataRow row in dt.Rows)
+
+            try
             {
-                T item = GetItem<T>(row);
-                data.Add(item);
+                foreach (DataRow row in dt.Rows)
+                {
+                    T item = GetItem<T>(row);
+                    data.Add(item);
+                }
             }
-            return data;
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+
+            return data;          
         }
         private T GetItem<T>(DataRow dr)
         {

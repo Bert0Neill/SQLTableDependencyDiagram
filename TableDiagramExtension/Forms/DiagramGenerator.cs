@@ -178,7 +178,7 @@ namespace DatabaseDiagram
             {
                 sqlDependencyDiagram.Model.Clear();
                 sqlDependencyDiagram.Model.BeginUpdate();
-                RoundRect rrect = new RoundRect(10, 30, 250, 100, MeasureUnits.Pixel);
+                RoundRect rrect = new RoundRect(10, 10, 250, 100, MeasureUnits.Pixel);
                 rrect.FillStyle.Color = Color.Transparent;
                 rrect.EditStyle.AllowSelect = false;
                 rrect.LineStyle.LineColor = Color.Gray;
@@ -213,19 +213,19 @@ namespace DatabaseDiagram
                 rrect.Labels.Add(lblManyToMany);
 
                 sqlDependencyDiagram.Model.AppendChild(rrect);
-                LineConnector oneToOne = new LineConnector(new PointF(20, 50), new PointF(110, 50));
+                LineConnector oneToOne = new LineConnector(new PointF(20, 30), new PointF(110, 30));
                 oneToOne.EditStyle.AllowSelect = false;
                 oneToOne.TailDecorator.DecoratorShape = DecoratorShape.None;
                 oneToOne.HeadDecorator.DecoratorShape = DecoratorShape.None;
                 sqlDependencyDiagram.Model.AppendChild(oneToOne);
 
-                LineConnector oneToMany = new LineConnector(new PointF(20, 80), new PointF(110, 80));
+                LineConnector oneToMany = new LineConnector(new PointF(20, 60), new PointF(110, 60));
                 oneToMany.EditStyle.AllowSelect = false;
                 oneToMany.TailDecorator.DecoratorShape = DecoratorShape.None;
                 oneToMany.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
                 sqlDependencyDiagram.Model.AppendChild(oneToMany);
 
-                LineConnector manyToMany = new LineConnector(new PointF(20, 110), new PointF(110, 110));
+                LineConnector manyToMany = new LineConnector(new PointF(20, 90), new PointF(110, 90));
                 manyToMany.EditStyle.AllowSelect = false;
                 manyToMany.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
                 manyToMany.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;

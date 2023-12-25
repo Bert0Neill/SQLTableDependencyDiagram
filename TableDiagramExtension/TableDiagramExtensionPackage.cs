@@ -37,7 +37,6 @@ namespace TableDiagramExtension
     [PackageRegistration(UseManagedResourcesOnly = true, AllowsBackgroundLoading = true)]
     [Guid(TableDiagramExtensionPackage.PackageGuidString)]
     [ProvideMenuResource("Menus.ctmenu", 1)]
-    //[ProvideAutoLoad(UIContextGuids80.NoSolution)] // add for redering on SQL 17- versions    
     public sealed class TableDiagramExtensionPackage : AsyncPackage
     {
         #region Class Variables
@@ -71,23 +70,30 @@ namespace TableDiagramExtension
 
         private void RetrieveSelectedExplorerNode()
         {
-            var objectExplorer = GetObjectExplorer();
-
-            if (objectExplorer != null)
+            try
             {
-                // Get the selected nodes in Object Explorer
-                int arraySize;
-                INodeInformation[] nodes;
+                var objectExplorer = GetObjectExplorer();
 
-                // Call the GetSelectedNodes method
-                objectExplorer.GetSelectedNodes(out arraySize, out nodes);
+                if (objectExplorer != null)
+                {
+                    // Get the selected nodes in Object Explorer
+                    int arraySize;
+                    INodeInformation[] nodes;
 
-                var node = nodes[0];
-                // use the first node as default SMO node
-                _sharedData.IsTable = node.UrnPath.EndsWith("Table");
-                _sharedData.DatabaseOrTableName = node.InvariantName;
-                _sharedData.SelectedServerName = node.Connection.ServerName;
-                _sharedData.SqlOlapConnectionInfoBase = node.Connection;
+                    // Call the GetSelectedNodes method
+                    objectExplorer.GetSelectedNodes(out arraySize, out nodes);
+
+                    var node = nodes[0];
+                    // use the first node as default SMO node
+                    _sharedData.IsTable = node.UrnPath.EndsWith("Table");
+                    _sharedData.DatabaseOrTableName = node.InvariantName;
+                    _sharedData.SelectedServerName = node.Connection.ServerName;
+                    _sharedData.SqlOlapConnectionInfoBase = node.Connection;
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -95,7 +101,7 @@ namespace TableDiagramExtension
 
         private IObjectExplorerService GetObjectExplorer()
         {
-            return this.GetService(typeof(IObjectExplorerService)) as IObjectExplorerService;            
+            return this.GetService(typeof(IObjectExplorerService)) as IObjectExplorerService;
         }
 
         public void SetObjectExplorerEventProvider()
@@ -136,7 +142,7 @@ namespace TableDiagramExtension
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
 
@@ -155,12 +161,12 @@ namespace TableDiagramExtension
 
                 _sharedData.IsTable = node.UrnPath.EndsWith("Table");
                 _sharedData.DatabaseOrTableName = node.InvariantName;
-                _sharedData.SelectedServerName = node.Connection.ServerName;                
+                _sharedData.SelectedServerName = node.Connection.ServerName;
                 _sharedData.SqlOlapConnectionInfoBase = node.Connection;
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }
