@@ -27,6 +27,11 @@ namespace TableDiagramExtension.Models
         public List<string> ForeignKeyID = new List<string>();
         private ArrayList alSubEmployees = new ArrayList();
         private int nRecSubEmployeeCount = 0;
+
+        //public string ColumnNameAndDataType = String.Empty;
+
+        public List<ColumnData> ColumnDatas = new List<ColumnData>();
+
         private ArrayList strColumns = new ArrayList();
 
 
@@ -36,7 +41,7 @@ namespace TableDiagramExtension.Models
             set { this.strName = value; }
         }
 
-        public String EmployeeID
+        public String TableID
         {
             get { return this.strID; }
             set { this.strID = value; }
@@ -48,12 +53,12 @@ namespace TableDiagramExtension.Models
             set { this.strColumns = value; }
         }
 
-        public ArrayList SubEmployees
+        public ArrayList SubTables
         {
             get { return this.alSubEmployees; }
         }
 
-        public int RecSubEmployeeCount
+        public int RecSubTableCount
         {
             get { return this.nRecSubEmployeeCount; }
             set { this.nRecSubEmployeeCount = value; }
@@ -77,6 +82,11 @@ namespace TableDiagramExtension.Models
             this.strColumns = Coloumn;
             this.PrimaryKeyID.Add(primaryKey);
             this.ForeignKeyID .Add(foreignKey);
+        }
+        public class ColumnData
+        {
+            public string CompactColumnName { get; set; }
+            public string NonCompactColumnName { get; set; }
         }
     }
 }

@@ -56,12 +56,18 @@ namespace TableDiagramExtension.Controllers
                     {
                         string columnName = columnElement.Attribute("Name").Value;
                         string isPrimaryKey = columnElement.Attribute("IsPrimaryKey").Value;
+                        string columnDataType = columnElement.Attribute("ColumnDataType")?.Value ?? "N/A"; ;
                         string isForeignKey = columnElement.Attribute("ForeignKey")?.Value ?? "N/A";
 
                         // add column node <EmpID>EmpID</EmpID>
                         XmlElement columnElementName = xmlDocFormatted.CreateElement(columnName);
                         columnElementName.InnerText = columnName;
                         xmlFormattedTableRoot.AppendChild(columnElementName);
+
+                        if (columnDataType != "N/A")
+                        {                            
+                            columnElementName.SetAttribute("ColumnDataType", columnDataType);
+                        }
 
                         if (isForeignKey != "N/A")
                         {

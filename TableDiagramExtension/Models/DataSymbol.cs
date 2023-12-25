@@ -19,6 +19,7 @@ using System.Collections;
 using System.Drawing;
 using System;
 using System.Collections.Generic;
+using static TableDiagramExtension.Models.CustomDiagramTable;
 
 namespace TableDiagramExtension.Models
 {
@@ -27,7 +28,7 @@ namespace TableDiagramExtension.Models
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Assert, Name = "FullTrust")]
     public class DataSymbol : Group
     {
-        public DataSymbol(ArrayList strColumnName, string strTableName, List<string> primaryKey, List<string> foreignKey)
+        public DataSymbol(ArrayList strColumnName, string strTableName, List<string> primaryKey, List<string> foreignKey, List<ColumnData> columnDatas, bool IsCompact)
             : base()
         {
             try
@@ -56,10 +57,12 @@ namespace TableDiagramExtension.Models
                 this.AppendChild(rect);
 
                 float y_TextNode = 30;
-                for (int i = 0; i < strColumnName.Count; i++)
+                //for (int i = 0; i < strColumnName.Count; i++)
+                for (int i = 0; i < columnDatas.Count; i++)
                 {
                     var columnField = rectWidth - 40;
-                    TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, y_TextNode, columnField, 20));
+                    //TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, y_TextNode, columnField, 20));                    
+                    TextNode txtNode = new TextNode(IsCompact ? columnDatas[i].CompactColumnName : columnDatas[i].NonCompactColumnName, new RectangleF(30, y_TextNode, columnField, 20));
                     txtNode.ReadOnly = true;
                     txtNode.FontStyle.Family = "Arial";
                     txtNode.FontStyle.Size = 7;
@@ -78,7 +81,9 @@ namespace TableDiagramExtension.Models
 
                     this.AppendChild(txtNode);
                     this.AppendChild(symRect);
-                    if (primaryKey.Contains(txtNode.Text))
+
+                    //if (primaryKey.Contains(strColumnName[i].ToString()))
+                    if (primaryKey.Contains(columnDatas[i].CompactColumnName))
                     {
                         Bitmap bmp = new Bitmap(@"..\..\class diagram\DBPrimaryKey.png");
                         BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
@@ -87,7 +92,8 @@ namespace TableDiagramExtension.Models
                         this.AppendChild(bmpNode);
                     }
 
-                    if (foreignKey.Contains(txtNode.Text))
+                    //if (foreignKey.Contains(strColumnName[i].ToString()))
+                    if (foreignKey.Contains(columnDatas[i].CompactColumnName))
                     {
                         Bitmap bmp = new Bitmap(@"..\..\class diagram\ForeignKey.png");
                         BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));

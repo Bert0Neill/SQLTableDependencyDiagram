@@ -145,20 +145,19 @@ namespace TableDiagramExtension.Resources {
         
         /// <summary>
         ///   Looks up a localized string similar to USE {0}
-        ///SELECT
+        ///SELECT 
         ///s.name AS &apos;@Schema&apos;,
         ///t.name AS &apos;@Name&apos;,
         ///t.object_id AS &apos;@TableId&apos;,
         ///(
-        ///SELECT c.name AS &apos;@Name&apos;,
+        ///SELECT DISTINCT
+        ///	c.name AS &apos;@Name&apos;,
         ///    --c.column_id AS &apos;@ColumnId&apos;,
         ///    IIF(i.object_id IS NOT NULL,1,0) AS &apos;@IsPrimaryKey&apos;,
-        ///    f.referenced_object_id AS &apos;@ForeignKey&apos;
-        ///FROM sys.columns AS c
-        ///	LEFT OUTER JOIN sys.index_columns AS i ON c.object_id = i.object_id
-        ///	  AND c.column_id = i.column_id
-        ///	  AND i.index_id = 1
-        ///		LEFT OUTER JOIN sys.foreign_key_columns AS f ON c.object_id = f.parent_object_id AND c.column_id = f.pare [rest of string was truncated]&quot;;.
+        ///    f.referenced_object_id AS &apos;@ForeignKey&apos;,
+        ///	CASE 
+        ///        WHEN isc.CHARACTER_MAXIMUM_LENGTH IS NULL THEN &apos; (&apos; + UPPER(SUBSTRING(isc.DATA_TYPE, 1, 1)) + LOWER(SUBSTRING(isc.DATA_TYPE, 2, LEN(isc.DATA_TYPE))) + &apos;)&apos;
+        ///        ELSE &apos; (&apos; + UPPER(SUBSTRING(isc.DATA_TYPE, 1, 1)) + LOWER(SUBSTR [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string SelectDependencyTableInfo {
             get {

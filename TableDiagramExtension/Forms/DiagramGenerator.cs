@@ -23,6 +23,7 @@ using TableDiagramExtension.Controllers;
 using TableDiagramExtension.Interfaces;
 using TableDiagramExtension.Models;
 using TableDiagramExtension.Resources;
+using static TableDiagramExtension.Models.CustomDiagramTable;
 
 namespace DatabaseDiagram
 {
@@ -54,7 +55,6 @@ namespace DatabaseDiagram
             sqlDependencyDiagram.EndUpdate();
 
             sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
-            //Application.Idle += new EventHandler(Application_Idle); // Wire up OnIdle processing
         }
 
         public DiagramGenerator(SharedData sharedData)
@@ -172,7 +172,7 @@ namespace DatabaseDiagram
         /// <summary>
         /// Initialize the Diagram from XML file
         /// </summary>
-        protected void InitializeDiagramFromXMLData(string updatedXml, DataTable Relationships, List<string> dependencyTables)
+        protected void InitializeDiagramFromXMLData(string updatedXml, DataTable Relationships, List<string> dependencyTables, bool isCompact)
         {
             try
             {
@@ -231,15 +231,16 @@ namespace DatabaseDiagram
                 manyToMany.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
                 sqlDependencyDiagram.Model.AppendChild(manyToMany);
 
-                // Read data from the XML data file and populate a Hashtable using the employee ID as the key
-                Hashtable lstEmployees = this.ReadEmployeeDataFromXMLFile(updatedXml);
+                // Read data from the XML data file and populate a Hashtable using the table ID as the key
+                //Hashtable lstTables = this.ReadTableDataFromXMLFile(updatedXml);
+                //ArrayList sortedlist = new ArrayList(lstTables.Values); // not actually sorted
 
                 // convert for downstream fnx's
-                ArrayList sortedlist = new ArrayList(lstEmployees.Values);
+                ArrayList sortedlist = new ArrayList(this.ReadTableDataFromXMLFile(updatedXml).Values);
 
                 // Create diagram symbol nodes for each employee and initialize the diagram
-                this.CreateOrgDiagramFromList(sortedlist);
-                lstEmployees.Clear();
+                this.CreateOrgDiagramFromList(sortedlist, isCompact);
+                //lstTables.Clear();
                 sortedlist.Clear();
 
                 //Make connection between nodes
@@ -256,16 +257,16 @@ namespace DatabaseDiagram
         /// <summary>
         /// Generates the SubEmployee count
         /// </summary>
-        /// <param name="empl">Employee</param>
-        protected void IterUpdateSubEmployeeCount(CustomDiagramTable empl)
+        /// <param name="dgm">Employee</param>
+        protected void IterUpdateSubEmployeeCount(CustomDiagramTable dgm)
         {
             try
             {
-                empl.RecSubEmployeeCount = empl.SubEmployees.Count;
-                foreach (CustomDiagramTable subempl in empl.SubEmployees)
+                dgm.RecSubTableCount = dgm.SubTables.Count;
+                foreach (CustomDiagramTable subempl in dgm.SubTables)
                 {
                     this.IterUpdateSubEmployeeCount(subempl);
-                    empl.RecSubEmployeeCount += subempl.RecSubEmployeeCount;
+                    dgm.RecSubTableCount += subempl.RecSubTableCount;
                 }
             }
             catch (Exception ex)
@@ -277,13 +278,13 @@ namespace DatabaseDiagram
         /// <summary>
         /// Read data from the XML file
         /// </summary>
-        /// <param name="datasrc">XML file</param>
+        /// <param name="updatedXml">XML file</param>
         /// <returns>returns the table</returns>
-        protected Hashtable ReadEmployeeDataFromXMLFile(string updatedXml)
+        protected Hashtable ReadTableDataFromXMLFile(string updatedXml)
         {
-            Hashtable lstEmployee = new Hashtable();
+            Hashtable lstTables = new Hashtable();
 
-            // Use the XML DOM to read data from the employees XML data file
+            // Use the XML DOM to read data from the DB tables XML data file
             XmlDocument xmldoc = new XmlDocument();
             try
             {
@@ -291,42 +292,44 @@ namespace DatabaseDiagram
 
                 if (xmldoc.DocumentElement.HasChildNodes)
                 {
-                    XmlNodeList employeelist = xmldoc.DocumentElement.ChildNodes;
-                    for (int i = 0; i < employeelist.Count; i++)
+                    XmlNodeList tableList = xmldoc.DocumentElement.ChildNodes;
+                    for (int i = 0; i < tableList.Count; i++)
                     {
-                        // Create an Employee instance to represent each employee
-                        CustomDiagramTable emply = new CustomDiagramTable();
+                        // Create a class instance to represent each DB Table
+                        CustomDiagramTable dgmTable = new CustomDiagramTable();
 
-                        XmlNode employeenode = employeelist[i];
-                        emply.TableName = employeenode.Name;
-                        string strTableName = employeenode.Name;
-                        ArrayList strColoumnName = new ArrayList();
+                        XmlNode tableNode = tableList[i];
+                        dgmTable.TableName = tableNode.Name;
 
-                        XmlNodeList employeedatalist = employeenode.ChildNodes;
-                        IEnumerator employeedata = employeedatalist.GetEnumerator();
-                        employeedata.Reset();
-                        while (employeedata.MoveNext())
+                        XmlNodeList tableDataList = tableNode.ChildNodes;
+                        IEnumerator tableData = tableDataList.GetEnumerator();
+                        tableData.Reset();
+
+                        while (tableData.MoveNext())
                         {
-                            XmlNode dataelement = employeedata.Current as XmlNode;
-                            strColoumnName.Add(dataelement.Name);
+                            XmlNode dataElement = tableData.Current as XmlNode;
 
-                            switch (dataelement.Name)
+                            switch (dataElement.Name)
                             {
                                 case "PrimaryKey":
-                                    emply.PrimaryKeyID.Add(dataelement.InnerText);
+                                    dgmTable.PrimaryKeyID.Add(dataElement.InnerText);
                                     break;
                                 case "ForeignKey":
-                                    emply.ForeignKeyID.Add(dataelement.InnerText);
+                                    dgmTable.ForeignKeyID.Add(dataElement.InnerText);
                                     break;
                                 case "TableId":
-                                    emply.EmployeeID = dataelement.InnerText;
+                                    dgmTable.TableID = dataElement.InnerText;
                                     break;
                                 default:
-                                    emply.Coloumns.Add(dataelement.Name);
+                                    ColumnData columnData = new ColumnData() { CompactColumnName = dataElement.Name, NonCompactColumnName = dataElement.Name + dataElement.Attributes["ColumnDataType"].Value };
+                                    dgmTable.ColumnDatas.Add(columnData);
+
+                                    dgmTable.Coloumns.Add(dataElement.Name); // default name                                   
                                     break;
                             }
                         }
-                        lstEmployee.Add(emply.EmployeeID, emply);
+
+                        lstTables.Add(dgmTable.TableID, dgmTable);
                     }
                 }
             }
@@ -335,25 +338,25 @@ namespace DatabaseDiagram
                 MessageBox.Show(ex.Message);
             }
 
-            return lstEmployee;
+            return lstTables;
         }
 
         /// <summary>
         /// Create diagram symbol nodes for each employee in the organization and add these symbols to the diagram
         /// Create links between manager and sub-employees to depict the org structure
         /// </summary>
-        /// <param name="alemployees"></param>
-        private void CreateOrgDiagramFromList(ArrayList alemployees)
+        /// <param name="aryTables"></param>
+        private void CreateOrgDiagramFromList(ArrayList aryTables, bool isCompact)
         {
             try
             {
                 // Temporarily suspend the Diagram Model redrawing
                 this.sqlDependencyDiagram.Model.BeginUpdate();
 
-                foreach (CustomDiagramTable emply in alemployees)
+                foreach (CustomDiagramTable table in aryTables)
                 {
-                    Group emplysymbol = InsertSymbolEmployee(emply);
-                    this.IterCreateEmployeeSymbol(emply, emplysymbol);
+                    Group tableSymbol = InsertSymbolEmployee(table, isCompact);
+                    this.IterCreateEmployeeSymbol(table, tableSymbol, isCompact);
                 }
 
                 // ReEnable the Model redraw
@@ -370,15 +373,15 @@ namespace DatabaseDiagram
         /// </summary>
         /// <param name="emply">Employees business object</param>
         /// <param name="emplysymbol">Node</param>
-        private void IterCreateEmployeeSymbol(CustomDiagramTable emply, Group emplysymbol)
+        private void IterCreateEmployeeSymbol(CustomDiagramTable emply, Group emplysymbol, bool isCompact)
         {
             try
             {
-                foreach (CustomDiagramTable subemply in emply.SubEmployees)
+                foreach (CustomDiagramTable subemply in emply.SubTables)
                 {
                     // Create a EmployeeSymbol for each of the sub-employees of the particular employee //Waterfall, Horizontal
-                    Group subemplysymbol = InsertSymbolEmployee(subemply);
-                    this.IterCreateEmployeeSymbol(subemply, subemplysymbol);
+                    Group subemplysymbol = InsertSymbolEmployee(subemply, isCompact);
+                    this.IterCreateEmployeeSymbol(subemply, subemplysymbol, isCompact);
                 }
             }
             catch (Exception ex)
@@ -390,15 +393,15 @@ namespace DatabaseDiagram
         /// <summary>
         /// Insert Node
         /// </summary>
-        /// <param name="employee">Employee object</param>
-        /// <returns>returns the node</returns>
-        private Group InsertSymbolEmployee(CustomDiagramTable employee)
+        /// <param name="dgmTable">Employee object</param>
+        /// <returns>returns the node</returns>        
+        private Group InsertSymbolEmployee(CustomDiagramTable dgmTable, bool isCompact)
         {
             DataSymbol Symbol = null;
 
             try
             {
-                Symbol = new DataSymbol(employee.Coloumns, employee.TableName, employee.PrimaryKeyID, employee.ForeignKeyID);
+                Symbol = new DataSymbol(dgmTable.Coloumns, dgmTable.TableName, dgmTable.PrimaryKeyID, dgmTable.ForeignKeyID, dgmTable.ColumnDatas, isCompact);
                 this.sqlDependencyDiagram.Model.AppendChild(Symbol);
                 return Symbol;
             }
@@ -408,7 +411,6 @@ namespace DatabaseDiagram
                 return Symbol;
             }
         }
-
 
         /// <summary>
         /// Connect Nodes with connectors
@@ -450,7 +452,6 @@ namespace DatabaseDiagram
 
         #endregion
 
-
         #region Event Handlers
         void EventSink_NodeClick(NodeMouseEventArgs evtArgs)
         {
@@ -483,25 +484,6 @@ namespace DatabaseDiagram
                             prevbNode = gnode;
                         }
                     }
-                }
-            }
-            catch (Exception ex)
-            {
-                _errorController.DisplayErrorMessage(ex.Message);
-            }
-        }
-
-        void Application_Idle(object sender, EventArgs e)
-        {
-            try
-            {
-                if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
-                {
-                    this.saveToolStripButton.Enabled = true;
-                }
-                else
-                {
-                    this.saveToolStripButton.Enabled = false;
                 }
             }
             catch (Exception ex)
@@ -668,39 +650,7 @@ namespace DatabaseDiagram
             {
                 _errorController.DisplayErrorMessage(ex.Message);
             }
-        }
-        private void submitStripButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // get server & table name
-                string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
-                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
-
-                // call SQL to get dependency tables
-                var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}].[{selectedTable.TABLE_NAME}]");
-                dependencyTables.Add(selectedTable.TABLE_NAME);
-
-                // call SQL to build XML of dependency tables (inc. selected table)
-                var dependencyTablesMetaDataXML = _sqlController.RetrieveDependencyTablesMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
-
-                // add multiple PK's to XML
-                string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
-
-                // get relationship data
-                DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
-
-                InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables);
-                sqlDependencyDiagram.View.SelectionList.Clear();
-
-                // enable buttons
-                this.AreToolStripButtonsEnabled();
-            }
-            catch (Exception ex)
-            {
-                _errorController.DisplayErrorMessage(ex.Message);
-            }
-        }
+        }        
 
         private void printToolStripButton_Click(object sender, EventArgs e)
         {
@@ -824,12 +774,12 @@ namespace DatabaseDiagram
         {
             try
             {
-                this.submitStripButton.Enabled = false;
+                this.viewSplitToolStripSplitButton.Enabled = false;
                 DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
 
                 if (selectedTable.TABLE_NAME == TextStrings.PleaseSelectTable) return;
 
-                this.submitStripButton.Enabled = true;
+                this.viewSplitToolStripSplitButton.Enabled = true;
             }
             catch (Exception ex)
             {
@@ -861,6 +811,49 @@ namespace DatabaseDiagram
                     this.cboTable.ComboBox.DisplayMember = "TABLE_NAME";
                     this.cboTable.Enabled = true;
                 }
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+        private void compactViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.GenerateDiagram(true);
+        }
+
+        private void dataTypeViewToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.GenerateDiagram(false);
+        }
+
+        private void GenerateDiagram(bool isCompact = true)
+        {
+            try
+            {
+                // get server & table name
+                string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
+                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
+
+                // call SQL to get dependency tables
+                var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}].[{selectedTable.TABLE_NAME}]");
+                dependencyTables.Add(selectedTable.TABLE_NAME);
+
+                // call SQL to build XML of dependency tables (inc. selected table)
+                var dependencyTablesMetaDataXML = _sqlController.RetrieveDependencyTablesMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
+
+                // add multiple PK's to XML
+                string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
+
+                // get relationship data
+                DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
+
+                InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables, isCompact);
+                sqlDependencyDiagram.View.SelectionList.Clear();
+
+                // enable buttons
+                this.AreToolStripButtonsEnabled();
             }
             catch (Exception ex)
             {
