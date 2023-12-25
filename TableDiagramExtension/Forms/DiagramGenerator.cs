@@ -14,6 +14,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
+using System.Drawing.Printing;
 using System.Linq;
 using System.Windows.Forms;
 using System.Xml;
@@ -153,7 +154,7 @@ namespace DatabaseDiagram
         {
             sqlDependencyDiagram.Model.Clear();
             sqlDependencyDiagram.Model.BeginUpdate();
-            RoundRect rrect = new RoundRect(10, 30, 250, 70, MeasureUnits.Pixel);
+            RoundRect rrect = new RoundRect(10, 30, 250, 100, MeasureUnits.Pixel);
             rrect.FillStyle.Color = Color.Transparent;
             rrect.EditStyle.AllowSelect = false;
             rrect.LineStyle.LineColor = Color.Gray;
@@ -180,6 +181,13 @@ namespace DatabaseDiagram
             lblOneToMany.OffsetY = 40;
             rrect.Labels.Add(lblOneToMany);
 
+            Syncfusion.Windows.Forms.Diagram.Label lblManyToMany = new Syncfusion.Windows.Forms.Diagram.Label(rrect, ": Many To Many");
+            lblManyToMany.FontStyle.Family = "Segoe UI";
+            lblManyToMany.FontStyle.Size = 9;
+            lblManyToMany.OffsetX = 100;
+            lblManyToMany.OffsetY = 70;
+            rrect.Labels.Add(lblManyToMany);
+
             sqlDependencyDiagram.Model.AppendChild(rrect);
             LineConnector oneToOne = new LineConnector(new PointF(20, 50), new PointF(110, 50));
             oneToOne.EditStyle.AllowSelect = false;
@@ -192,6 +200,12 @@ namespace DatabaseDiagram
             oneToMany.TailDecorator.DecoratorShape = DecoratorShape.None;
             oneToMany.HeadDecorator.DecoratorShape = DecoratorShape.Circle;
             sqlDependencyDiagram.Model.AppendChild(oneToMany);
+
+            LineConnector manyToMany = new LineConnector(new PointF(20, 110), new PointF(110, 110));
+            manyToMany.EditStyle.AllowSelect = false;
+            manyToMany.TailDecorator.DecoratorShape = DecoratorShape.Circle;
+            manyToMany.HeadDecorator.DecoratorShape = DecoratorShape.Circle;
+            sqlDependencyDiagram.Model.AppendChild(manyToMany);
 
             // Read data from the XML data file and populate a Hashtable using the employee ID as the key
             Hashtable lstEmployees = this.ReadEmployeeDataFromXMLFile(updatedXml);
@@ -350,10 +364,9 @@ namespace DatabaseDiagram
 
             ortholink.LineStyle.LineWidth = 1f;
             ortholink.LineStyle.LineColor = Color.Black;
-            if (relation == "OneToMany")
-                ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
-            else
-                ortholink.TailDecorator.DecoratorShape = DecoratorShape.Circle;
+
+            if (relation == "OneToMany") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
+            else ortholink.TailDecorator.DecoratorShape = DecoratorShape.Circle;
 
             ortholink.HeadDecorator.DecoratorShape = DecoratorShape.Circle;
 
@@ -445,19 +458,25 @@ namespace DatabaseDiagram
         private void saveToolStripButton_Click(object sender, EventArgs e)
         {
             this.saveFileDialog1.FileName = "Diagram";
-            saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
+            //saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
+
+            saveFileDialog1.Title = "Save File:";
+            saveFileDialog1.Filter = @"EDD file(*.edd)|*.edd|XML file(*.xml)|*.xml|All files|*.*";
+
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 sqlDependencyDiagram.SaveBinary(saveFileDialog1.FileName);
+                //sqlDependencyDiagram.SaveSoap(saveFileDialog1.FileName);
             }
         }
 
         private void saveAsToolStripButton_Click(object sender, EventArgs e)
         {
-            this.saveFileDialog1.FileName = "Diagram";
             saveFileDialog1.Filter = @"EDD file(*.edd)|*.edd|XML file(*.xml)|*.xml|All files|*.*";
+            //this.saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
             saveFileDialog1.Title = "Save File As:";
             saveFileDialog1.FileName = "Diagram";
+
             if (saveFileDialog1.ShowDialog() == DialogResult.OK)
             {
                 switch (saveFileDialog1.FilterIndex)
@@ -465,11 +484,11 @@ namespace DatabaseDiagram
                     case 1:
                         sqlDependencyDiagram.SaveBinary(saveFileDialog1.FileName);
                         break;
-                    case 2:
-#if !NETCORE
-                        sqlDependencyDiagram.SaveSoap(saveFileDialog1.FileName);
-#endif
-                        break;
+                    //case 2:
+
+                    //    //sqlDependencyDiagram.SaveSoap(saveFileDialog1.FileName);
+
+                    //    break;
                     default:
                         sqlDependencyDiagram.SaveBinary(saveFileDialog1.FileName);
                         break;
@@ -526,34 +545,9 @@ namespace DatabaseDiagram
             }
         }
 
-        private void sVGToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            SaveFileDialog saveFileDialog1 = new SaveFileDialog();
-            saveFileDialog1.Filter = @"Scalable Vector Graphics Format(*.svg)|*.svg";
-            saveFileDialog1.FileName = "Diagram";
-            saveFileDialog1.Title = "Export Diagram As:";
-
-            if (saveFileDialog1.ShowDialog() == DialogResult.OK)
-            {
-
-                ToSvg tosvg = new ToSvg();
-                // Get Diagram Nodes Bounding Rectangle.
-                RectangleF rectBounding = this.sqlDependencyDiagram.Model.GetBoundingRect();
-                Graphics gfx = tosvg.GetRealGraphics(new Size((int)rectBounding.Width, (int)rectBounding.Height));
-                this.sqlDependencyDiagram.ExportDiagramToGraphics(gfx);
-                tosvg.Save(saveFileDialog1.FileName);
-
-            }
-            else
-            {
-                return;
-            }
-        }
-
         private void zoomInToolStripMenuItem_Click_1(object sender, EventArgs e)
         {
             sqlDependencyDiagram.View.ZoomIn();
-            sqlDependencyDiagram.Controller.ActivateTool("PanTool");
         }
 
         private void zoomOutToolStripMenuItem_Click_1(object sender, EventArgs e)
@@ -565,7 +559,93 @@ namespace DatabaseDiagram
         {
             sqlDependencyDiagram.View.ZoomToActual();
         }
+        private void submitStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //InitailizeDiagram();
+                //this.sqlDependencyDiagram.Refresh();
 
+                // get server & table name
+                string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
+                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
+
+                // call SQL to get dependency tables
+                var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}].[{selectedTable.TABLE_NAME}]");
+                dependencyTables.Add(selectedTable.TABLE_NAME);
+
+                // call SQL to build XML of dependency tables (inc. selected table)
+                var dependencyTablesMetaDataXML = _sqlController.RetrieveDependencyTablesMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
+
+                // add multiple PK's to XML
+                string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
+
+                // get relationship data
+                DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
+
+                InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables);
+                sqlDependencyDiagram.View.SelectionList.Clear();
+
+                // enable buttons
+                this.AreToolStripButtonsEnabled();
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+        private void printToolStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                if (sqlDependencyDiagram != null)
+                {
+                    PrintDocument printDoc = sqlDependencyDiagram.CreatePrintDocument();
+                    PrintPreviewDialog printPreviewDlg = new PrintPreviewDialog();
+                    printPreviewDlg.StartPosition = FormStartPosition.CenterScreen;
+                    printDoc.PrinterSettings.FromPage = 0;
+                    printDoc.PrinterSettings.ToPage = 0;
+                    printDoc.PrinterSettings.PrintRange = PrintRange.AllPages;
+                    printPreviewDlg.Document = printDoc;
+                    printPreviewDlg.ShowDialog(this);
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+        private void openStripButton_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                this.openFileDialog1.FileName = ".edd";
+                this.openFileDialog1.Filter = "EDD file(*.edd)|*.edd";
+                //this.openFileDialog1.Filter = @"EDD file(*.edd)|*.edd|XML file(*.xml)|*.xml|All files|*.*";
+                
+                if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
+                {
+                    //sqlDependencyDiagram.View.SelectionList.Clear();
+
+                    //sqlDependencyDiagram.BeginUpdate();
+                    //this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
+                    //this.sqlDependencyDiagram.Model.LineStyle.LineColor = Color.LightGray;
+                    //this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
+                    //InitailizeDiagram();
+                    //sqlDependencyDiagram.EndUpdate();
+
+                    this.sqlDependencyDiagram.LoadBinary(this.openFileDialog1.FileName);
+                    //this.sqlDependencyDiagram.LoadSoap(this.openFileDialog1.FileName);
+                    this.sqlDependencyDiagram.Refresh();
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
         #endregion
 
         #region Helper Methods
@@ -579,6 +659,25 @@ namespace DatabaseDiagram
             img.Save(filename, imageformat);
         }
 
+        private void AreToolStripButtonsEnabled()
+        {
+            try
+            {
+                if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
+                {
+                    this.printToolStripButton.Enabled = this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = true;
+                }
+                else
+                {
+                    this.printToolStripButton.Enabled = this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = false;
+                }
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+        
         #endregion
 
         private void DiagramGenerator_Load(object sender, EventArgs e)
@@ -655,56 +754,10 @@ namespace DatabaseDiagram
             }
         }
 
-        private void AreToolStripButtonsEnabled()
-        {
-            try
-            {
-                if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
-                {
-                    this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = true;
-                }
-                else
-                {
-                    this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = false;
-                }
-            }
-            catch (Exception ex)
-            {
-                _errorController.DisplayErrorMessage(ex.Message);
-            }
-        }
+      
 
-        private void submitStripButton_Click(object sender, EventArgs e)
-        {
-            try
-            {
-                // get server & table name
-                string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
-                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
+      
 
-                // call SQL to get dependency tables
-                var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}].[{selectedTable.TABLE_NAME}]");
-                dependencyTables.Add(selectedTable.TABLE_NAME);
-
-                // call SQL to build XML of dependency tables (inc. selected table)
-                var dependencyTablesMetaDataXML = _sqlController.RetrieveDependencyTablesMetaData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
-
-                // add multiple PK's to XML
-                string updatedXml = _xmlController.GenerateXmlDocFromDBData(dependencyTablesMetaDataXML);
-
-                // get relationship data
-                DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
-
-                InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables);
-                sqlDependencyDiagram.View.SelectionList.Clear();
-
-                // enable buttons
-                this.AreToolStripButtonsEnabled();
-            }
-            catch (Exception ex)
-            {
-                _errorController.DisplayErrorMessage(ex.Message);
-            }
-        }
+        
     }
 }

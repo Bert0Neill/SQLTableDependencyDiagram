@@ -4356,6 +4356,7 @@
   <ItemGroup>
     <EmbeddedResource Include="Forms\DiagramGenerator.resx">
       <DependentUpon>DiagramGenerator.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
@@ -4364,6 +4365,7 @@
     <EmbeddedResource Include="Resources\SqlStatements.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>SqlStatements.Designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources\TextStrings.resx">
       <Generator>ResXFileCodeGenerator</Generator>

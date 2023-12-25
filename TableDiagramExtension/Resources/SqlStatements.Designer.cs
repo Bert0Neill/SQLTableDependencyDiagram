@@ -90,18 +90,24 @@ namespace TableDiagramExtension.Resources {
         /// <summary>
         ///   Looks up a localized string similar to USE {0}
         ///--USE [AdventureWorksLT2014]
+        ///
+        ///IF OBJECT_ID(N&apos;tempdb..#TmpFKRelationship&apos;) IS NOT NULL
+        ///BEGIN
+        ///DROP TABLE #TmpFKRelationship
+        ///END
+        ///
+        ///SELECT * INTO #TmpFKRelationship FROM 
+        ///(
         ///SELECT 
+        ///	ROW_NUMBER() OVER (ORDER BY fk.name) AS RowCounter,
         ///    fk.name AS ForeignKeyName,
         ///    tp.name AS ParentTableName,
         ///    cp.name AS ParentColumnName,
-        ///    rf.name AS ReferencedTableName,
+        ///    rf.name AS ReferencedTableName,	
         ///    cr.name AS ReferencedColumnName,
+        ///	ist.TABLE_SCHEMA AS SchemaName,
         ///	CASE 
-        ///            WHEN OBJECTPROPERTY(fk.object_id, &apos;CnstIsPrimaryKey&apos;) = 1 THEN &apos;OneToOne&apos;
-        ///            WHEN (
-        ///                SELECT COUNT(DISTINCT rp.name)
-        ///                FROM sys.foreign_key_columns AS fkc
-        ///                JOIN sys.objects AS rp ON fkc.referenced_object_id = rp.ob [rest of string was truncated]&quot;;.
+        ///            WHEN OBJECTPROPERTY(fk.object_id,  [rest of string was truncated]&quot;;.
         /// </summary>
         internal static string RetrieveTableRelationships {
             get {
