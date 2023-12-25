@@ -154,6 +154,100 @@ SELECT
 					WHERE fk.parent_object_id = fkc.parent_object_id
 				) = 1 THEN 'OneToOne  '
             ELSE 'OneToMany '
+        END AS 'RelationshipType'	
+FROM sys.foreign_keys AS fk
+INNER JOIN sys.tables AS tp ON fk.parent_object_id = tp.object_id
+INNER JOIN sys.tables AS rf ON fk.referenced_object_id = rf.object_id
+INNER JOIN sys.foreign_key_columns AS fkc ON fk.object_id = fkc.constraint_object_id
+INNER JOIN sys.columns AS cp ON fkc.parent_column_id = cp.column_id AND fkc.parent_object_id = cp.object_id
+INNER JOIN sys.columns AS cr ON fkc.referenced_column_id = cr.column_id AND fkc.referenced_object_id = cr.object_id
+INNER JOIN INFORMATION_SCHEMA.TABLES ist on  rf.name = ist.TABLE_NAME -- join pn PK table
+
+--where tp.name  in ('CustomerAddress','Customer','Address') AND rf.name  in ('CustomerAddress','Customer','Address') 
+where tp.name  in ({1}) AND rf.name in ({1})
+
+) AS FK_Relationships;
+
+DECLARE @RowNum INT, @CurrentRowNum INT, @ColumnID NVARCHAR(MAX), @PKTable NVARCHAR(MAX),  @SchemaName NVARCHAR(MAX), @sqlCommand NVARCHAR(MAX), @PK_Occurance INT = 0;
+
+SELECT @CurrentRowNum = MAX(RowCounter) FROM #TmpFKRelationship     -- start with last row
+SELECT @RowNum = Count(*) From #TmpFKRelationship					-- total number of records
+
+WHILE @RowNum &gt; 0 --loop until no more records                          
+BEGIN   
+	-- retrieve values
+    SELECT	@SchemaName = SchemaName,
+			@PKTable = ReferencedTableName, 
+			@ColumnID = ReferencedColumnName 
+	FROM #TmpFKRelationship 
+	WHERE RowCounter= @CurrentRowNum 
+
+    -- print cast(@PKTable as char(50)) + ' ' + @ColumnID + ' ' -- debugging
+	
+	-- build dynamic SQL, if PK Table has duplicate PK values (composite PKs)
+	SET @sqlCommand = '
+    SELECT @PK_OccuranceOUT = COUNT(*)
+    FROM (
+        SELECT ' + QUOTENAME(@ColumnID) + '
+        FROM ' + QUOTENAME(@SchemaName) + '.' + QUOTENAME(@PKTable) + '
+        GROUP BY ' + QUOTENAME(@ColumnID) + '
+        HAVING COUNT(*) &gt; 1
+    ) AS DuplicatePKs;';
+	
+	EXEC sp_executesql @sqlCommand, N'@PK_OccuranceOUT INT OUTPUT', @PK_Occurance OUTPUT; -- Execute dynamic SQL
+	
+	IF (@PK_Occurance &gt; 0)
+	BEGIN
+		-- update relationship to M:M as PK table has duplicate PKs (must be composite PKs)
+		UPDATE #TmpFKRelationship SET RelationshipType = 'ManyToMany' WHERE RowCounter = @CurrentRowNum;
+	END
+
+    SELECT TOP 1 @CurrentRowNum=RowCounter FROM #TmpFKRelationship WHERE RowCounter &lt; @CurrentRowNum ORDER BY RowCounter DESC --next record
+    set @RowNum = @RowNum - 1 --decrease count
+END
+
+-- return to caller
+SELECT DISTINCT
+	ForeignKeyName,
+    ParentTableName,
+    ParentColumnName,
+    ReferencedTableName,	
+    ReferencedColumnName,	
+    TRIM(RelationshipType) AS RelationshipType,	
+	CASE 
+        WHEN isc.CHARACTER_MAXIMUM_LENGTH IS NULL THEN ' (' + UPPER(SUBSTRING(isc.DATA_TYPE, 1, 1)) + LOWER(SUBSTRING(isc.DATA_TYPE, 2, LEN(isc.DATA_TYPE))) + ')'
+        ELSE ' (' + UPPER(SUBSTRING(isc.DATA_TYPE, 1, 1)) + LOWER(SUBSTRING(isc.DATA_TYPE, 2, LEN(isc.DATA_TYPE))) + ' ' + CAST(isc.CHARACTER_MAXIMUM_LENGTH AS VARCHAR(4)) + ')' 
+    END AS ReferencedColumnDataType
+
+FROM #TmpFKRelationship
+	INNER JOIN INFORMATION_SCHEMA.COLUMNS isc on  ReferencedColumnName = isc.COLUMN_NAME -- join pn PK table column</value>
+    <comment>USE {0}
+--USE [AdventureWorksLT2014]
+
+IF OBJECT_ID(N'tempdb..#TmpFKRelationship') IS NOT NULL
+BEGIN
+DROP TABLE #TmpFKRelationship
+END
+
+SELECT * INTO #TmpFKRelationship FROM 
+(
+SELECT 
+	ROW_NUMBER() OVER (ORDER BY fk.name) AS RowCounter,
+    fk.name AS ForeignKeyName,
+    tp.name AS ParentTableName,
+    cp.name AS ParentColumnName,
+    rf.name AS ReferencedTableName,	
+    cr.name AS ReferencedColumnName,
+	ist.TABLE_SCHEMA AS SchemaName,
+	CASE 
+            WHEN OBJECTPROPERTY(fk.object_id, 'CnstIsPrimaryKey') = 1 THEN 'OneToOne  '
+            WHEN (
+					SELECT COUNT(DISTINCT rp.name)
+					FROM sys.foreign_key_columns AS fkc
+					JOIN sys.objects AS rp ON fkc.referenced_object_id = rp.object_id
+					WHERE fk.parent_object_id = fkc.parent_object_id
+				) = 1 THEN 'OneToOne  '
+            ELSE 'OneToMany '
         END AS 'RelationshipType'
 FROM 
     sys.foreign_keys AS fk
@@ -220,7 +314,7 @@ SELECT
     ReferencedTableName,	
     ReferencedColumnName,	
     TRIM(RelationshipType) AS RelationshipType
-FROM #TmpFKRelationship</value>
+FROM #TmpFKRelationship</comment>
   </data>
   <data name="SelectDatabaseTables" xml:space="preserve">
     <value>USE {0}
