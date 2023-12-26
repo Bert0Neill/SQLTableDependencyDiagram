@@ -40,6 +40,7 @@ namespace DatabaseDiagram
         private readonly IErrorController _errorController;
         private readonly XMLController _xmlController;
         private DatabaseMetaData selectedTable = null;
+        private bool IsCompact;
 
         #endregion
 
@@ -79,7 +80,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -120,6 +121,10 @@ namespace DatabaseDiagram
             try
             {
                 sqlDependencyDiagram.View.SelectionList.Clear();
+                //this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
+
+                this.sqlDependencyDiagram.Model.LineBridgingEnabled = true; //enabling for model
+                this.sqlDependencyDiagram.Model.LineRoutingEnabled = true; //enabling for model
             }
             catch (Exception ex)
             {
@@ -152,9 +157,11 @@ namespace DatabaseDiagram
                     else
                     {
                         tableCount++;
-                        pointLeft += 250; // over
+                        if (IsCompact) pointLeft += 250; // over
+                        else pointLeft += 300; // extra width needed for extra column properties
                     }
 
+                    // create table node on diagram
                     sqlDependencyDiagram.Model.Nodes[table].EditStyle.AllowDelete = false;
                     sqlDependencyDiagram.Model.Nodes[table].PinPoint = new PointF(pointLeft, pointRight);
                 }
@@ -180,6 +187,7 @@ namespace DatabaseDiagram
                 sqlDependencyDiagram.Model.Clear();
                 sqlDependencyDiagram.Model.BeginUpdate();
                 RoundRect rrect = new RoundRect(10, 10, 250, 100, MeasureUnits.Pixel);
+                rrect.TreatAsObstacle = true; //Enabling obstacle property for node
                 rrect.FillStyle.Color = Color.Transparent;
                 rrect.EditStyle.AllowSelect = false;
                 rrect.LineStyle.LineColor = Color.Gray;
@@ -232,16 +240,11 @@ namespace DatabaseDiagram
                 manyToMany.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
                 sqlDependencyDiagram.Model.AppendChild(manyToMany);
 
-                // Read data from the XML data file and populate a Hashtable using the table ID as the key
-                //Hashtable lstTables = this.ReadTableDataFromXMLFile(updatedXml);
-                //ArrayList sortedlist = new ArrayList(lstTables.Values); // not actually sorted
-
                 // convert for downstream fnx's
                 ArrayList sortedlist = new ArrayList(this.ReadTableDataFromXMLFile(updatedXml).Values);
 
                 // Create diagram symbol nodes for each employee and initialize the diagram
-                this.CreateOrgDiagramFromList(sortedlist, isCompact);
-                //lstTables.Clear();
+                this.CreateOrgDiagramFromList(sortedlist, isCompact);                
                 sortedlist.Clear();
 
                 //Make connection between nodes
@@ -336,7 +339,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
 
             return lstTables;
@@ -416,31 +419,93 @@ namespace DatabaseDiagram
         /// <summary>
         /// Connect Nodes with connectors
         /// </summary>
-        /// <param name="emplysymbol">Parent</param>
-        /// <param name="subemplysymbol">Child</param>
+        /// <param name="refTableSymbol">Parent</param>
+        /// <param name="parentSymbol">Child</param>
         /// <param name="relation">relationship</param>
-        private void ConnectNodes(Node emplysymbol, Node subemplysymbol, string relation)
+        private void ConnectNodes(Node refTableSymbol, Node parentSymbol, string relation)
         {
             try
             {
-                LineConnector ortholink = new LineConnector(PointF.Empty, new PointF(0, 1));
-                ortholink.EditStyle.AllowDelete = false;
-                ortholink.LineStyle.DashStyle = DashStyle.Solid;
+                // NB: nodes will already have been craeted
 
-                ortholink.LineStyle.LineWidth = 1f;
-                ortholink.LineStyle.LineColor = Color.Black;
-
-                if (relation == "OneToMany") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
-                else ortholink.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
-
-                ortholink.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
-
-                this.sqlDependencyDiagram.Model.AppendChild(ortholink);
-
-                if (emplysymbol.CentralPort != null && subemplysymbol.CentralPort != null)
+                if (refTableSymbol.CentralPort != null && parentSymbol.CentralPort != null)
                 {
-                    emplysymbol.CentralPort.TryConnect(ortholink.TailEndPoint);
-                    subemplysymbol.CentralPort.TryConnect(ortholink.HeadEndPoint);
+                    // check if self referencing join
+                    if (refTableSymbol.Name == parentSymbol.Name)
+                    {
+                        
+                        //enabling line routing for model
+                        this.sqlDependencyDiagram.Model.LineRoutingEnabled = true;
+
+                        refTableSymbol.EnableCentralPort = true;
+                        refTableSymbol.DrawPorts = false;                        
+                        refTableSymbol.TreatAsObstacle = true; //Enabling obstacle property for node
+
+                        //creating connection point ports.
+                        Syncfusion.Windows.Forms.Diagram.ConnectionPoint cp = new Syncfusion.Windows.Forms.Diagram.ConnectionPoint();
+                        Syncfusion.Windows.Forms.Diagram.ConnectionPoint cp1 = new Syncfusion.Windows.Forms.Diagram.ConnectionPoint();
+
+                        //Port position
+                        cp.Position = Syncfusion.Windows.Forms.Diagram.Position.TopCenter;
+                        cp1.Position = Syncfusion.Windows.Forms.Diagram.Position.MiddleLeft;
+
+                        //Adding port to the node
+                        refTableSymbol.Ports.Add(cp);
+                        refTableSymbol.Ports.Add(cp1);
+
+                        //Creating connector
+                        Syncfusion.Windows.Forms.Diagram.OrgLineConnector ortholink = new Syncfusion.Windows.Forms.Diagram.OrgLineConnector(new PointF(0, 0), new PointF(0, 0));
+
+                        ortholink.EditStyle.AllowDelete = false;
+                        ortholink.LineStyle.DashStyle = DashStyle.Solid;
+                        ortholink.LineStyle.LineWidth = 1f;
+                        ortholink.LineStyle.LineColor = Color.Black;
+
+                        // tail connector
+                        if (relation == "OneToMany" || relation == "OneToOne") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
+                        else ortholink.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
+
+                        // head connector
+                        if (relation == "OneToOne") ortholink.HeadDecorator.DecoratorShape = DecoratorShape.None;
+                        else ortholink.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
+
+                        //enabling roting to connector
+                        ortholink.LineRoutingEnabled = true;
+
+                        this.sqlDependencyDiagram.Model.AppendChild(ortholink);
+
+                        //specify head and tail port point to the connector
+                        refTableSymbol.CentralPort.TryConnect(ortholink.HeadEndPoint);
+                        //refTableSymbol.Ports[0].TryConnect(ortholink.HeadEndPoint);
+                        refTableSymbol.Ports[1].TryConnect(ortholink.TailEndPoint);
+                     
+                    }
+                    else
+                    {
+                        LineConnector ortholink = new LineConnector(PointF.Empty, new PointF(0, 1));
+                        ortholink.EditStyle.AllowDelete = false;
+                        ortholink.LineStyle.DashStyle = DashStyle.Solid;
+
+                        refTableSymbol.TreatAsObstacle = true; //Enabling obstacle property for node
+                        parentSymbol.TreatAsObstacle = true; //Enabling obstacle property for node
+
+                        ortholink.LineStyle.LineWidth = 1f;
+                        ortholink.LineStyle.LineColor = Color.Black;
+
+                        //if (relation == "OneToMany") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
+                        if (relation == "OneToMany" || relation == "OneToOne") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
+                        else ortholink.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
+
+                        if (relation == "OneToOne") ortholink.HeadDecorator.DecoratorShape = DecoratorShape.None;
+                        else ortholink.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
+
+                        ortholink.LineRoutingEnabled = true;
+
+                        this.sqlDependencyDiagram.Model.AppendChild(ortholink);
+
+                        refTableSymbol.CentralPort.TryConnect(ortholink.TailEndPoint);
+                        parentSymbol.CentralPort.TryConnect(ortholink.HeadEndPoint);
+                    }
                 }
 
                 this.sqlDependencyDiagram.Controller.SendToBack();
@@ -497,7 +562,7 @@ namespace DatabaseDiagram
         {
             try
             {
-                this.saveFileDialog1.FileName = "Diagram";
+                this.saveFileDialog1.FileName = "Diagram.edd";
                 //saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
 
                 saveFileDialog1.Title = "Save File:";
@@ -678,24 +743,12 @@ namespace DatabaseDiagram
         private void openStripButton_Click(object sender, EventArgs e)
         {
             try
-            {
-                this.openFileDialog1.FileName = ".edd";
+            {                
                 this.openFileDialog1.Filter = "EDD file(*.edd)|*.edd";
-                //this.openFileDialog1.Filter = @"EDD file(*.edd)|*.edd|XML file(*.xml)|*.xml|All files|*.*";
 
                 if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
                 {
-                    //sqlDependencyDiagram.View.SelectionList.Clear();
-
-                    //sqlDependencyDiagram.BeginUpdate();
-                    //this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
-                    //this.sqlDependencyDiagram.Model.LineStyle.LineColor = Color.LightGray;
-                    //this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
-                    //InitailizeDiagram();
-                    //sqlDependencyDiagram.EndUpdate();
-
                     this.sqlDependencyDiagram.LoadBinary(this.openFileDialog1.FileName);
-                    //this.sqlDependencyDiagram.LoadSoap(this.openFileDialog1.FileName);
                     this.sqlDependencyDiagram.Refresh();
                 }
             }
@@ -821,11 +874,13 @@ namespace DatabaseDiagram
 
         private void compactViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            IsCompact = true;
             this.GenerateDiagram(true);
         }
 
         private void dataTypeViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            IsCompact = false;
             this.GenerateDiagram(false);
         }
 

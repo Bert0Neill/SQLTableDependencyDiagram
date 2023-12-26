@@ -94,7 +94,7 @@ namespace TableDiagramExtension.Commands
                 Application.EnableVisualStyles();
 
                 DiagramGenerator frmDiagramGenerator = new DiagramGenerator(((TableDiagramExtensionPackage)package)._sharedData);
-                frmDiagramGenerator.Show();
+                frmDiagramGenerator.ShowDialog();
             }
             catch (Exception ex)
             {
