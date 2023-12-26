@@ -472,13 +472,14 @@ namespace DatabaseDiagram
                         //enabling roting to connector
                         ortholink.LineRoutingEnabled = true;
 
-                        this.sqlDependencyDiagram.Model.AppendChild(ortholink);
+                        
 
                         //specify head and tail port point to the connector
                         refTableSymbol.CentralPort.TryConnect(ortholink.HeadEndPoint);
                         //refTableSymbol.Ports[0].TryConnect(ortholink.HeadEndPoint);
                         refTableSymbol.Ports[1].TryConnect(ortholink.TailEndPoint);
-                     
+
+                        this.sqlDependencyDiagram.Model.AppendChild(ortholink);
                     }
                     else
                     {
