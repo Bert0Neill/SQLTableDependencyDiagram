@@ -59,12 +59,7 @@ namespace DatabaseDiagram
             this.pNGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.jPEGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gIFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zoomInToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.zoomInToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.zoomOutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.resetToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.submitStripButton = new System.Windows.Forms.ToolStripButton();
             this.panel2 = new System.Windows.Forms.Panel();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
@@ -156,9 +151,7 @@ namespace DatabaseDiagram
             this.openStripButton,
             this.saveToolStripButton,
             this.exportToolStripButton,
-            this.zoomInToolStripButton,
-            this.printToolStripButton,
-            this.submitStripButton});
+            this.printToolStripButton});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(1136, 25);
@@ -214,7 +207,7 @@ namespace DatabaseDiagram
             // 
             this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
             this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
-            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
             this.compactViewToolStripMenuItem.Text = "Compact View";
             this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
             // 
@@ -222,7 +215,7 @@ namespace DatabaseDiagram
             // 
             this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
             this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
-            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
             this.dataTypeViewToolStripMenuItem.Text = "Extended View";
             this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
             // 
@@ -291,46 +284,6 @@ namespace DatabaseDiagram
             this.gIFToolStripMenuItem.Text = "GIF";
             this.gIFToolStripMenuItem.Click += new System.EventHandler(this.gIFToolStripMenuItem_Click);
             // 
-            // zoomInToolStripButton
-            // 
-            this.zoomInToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.zoomInToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.zoomInToolStripMenuItem,
-            this.zoomOutToolStripMenuItem,
-            this.resetToolStripMenuItem});
-            this.zoomInToolStripButton.Enabled = false;
-            this.zoomInToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("zoomInToolStripButton.Image")));
-            this.zoomInToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.zoomInToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.zoomInToolStripButton.Name = "zoomInToolStripButton";
-            this.zoomInToolStripButton.ShowDropDownArrow = false;
-            this.zoomInToolStripButton.Size = new System.Drawing.Size(62, 22);
-            this.zoomInToolStripButton.Text = "Zoom";
-            this.zoomInToolStripButton.Visible = false;
-            // 
-            // zoomInToolStripMenuItem
-            // 
-            this.zoomInToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("zoomInToolStripMenuItem.Image")));
-            this.zoomInToolStripMenuItem.Name = "zoomInToolStripMenuItem";
-            this.zoomInToolStripMenuItem.Size = new System.Drawing.Size(137, 24);
-            this.zoomInToolStripMenuItem.Text = "ZoomIn";
-            this.zoomInToolStripMenuItem.Click += new System.EventHandler(this.zoomInToolStripMenuItem_Click_1);
-            // 
-            // zoomOutToolStripMenuItem
-            // 
-            this.zoomOutToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("zoomOutToolStripMenuItem.Image")));
-            this.zoomOutToolStripMenuItem.Name = "zoomOutToolStripMenuItem";
-            this.zoomOutToolStripMenuItem.Size = new System.Drawing.Size(137, 24);
-            this.zoomOutToolStripMenuItem.Text = "ZoomOut";
-            this.zoomOutToolStripMenuItem.Click += new System.EventHandler(this.zoomOutToolStripMenuItem_Click_1);
-            // 
-            // resetToolStripMenuItem
-            // 
-            this.resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            this.resetToolStripMenuItem.Size = new System.Drawing.Size(137, 24);
-            this.resetToolStripMenuItem.Text = "Reset";
-            this.resetToolStripMenuItem.Click += new System.EventHandler(this.resetToolStripMenuItem_Click_1);
-            // 
             // printToolStripButton
             // 
             this.printToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
@@ -342,16 +295,6 @@ namespace DatabaseDiagram
             this.printToolStripButton.Text = "Print";
             this.printToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
             this.printToolStripButton.Click += new System.EventHandler(this.printToolStripButton_Click);
-            // 
-            // submitStripButton
-            // 
-            this.submitStripButton.Enabled = false;
-            this.submitStripButton.Image = ((System.Drawing.Image)(resources.GetObject("submitStripButton.Image")));
-            this.submitStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.submitStripButton.Name = "submitStripButton";
-            this.submitStripButton.Size = new System.Drawing.Size(83, 22);
-            this.submitStripButton.Text = "Generate";
-            this.submitStripButton.Visible = false;
             // 
             // panel2
             // 
@@ -4573,17 +4516,12 @@ namespace DatabaseDiagram
         private System.Windows.Forms.ToolStripMenuItem gIFToolStripMenuItem;
         private Syncfusion.Windows.Forms.Diagram.Controls.Diagram sqlDependencyDiagram;
         private Syncfusion.Windows.Forms.Diagram.Model model1;
-        private System.Windows.Forms.ToolStripDropDownButton zoomInToolStripButton;
-        private System.Windows.Forms.ToolStripMenuItem zoomInToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem zoomOutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem resetToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
         private System.Windows.Forms.ToolStripLabel toolStripLabel1;
         private System.Windows.Forms.ToolStripComboBox cboDatabase;
         private System.Windows.Forms.ToolStripLabel toolStripLabel2;
         private System.Windows.Forms.ToolStripComboBox cboTable;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
-        private System.Windows.Forms.ToolStripButton submitStripButton;
         private System.Windows.Forms.ToolStripButton printToolStripButton;
         private System.Windows.Forms.ToolStripButton openStripButton;
         private System.Windows.Forms.ToolStripSplitButton viewSplitToolStripSplitButton;

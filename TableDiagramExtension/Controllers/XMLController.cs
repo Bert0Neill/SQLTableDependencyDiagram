@@ -66,6 +66,7 @@ namespace TableDiagramExtension.Controllers
 
                         if (columnDataType != "N/A")
                         {                            
+                            // add attribute, that will later be added to concrete class collection of columns
                             columnElementName.SetAttribute("ColumnDataType", columnDataType);
                         }
 

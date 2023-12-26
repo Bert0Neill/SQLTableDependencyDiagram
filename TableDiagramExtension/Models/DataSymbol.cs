@@ -67,7 +67,6 @@ namespace TableDiagramExtension.Models
                 this.AppendChild(rect);
 
                 float y_TextNode = 30;
-                //for (int i = 0; i < strColumnName.Count; i++)
                 for (int i = 0; i < columnDatas.Count; i++)
                 {
                     var columnField = rectWidth - 40;
