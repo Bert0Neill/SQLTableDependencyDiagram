@@ -730,11 +730,11 @@ namespace DatabaseDiagram
             {
                 if (this.sqlDependencyDiagram != null && this.sqlDependencyDiagram.Model != null)
                 {
-                    this.printToolStripButton.Enabled = this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = true;
+                    this.printToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = true;
                 }
                 else
                 {
-                    this.printToolStripButton.Enabled = this.zoomInToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = false;
+                    this.printToolStripButton.Enabled = this.exportToolStripButton.Enabled = this.saveToolStripButton.Enabled = false;
                 }
             }
             catch (Exception ex)
