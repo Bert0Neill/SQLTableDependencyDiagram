@@ -20,6 +20,7 @@ using System.Drawing;
 using System;
 using System.Collections.Generic;
 using static TableDiagramExtension.Models.CustomDiagramTable;
+using System.Linq;
 
 namespace TableDiagramExtension.Models
 {
@@ -28,18 +29,27 @@ namespace TableDiagramExtension.Models
     [System.Security.Permissions.PermissionSet(System.Security.Permissions.SecurityAction.Assert, Name = "FullTrust")]
     public class DataSymbol : Group
     {
-        public DataSymbol(ArrayList strColumnName, string strTableName, List<string> primaryKey, List<string> foreignKey, List<ColumnData> columnDatas, bool IsCompact)
+        public DataSymbol(ArrayList strColumnName, string strTableName, List<string> primaryKey, List<string> foreignKey, List<ColumnData> columnDatas, bool IsCompact, string initialTable)
             : base()
         {
             try
             {
                 this.Name = strTableName;
-                float rectHeight = (strColumnName.Count * 20) + 40;
-                float tmpColWidth = (strTableName.Length * 10);
-                float rectWidth = Math.Max(tmpColWidth, 150); // take the largest to give the table width space for name
+                float rectHeight = (strColumnName.Count * 20) + 40;                
+                float maxColumnSize = 0;
+
+                // base table width on longest column name or table name
+                if (IsCompact) maxColumnSize = columnDatas.Max(c => c.CompactColumnName.Length);                
+                else maxColumnSize = columnDatas.Max(c => c.NonCompactColumnName.Length);
+
+                if (maxColumnSize < strTableName.Length) maxColumnSize = strTableName.Length;
+
+                float tmpColWidth = (maxColumnSize * 8);
+                float rectWidth = Math.Max(tmpColWidth, 150); // default is 150 - take the largest to give the table width space for name
 
                 Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, rectWidth, rectHeight);
-                rect.FillStyle.Color = Color.WhiteSmoke;
+                if (initialTable != strTableName) rect.FillStyle.Color = Color.WhiteSmoke;
+                else rect.FillStyle.Color = Color.LightBlue;
                 rect.Name = "BaseNode";
 
                 // label - table name
@@ -61,7 +71,6 @@ namespace TableDiagramExtension.Models
                 for (int i = 0; i < columnDatas.Count; i++)
                 {
                     var columnField = rectWidth - 40;
-                    //TextNode txtNode = new TextNode(strColumnName[i].ToString(), new RectangleF(30, y_TextNode, columnField, 20));                    
                     TextNode txtNode = new TextNode(IsCompact ? columnDatas[i].CompactColumnName : columnDatas[i].NonCompactColumnName, new RectangleF(30, y_TextNode, columnField, 20));
                     txtNode.ReadOnly = true;
                     txtNode.FontStyle.Family = "Arial";
@@ -82,7 +91,6 @@ namespace TableDiagramExtension.Models
                     this.AppendChild(txtNode);
                     this.AppendChild(symRect);
 
-                    //if (primaryKey.Contains(strColumnName[i].ToString()))
                     if (primaryKey.Contains(columnDatas[i].CompactColumnName))
                     {
                         Bitmap bmp = new Bitmap(@"..\..\class diagram\DBPrimaryKey.png");
@@ -92,7 +100,6 @@ namespace TableDiagramExtension.Models
                         this.AppendChild(bmpNode);
                     }
 
-                    //if (foreignKey.Contains(strColumnName[i].ToString()))
                     if (foreignKey.Contains(columnDatas[i].CompactColumnName))
                     {
                         Bitmap bmp = new Bitmap(@"..\..\class diagram\ForeignKey.png");

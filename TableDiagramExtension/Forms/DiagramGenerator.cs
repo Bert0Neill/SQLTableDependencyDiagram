@@ -39,6 +39,7 @@ namespace DatabaseDiagram
         private readonly ISQLController _sqlController;
         private readonly IErrorController _errorController;
         private readonly XMLController _xmlController;
+        private DatabaseMetaData selectedTable = null;
 
         #endregion
 
@@ -401,7 +402,7 @@ namespace DatabaseDiagram
 
             try
             {
-                Symbol = new DataSymbol(dgmTable.Coloumns, dgmTable.TableName, dgmTable.PrimaryKeyID, dgmTable.ForeignKeyID, dgmTable.ColumnDatas, isCompact);
+                Symbol = new DataSymbol(dgmTable.Coloumns, dgmTable.TableName, dgmTable.PrimaryKeyID, dgmTable.ForeignKeyID, dgmTable.ColumnDatas, isCompact, selectedTable.TABLE_NAME);
                 this.sqlDependencyDiagram.Model.AppendChild(Symbol);
                 return Symbol;
             }
@@ -834,7 +835,7 @@ namespace DatabaseDiagram
             {
                 // get server & table name
                 string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
-                DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
+                selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
 
                 // call SQL to get dependency tables
                 var dependencyTables = _sqlController.RetrieveDependencyTables(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, $"[{selectedTable.TABLE_SCHEMA}].[{selectedTable.TABLE_NAME}]");
