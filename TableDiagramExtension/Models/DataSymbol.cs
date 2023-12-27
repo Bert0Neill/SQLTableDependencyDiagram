@@ -12,6 +12,7 @@ using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
+using TableDiagramExtension.Resources;
 using static TableDiagramExtension.Models.CustomDiagramTable;
 
 namespace TableDiagramExtension.Models
@@ -43,7 +44,7 @@ namespace TableDiagramExtension.Models
                 if (initialTable != strTableName) rect.FillStyle.Color = Color.WhiteSmoke;
                 else rect.FillStyle.Color = Color.LightBlue;
                 
-                rect.Name = "BaseNode";
+                rect.Name = TextStrings.BaseNode;
                 rect.TreatAsObstacle = true;
 
                 // label - table name
@@ -107,7 +108,7 @@ namespace TableDiagramExtension.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
     }

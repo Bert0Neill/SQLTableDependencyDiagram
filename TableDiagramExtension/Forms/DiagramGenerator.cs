@@ -80,7 +80,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -126,7 +126,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -171,7 +171,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -252,7 +252,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -273,7 +273,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -337,7 +337,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
 
             return lstTables;
@@ -370,7 +370,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -392,7 +392,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -413,7 +413,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
                 return Symbol;
             }
         }
@@ -460,11 +460,11 @@ namespace DatabaseDiagram
                         ortholink.LineStyle.LineColor = Color.Black;
 
                         // tail connector
-                        if (relation == "OneToMany" || relation == "OneToOne") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
+                        if (relation == TextStrings.OneToMany || relation == TextStrings.OneToOne) ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
                         else ortholink.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
 
                         // head connector
-                        if (relation == "OneToOne") ortholink.HeadDecorator.DecoratorShape = DecoratorShape.None;
+                        if (relation == TextStrings.OneToOne) ortholink.HeadDecorator.DecoratorShape = DecoratorShape.None;
                         else ortholink.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
 
                         //enabling roting to connector
@@ -485,10 +485,10 @@ namespace DatabaseDiagram
                         ortholink.LineStyle.LineWidth = 1f;
                         ortholink.LineStyle.LineColor = Color.Black;
 
-                        if (relation == "OneToMany" || relation == "OneToOne") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
+                        if (relation == TextStrings.OneToMany || relation == TextStrings.OneToOne) ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
                         else ortholink.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
 
-                        if (relation == "OneToOne") ortholink.HeadDecorator.DecoratorShape = DecoratorShape.None;
+                        if (relation == TextStrings.OneToOne) ortholink.HeadDecorator.DecoratorShape = DecoratorShape.None;
                         else ortholink.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
 
                         ortholink.LineRoutingEnabled = true;
@@ -504,7 +504,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -527,7 +527,7 @@ namespace DatabaseDiagram
                     {
                         sqlDependencyDiagram.Controller.TextEditor.BeginEdit(gnode, false);
                     }
-                    if (gnode.Name == "BaseNode")
+                    if (gnode.Name == TextStrings.BaseNode)
                     {
                         if (prevbNode == null)
                             prevbNode = gnode;
@@ -546,7 +546,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -557,7 +557,7 @@ namespace DatabaseDiagram
                 this.saveFileDialog1.FileName = "Diagram.edd";
                 //saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
 
-                saveFileDialog1.Title = "Save File:";
+                saveFileDialog1.Title = TextStrings.SaveFile;
                 saveFileDialog1.Filter = @"EDD file(*.edd)|*.edd|XML file(*.xml)|*.xml|All files|*.*";
 
                 if (saveFileDialog1.ShowDialog() == DialogResult.OK)
@@ -567,7 +567,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -576,7 +576,6 @@ namespace DatabaseDiagram
             try
             {
                 saveFileDialog1.Filter = @"EDD file(*.edd)|*.edd|XML file(*.xml)|*.xml|All files|*.*";
-                //this.saveFileDialog1.Filter = "EDD file(*.edd)|*.edd";
                 saveFileDialog1.Title = "Save File As:";
                 saveFileDialog1.FileName = "Diagram";
 
@@ -600,7 +599,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -623,7 +622,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -646,7 +645,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -670,7 +669,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -682,7 +681,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -694,7 +693,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -706,7 +705,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }        
 
@@ -728,7 +727,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -746,7 +745,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
         #endregion
@@ -765,7 +764,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -784,7 +783,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -801,7 +800,7 @@ namespace DatabaseDiagram
                 // retrieve dropdown values
                 activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString);
 
-                activeDBs.Insert(0, "Please select database");
+                activeDBs.Insert(0, TextStrings.PleaseSelectDatabase);
 
                 if (activeDBs.Count > 1)
                 {
@@ -812,7 +811,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -829,7 +828,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -854,13 +853,13 @@ namespace DatabaseDiagram
                     //var comboData = initialData.Select(tbl => tbl.TABLE_NAME).Distinct().ToList();
                     this.cboTable.ComboBox.DataSource = null;
                     this.cboTable.ComboBox.DataSource = distinctTables;
-                    this.cboTable.ComboBox.DisplayMember = "TABLE_NAME";
+                    this.cboTable.ComboBox.DisplayMember = TextStrings.TABLE_NAME;
                     this.cboTable.Enabled = true;
                 }
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
 
@@ -905,7 +904,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.StackTrace);
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
     }

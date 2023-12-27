@@ -122,7 +122,7 @@ namespace TableDiagramExtension.Controllers
 
         public DataTable RetrieveRelationshipData(string initialConnectionString, string activeDatabase, List<string> dependencyTables)
         {
-            DataTable results = new DataTable() { TableName = "Relationships" };
+            DataTable results = new DataTable() { TableName = TextStrings.Relationships };
 
             try
             {

@@ -117,11 +117,56 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="BaseNode" xml:space="preserve">
+    <value>BaseNode</value>
+  </data>
+  <data name="Column" xml:space="preserve">
+    <value>Column</value>
+  </data>
+  <data name="ColumnDataType" xml:space="preserve">
+    <value>ColumnDataType</value>
+  </data>
+  <data name="dataroot" xml:space="preserve">
+    <value>dataroot</value>
+  </data>
+  <data name="Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ForeignKey" xml:space="preserve">
+    <value>ForeignKey</value>
+  </data>
+  <data name="IsPrimaryKey" xml:space="preserve">
+    <value>IsPrimaryKey</value>
+  </data>
+  <data name="NA" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="OneToMany" xml:space="preserve">
+    <value>OneToMany</value>
+  </data>
+  <data name="OneToOne" xml:space="preserve">
+    <value>OneToOne</value>
+  </data>
   <data name="PleaseSelectDatabase" xml:space="preserve">
     <value>Please select database</value>
   </data>
   <data name="PleaseSelectTable" xml:space="preserve">
     <value>Please select table</value>
+  </data>
+  <data name="PrimaryKey" xml:space="preserve">
+    <value>PrimaryKey</value>
+  </data>
+  <data name="Relationships" xml:space="preserve">
+    <value>Relationships</value>
+  </data>
+  <data name="SaveFile" xml:space="preserve">
+    <value>Save File:</value>
+  </data>
+  <data name="schIns" xml:space="preserve">
+    <value>http://www.w3.org/2001/XMLSchema-instance</value>
   </data>
   <data name="StandardErrorMessage" xml:space="preserve">
     <value>An error has occured. 
@@ -130,5 +175,17 @@ Please review the ActivityLog.xml file for more information.</value>
   </data>
   <data name="StandardErrorMessageTitle" xml:space="preserve">
     <value>Application Error</value>
+  </data>
+  <data name="Table" xml:space="preserve">
+    <value>Table</value>
+  </data>
+  <data name="TableId" xml:space="preserve">
+    <value>TableId</value>
+  </data>
+  <data name="TABLE_NAME" xml:space="preserve">
+    <value>TABLE_NAME</value>
+  </data>
+  <data name="urn" xml:space="preserve">
+    <value>urn:schemas-microsoft-com:officedata</value>
   </data>
 </root>

@@ -3,6 +3,7 @@ using System.Windows.Forms;
 using System.Xml;
 using System.Xml.Linq;
 using TableDiagramExtension.Interfaces;
+using TableDiagramExtension.Resources;
 
 namespace TableDiagramExtension.Controllers
 {
@@ -18,10 +19,10 @@ namespace TableDiagramExtension.Controllers
                 XmlDocument xmlDocFormatted = new XmlDocument();
 
                 // Create the root element <dataroot>
-                XmlElement datarootElement = xmlDocFormatted.CreateElement("dataroot");
-                datarootElement.SetAttribute("xmlns:od", "urn:schemas-microsoft-com:officedata");
-                datarootElement.SetAttribute("xmlns:xsi", "http://www.w3.org/2001/XMLSchema-instance");                
-                datarootElement.SetAttribute("generated", "2005-01-18T15:03:23");
+                XmlElement datarootElement = xmlDocFormatted.CreateElement(TextStrings.dataroot);
+                datarootElement.SetAttribute("xmlns:od", TextStrings.urn);
+                datarootElement.SetAttribute("xmlns:xsi", TextStrings.schIns);                
+                datarootElement.SetAttribute("generated", "2023-01-18T15:03:23");
                 
                 xmlDocFormatted.AppendChild(datarootElement);
 
@@ -29,46 +30,46 @@ namespace TableDiagramExtension.Controllers
                 XDocument xmlDoc = XDocument.Parse(xmlString);
 
                 // Accessing Table elements and attributes
-                var tableElements = xmlDoc.Descendants("Table");
+                var tableElements = xmlDoc.Descendants(TextStrings.Table);
                 foreach (var tableElement in tableElements)
                 {
                     //string schema = tableElement.Attribute("Schema").Value;
-                    string tableName = tableElement.Attribute("Name").Value;
-                    string tableId = tableElement.Attribute("TableId").Value;
+                    string tableName = tableElement.Attribute(TextStrings.Name).Value;
+                    string tableId = tableElement.Attribute(TextStrings.TableId).Value;
 
                     // add <Address>
                     XmlElement xmlFormattedTableRoot = xmlDocFormatted.CreateElement(tableName);
 
                     // add to xmlDocFormatted node <TableID>123</TableID> to <Address> node
-                    XmlElement tableElementID = xmlDocFormatted.CreateElement("TableId");
+                    XmlElement tableElementID = xmlDocFormatted.CreateElement(TextStrings.TableId);
                     tableElementID.InnerText = tableId;
                     xmlFormattedTableRoot.AppendChild(tableElementID);
 
                     // Accessing Column elements and attributes within each Table
-                    var columnElements = tableElement.Elements("Column");
+                    var columnElements = tableElement.Elements(TextStrings.Column);
 
                     foreach (var columnElement in columnElements)
                     {
-                        string columnName = columnElement.Attribute("Name").Value;
-                        string isPrimaryKey = columnElement.Attribute("IsPrimaryKey").Value;
-                        string columnDataType = columnElement.Attribute("ColumnDataType")?.Value ?? "N/A"; ;
-                        string isForeignKey = columnElement.Attribute("ForeignKey")?.Value ?? "N/A";
+                        string columnName = columnElement.Attribute(TextStrings.Name).Value;
+                        string isPrimaryKey = columnElement.Attribute(TextStrings.IsPrimaryKey).Value;
+                        string columnDataType = columnElement.Attribute(TextStrings.ColumnDataType)?.Value ?? TextStrings.NA; ;
+                        string isForeignKey = columnElement.Attribute(TextStrings.ForeignKey)?.Value ?? TextStrings.NA;
 
                         // add column node <EmpID>EmpID</EmpID>
                         XmlElement columnElementName = xmlDocFormatted.CreateElement(columnName);
                         columnElementName.InnerText = columnName;
                         xmlFormattedTableRoot.AppendChild(columnElementName);
 
-                        if (columnDataType != "N/A")
+                        if (columnDataType != TextStrings.NA)
                         {                            
                             // add attribute, that will later be added to concrete class collection of columns
-                            columnElementName.SetAttribute("ColumnDataType", columnDataType);
+                            columnElementName.SetAttribute(TextStrings.ColumnDataType, columnDataType);
                         }
 
-                        if (isForeignKey != "N/A")
+                        if (isForeignKey != TextStrings.NA)
                         {
                             // add <ForeignKey> 123 </ForeignKey>
-                            XmlElement foreignKeyElementName = xmlDocFormatted.CreateElement("ForeignKey");
+                            XmlElement foreignKeyElementName = xmlDocFormatted.CreateElement(TextStrings.ForeignKey);
                             foreignKeyElementName.InnerText = columnName;
                             xmlFormattedTableRoot.AppendChild(foreignKeyElementName);
                         }
@@ -76,7 +77,7 @@ namespace TableDiagramExtension.Controllers
                         if (isPrimaryKey == "1")
                         {
                             // add <PrimaryKey> empID </PrimaryKey>
-                            XmlElement primaryKeyElementName = xmlDocFormatted.CreateElement("PrimaryKey");
+                            XmlElement primaryKeyElementName = xmlDocFormatted.CreateElement(TextStrings.PrimaryKey);
                             primaryKeyElementName.InnerText = columnName;
                             xmlFormattedTableRoot.AppendChild(primaryKeyElementName);
                         }
@@ -90,10 +91,9 @@ namespace TableDiagramExtension.Controllers
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.Message, TextStrings.Error, MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return string.Empty;
             }
         }
-
     }
 }

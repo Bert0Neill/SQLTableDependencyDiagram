@@ -61,6 +61,105 @@ namespace TableDiagramExtension.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to BaseNode.
+        /// </summary>
+        internal static string BaseNode {
+            get {
+                return ResourceManager.GetString("BaseNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Column.
+        /// </summary>
+        internal static string Column {
+            get {
+                return ResourceManager.GetString("Column", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ColumnDataType.
+        /// </summary>
+        internal static string ColumnDataType {
+            get {
+                return ResourceManager.GetString("ColumnDataType", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dataroot.
+        /// </summary>
+        internal static string dataroot {
+            get {
+                return ResourceManager.GetString("dataroot", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error.
+        /// </summary>
+        internal static string Error {
+            get {
+                return ResourceManager.GetString("Error", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to ForeignKey.
+        /// </summary>
+        internal static string ForeignKey {
+            get {
+                return ResourceManager.GetString("ForeignKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to IsPrimaryKey.
+        /// </summary>
+        internal static string IsPrimaryKey {
+            get {
+                return ResourceManager.GetString("IsPrimaryKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to N/A.
+        /// </summary>
+        internal static string NA {
+            get {
+                return ResourceManager.GetString("NA", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Name.
+        /// </summary>
+        internal static string Name {
+            get {
+                return ResourceManager.GetString("Name", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OneToMany.
+        /// </summary>
+        internal static string OneToMany {
+            get {
+                return ResourceManager.GetString("OneToMany", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to OneToOne.
+        /// </summary>
+        internal static string OneToOne {
+            get {
+                return ResourceManager.GetString("OneToOne", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Please select database.
         /// </summary>
         internal static string PleaseSelectDatabase {
@@ -75,6 +174,42 @@ namespace TableDiagramExtension.Resources {
         internal static string PleaseSelectTable {
             get {
                 return ResourceManager.GetString("PleaseSelectTable", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to PrimaryKey.
+        /// </summary>
+        internal static string PrimaryKey {
+            get {
+                return ResourceManager.GetString("PrimaryKey", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Relationships.
+        /// </summary>
+        internal static string Relationships {
+            get {
+                return ResourceManager.GetString("Relationships", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save File:.
+        /// </summary>
+        internal static string SaveFile {
+            get {
+                return ResourceManager.GetString("SaveFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to http://www.w3.org/2001/XMLSchema-instance.
+        /// </summary>
+        internal static string schIns {
+            get {
+                return ResourceManager.GetString("schIns", resourceCulture);
             }
         }
         
@@ -95,6 +230,42 @@ namespace TableDiagramExtension.Resources {
         internal static string StandardErrorMessageTitle {
             get {
                 return ResourceManager.GetString("StandardErrorMessageTitle", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Table.
+        /// </summary>
+        internal static string Table {
+            get {
+                return ResourceManager.GetString("Table", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TABLE_NAME.
+        /// </summary>
+        internal static string TABLE_NAME {
+            get {
+                return ResourceManager.GetString("TABLE_NAME", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to TableId.
+        /// </summary>
+        internal static string TableId {
+            get {
+                return ResourceManager.GetString("TableId", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to urn:schemas-microsoft-com:officedata.
+        /// </summary>
+        internal static string urn {
+            get {
+                return ResourceManager.GetString("urn", resourceCulture);
             }
         }
     }
