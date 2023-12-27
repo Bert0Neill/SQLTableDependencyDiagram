@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="TableDiagramExtension.0d78cf91-8492-4f16-acdc-d27c716d3b03" Version="1.1" Language="en-US" Publisher="Bert O'Neill" />
-        <DisplayName>TableDiagramExtension</DisplayName>
+        <Identity Id="AutoTableDiagramExtension.0d78cf91-8492-4f16-acdc-d27c716d3b03" Version="1.2" Language="en-US" Publisher="Bert O'Neill" />
+        <DisplayName>AutoTableDiagramExtension</DisplayName>
         <Description xml:space="preserve">This SSMS 'Table Diagram Extension' will quickly get the related tables to a selected table, and create an ER diagram. Showing the references, prinary and foreign keys between the tables (including self-references).
 To which, you can export as an image or print the disgram.
 
