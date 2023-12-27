@@ -1,21 +1,12 @@
-﻿using Microsoft.SqlServer.Management.Smo;
-using Microsoft.SqlServer.Management.Smo.RegSvrEnum;
-using Newtonsoft.Json.Linq;
-using System;
-using System.Collections;
+﻿using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
-using System.IO;
 using System.Linq;
-using System.Linq.Expressions;
 using System.Text;
-using System.Threading.Tasks;
-using TableDiagramExtension.Classes;
 using TableDiagramExtension.Interfaces;
 using TableDiagramExtension.Models;
 using TableDiagramExtension.Resources;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace TableDiagramExtension.Controllers
 {

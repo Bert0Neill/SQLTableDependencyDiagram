@@ -197,7 +197,10 @@
     </Content>
     <Content Include="Commands\Resources\Diagram.png" />
     <Content Include="Commands\Resources\MenuDiagramCommand.png" />
-    <Content Include="database_storage_server_network_file_icon_190636.ico" />
+    <Content Include="database_storage_server_network_file_icon_190636.ico">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <IncludeInVSIX>true</IncludeInVSIX>
+    </Content>
     <Content Include="Data\Database.xml" />
     <Content Include="Data\Database1.xml" />
     <Content Include="Data\Database2.xml" />

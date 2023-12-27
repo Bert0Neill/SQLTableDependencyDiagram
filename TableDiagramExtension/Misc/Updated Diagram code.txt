@@ -9,15 +9,15 @@ Bert ONeill
 
 Sun, Dec 17 at 11:27 PM
 
-#region Copyright Syncfusion Inc. 2001-2023.
+#region Copyright Bert O'Neill
 
-// Copyright Syncfusion Inc. 2001-2023. All rights reserved.
+// Copyright Bert O'Neill All rights reserved.
 
 // Use of this code is subject to the terms of our license.
 
 // A copy of the current license can be obtained at any time by e-mailing
 
-// licensing@syncfusion.com. Any infringement will be prosecuted under
+// bertoneill@yahoo.com. Any infringement will be prosecuted under
 
 // applicable laws.
 
