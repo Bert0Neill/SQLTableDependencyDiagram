@@ -42,7 +42,9 @@ namespace TableDiagramExtension.Models
                 Syncfusion.Windows.Forms.Diagram.Rectangle rect = new Syncfusion.Windows.Forms.Diagram.Rectangle(0, 0, rectWidth, rectHeight);
                 if (initialTable != strTableName) rect.FillStyle.Color = Color.WhiteSmoke;
                 else rect.FillStyle.Color = Color.LightBlue;
+                
                 rect.Name = "BaseNode";
+                rect.TreatAsObstacle = true;
 
                 // label - table name
                 Syncfusion.Windows.Forms.Diagram.Label lbl = new Syncfusion.Windows.Forms.Diagram.Label(rect, strTableName);

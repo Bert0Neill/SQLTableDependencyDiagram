@@ -11,6 +11,9 @@ The concept is to get you up to speed on a section of the database schema - not 
         <Tags>SSMS Extension ERD Diagrams</Tags>
     </Metadata>
     <Installation>
+        <InstallationTarget Version="[16.0,18.0)" Id="Microsoft.VisualStudio.Community">
+            <ProductArchitecture>amd64</ProductArchitecture>
+        </InstallationTarget>
     </Installation>
     <Dependencies>
         <Dependency Id="Microsoft.Framework.NDP" DisplayName="Microsoft .NET Framework" d:Source="Manual" Version="[4.5,)" />

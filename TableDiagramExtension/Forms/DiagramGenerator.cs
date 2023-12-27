@@ -120,11 +120,9 @@ namespace DatabaseDiagram
         {
             try
             {
-                sqlDependencyDiagram.View.SelectionList.Clear();
-                //this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
-
-                this.sqlDependencyDiagram.Model.LineBridgingEnabled = true; //enabling for model
+                this.sqlDependencyDiagram.View.SelectionList.Clear();                
                 this.sqlDependencyDiagram.Model.LineRoutingEnabled = true; //enabling for model
+                //this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
             }
             catch (Exception ex)
             {
@@ -357,6 +355,10 @@ namespace DatabaseDiagram
                 // Temporarily suspend the Diagram Model redrawing
                 this.sqlDependencyDiagram.Model.BeginUpdate();
 
+                // route connector lines around obstacles
+                this.sqlDependencyDiagram.Model.LineRouter.DistanceToObstacles = 10;
+                this.sqlDependencyDiagram.Model.LineRouter.RoutingMode = RoutingMode.Automatic;
+
                 foreach (CustomDiagramTable table in aryTables)
                 {
                     Group tableSymbol = InsertSymbolEmployee(table, isCompact);
@@ -426,20 +428,16 @@ namespace DatabaseDiagram
         {
             try
             {
-                // NB: nodes will already have been craeted
-
                 if (refTableSymbol.CentralPort != null && parentSymbol.CentralPort != null)
                 {
                     // check if self referencing join
                     if (refTableSymbol.Name == parentSymbol.Name)
                     {
-                        
                         //enabling line routing for model
                         this.sqlDependencyDiagram.Model.LineRoutingEnabled = true;
 
                         refTableSymbol.EnableCentralPort = true;
                         refTableSymbol.DrawPorts = false;                        
-                        refTableSymbol.TreatAsObstacle = true; //Enabling obstacle property for node
 
                         //creating connection point ports.
                         Syncfusion.Windows.Forms.Diagram.ConnectionPoint cp = new Syncfusion.Windows.Forms.Diagram.ConnectionPoint();
@@ -447,7 +445,7 @@ namespace DatabaseDiagram
 
                         //Port position
                         cp.Position = Syncfusion.Windows.Forms.Diagram.Position.TopCenter;
-                        cp1.Position = Syncfusion.Windows.Forms.Diagram.Position.MiddleLeft;
+                        cp1.Position = Syncfusion.Windows.Forms.Diagram.Position.MiddleRight;
 
                         //Adding port to the node
                         refTableSymbol.Ports.Add(cp);
@@ -472,11 +470,8 @@ namespace DatabaseDiagram
                         //enabling roting to connector
                         ortholink.LineRoutingEnabled = true;
 
-                        
-
                         //specify head and tail port point to the connector
                         refTableSymbol.CentralPort.TryConnect(ortholink.HeadEndPoint);
-                        //refTableSymbol.Ports[0].TryConnect(ortholink.HeadEndPoint);
                         refTableSymbol.Ports[1].TryConnect(ortholink.TailEndPoint);
 
                         this.sqlDependencyDiagram.Model.AppendChild(ortholink);
@@ -487,13 +482,9 @@ namespace DatabaseDiagram
                         ortholink.EditStyle.AllowDelete = false;
                         ortholink.LineStyle.DashStyle = DashStyle.Solid;
 
-                        refTableSymbol.TreatAsObstacle = true; //Enabling obstacle property for node
-                        parentSymbol.TreatAsObstacle = true; //Enabling obstacle property for node
-
                         ortholink.LineStyle.LineWidth = 1f;
                         ortholink.LineStyle.LineColor = Color.Black;
 
-                        //if (relation == "OneToMany") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
                         if (relation == "OneToMany" || relation == "OneToOne") ortholink.TailDecorator.DecoratorShape = DecoratorShape.None;
                         else ortholink.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
 
