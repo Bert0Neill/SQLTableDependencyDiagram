@@ -21,6 +21,7 @@ using System;
 using System.Collections.Generic;
 using static TableDiagramExtension.Models.CustomDiagramTable;
 using System.Linq;
+using System.Reflection;
 
 namespace TableDiagramExtension.Models
 {
@@ -92,7 +93,7 @@ namespace TableDiagramExtension.Models
 
                     if (primaryKey.Contains(columnDatas[i].CompactColumnName))
                     {
-                        Bitmap bmp = new Bitmap(@"..\..\class diagram\DBPrimaryKey.png");
+                        Bitmap bmp = new Bitmap(Properties.Resources.DBPrimaryKey);
                         BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
                         bmpNode.LineStyle.LineColor = Color.Transparent;
                         bmpNode.EditStyle.AllowSelect = false;
@@ -101,7 +102,7 @@ namespace TableDiagramExtension.Models
 
                     if (foreignKey.Contains(columnDatas[i].CompactColumnName))
                     {
-                        Bitmap bmp = new Bitmap(@"..\..\class diagram\ForeignKey.png");
+                        Bitmap bmp = new Bitmap(Properties.Resources.ForeignKey);
                         BitmapNode bmpNode = new BitmapNode(bmp, new RectangleF(symRect.BoundingRectangle.X + 5, symRect.BoundingRectangle.Y + 5, symRect.BoundingRectangle.Width - 10, symRect.BoundingRectangle.Height - 10));
                         bmpNode.LineStyle.LineColor = Color.Transparent;
                         bmpNode.EditStyle.AllowSelect = false;
@@ -113,9 +114,8 @@ namespace TableDiagramExtension.Models
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show(ex.StackTrace, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
         }
-
     }
 }

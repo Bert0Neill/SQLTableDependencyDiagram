@@ -80,7 +80,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -128,7 +128,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -173,7 +173,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -254,7 +254,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -275,7 +275,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -339,7 +339,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
 
             return lstTables;
@@ -368,7 +368,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -390,7 +390,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -411,7 +411,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
                 return Symbol;
             }
         }
@@ -513,7 +513,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -555,7 +555,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -576,7 +576,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -609,7 +609,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -632,7 +632,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -655,7 +655,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -679,7 +679,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -691,7 +691,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -703,7 +703,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -715,7 +715,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }        
 
@@ -737,7 +737,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -755,7 +755,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
         #endregion
@@ -774,7 +774,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -793,7 +793,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -821,7 +821,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -838,7 +838,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -869,7 +869,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
 
@@ -914,7 +914,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(ex.StackTrace);
             }
         }
     }
