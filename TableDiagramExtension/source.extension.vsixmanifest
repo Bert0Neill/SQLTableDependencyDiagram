@@ -13,7 +13,7 @@ Instead of trying to understand the full schema and then make your way to the su
         <PreviewImage>Extended View Table with multiple FKs.png</PreviewImage>
         <Tags>SSMS Extension ERD Diagrams</Tags>
     </Metadata>
-    <Installation InstalledByMsi="true">
+    <Installation>
         <InstallationTarget Version="[17.0,18.0)" Id="Microsoft.VisualStudio.Community">
             <ProductArchitecture>amd64</ProductArchitecture>
         </InstallationTarget>
