@@ -3,11 +3,14 @@
     <Metadata>
         <Identity Id="TableDiagramExtension.0d78cf91-8492-4f16-acdc-d27c716d3b03" Version="1.1" Language="en-US" Publisher="Bert O'Neill" />
         <DisplayName>TableDiagramExtension</DisplayName>
-        <Description xml:space="preserve">This SSMS 'Table Diagram Extension' will quickly get the related tables to your selected table and create an ER diagram. Showing the references, prinary and foreign keys.
-To which, you can export as an image to shqare or print out.
+        <Description xml:space="preserve">This SSMS 'Table Diagram Extension' will quickly get the related tables to a selected table, and create an ER diagram. Showing the references, prinary and foreign keys between the tables (including self-references).
+To which, you can export as an image or print the disgram.
 
-The concept is to get you up to speed on a section of the database schema - not all the schema at one, but creating bite size diagrams of related tables.</Description>
+The concept is to get you up to speed on a sub-section of the database schema - not all the schema at one, but creating bite sized diagrams, of related tables.
+For e.g. you may be working with a banking database, but it has tables that are goverment oriented or tavbles that are specifically related certain typ[es of transactions.
+Instead of trying to understand the full schema and then make your way to the sub-section of tables, just give all the tables related to a particular table I am interested in.</Description>
         <Icon>database_storage_server_network_file_icon_190636.ico</Icon>
+        <PreviewImage>Extended View Table with multiple FKs.png</PreviewImage>
         <Tags>SSMS Extension ERD Diagrams</Tags>
     </Metadata>
     <Installation>
