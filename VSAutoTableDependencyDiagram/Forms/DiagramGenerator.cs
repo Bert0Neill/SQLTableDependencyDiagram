@@ -3,7 +3,6 @@
 // Use of this code is subject to the terms of our license.
 // Any infringement will be prosecuted under applicable laws. 
 #endregion
-using Microsoft.VisualStudio.Imaging;
 using Syncfusion.SVG.IO;
 using Syncfusion.Windows.Forms.Diagram;
 using Syncfusion.Windows.Forms.Diagram.Controls;
@@ -41,48 +40,39 @@ namespace DatabaseDiagram
         private readonly XMLController _xmlController;
         private DatabaseMetaData selectedTable = null;
         private bool IsCompact;
+        private List<string> activeDBs;
 
         #endregion
 
         #region Form initialize
         public DiagramGenerator()
         {
-            InitializeComponent();
-            sqlDependencyDiagram.BeginUpdate();
-            this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
-            this.sqlDependencyDiagram.Model.LineStyle.LineColor = Color.LightGray;
-            this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
-            InitailizeDiagram();
-            DiagramAppearance();
-            sqlDependencyDiagram.EndUpdate();
-
-            sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
-
-            toolStripTextBoxConnectionString.Text = "Enter your database connection string..."; // Set initial placeholder text
-            toolStripTextBoxConnectionString.ForeColor = SystemColors.GrayText; // Set initial placeholder text color
-
-            toolStripTextBoxConnectionString.GotFocus += toolStripTextBoxConnectionString_GotFocus;
-            toolStripTextBoxConnectionString.LostFocus += toolStripTextBoxConnectionString_LostFocus;
-
-        }
-
-        private void toolStripTextBoxConnectionString_LostFocus(object sender, EventArgs e)
-        {
-            ToolStripTextBox textBox = (ToolStripTextBox)sender;
-            if (string.IsNullOrWhiteSpace(textBox.Text))
+            try
             {
-                textBox.Text = "Enter your database connection string...for e.g. Data Source=.\\MSSQLSERVER01;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
-                textBox.ForeColor = SystemColors.GrayText; // Set placeholder text color
+                InitializeComponent();
+
+                sqlDependencyDiagram.BeginUpdate();
+
+                this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
+                this.sqlDependencyDiagram.Model.LineStyle.LineColor = Color.LightGray;
+                this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
+
+                InitailizeDiagram();
+                DiagramAppearance();
+
+                sqlDependencyDiagram.EndUpdate();
+
+                //sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
+
+                this._sqlController = new SQLController();
+                this._sharedData = new SharedData();
+                _errorController = new ErrorController();
+                _xmlController = new XMLController();
+                toolStripTextBoxConnectionString.TextChanged += toolStripTextBoxConnectionString_TextChanged;
             }
-        }
-
-        private void toolStripTextBoxConnectionString_GotFocus(object sender, EventArgs e)
-        {
-            ToolStripTextBox textBox = (ToolStripTextBox)sender;
-            if (textBox.Text == "Enter your database connection string...for e.g. Data Source=.\\MSSQLSERVER01;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")
+            catch (Exception ex)
             {
-                textBox.Text = string.Empty;
-                textBox.ForeColor = SystemColors.ControlText; // Set regular text color
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -98,12 +88,26 @@ namespace DatabaseDiagram
                 InitailizeDiagram();
                 DiagramAppearance();
                 sqlDependencyDiagram.EndUpdate();
-                sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
+
+                //sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
 
                 _sharedData = sharedData;
                 _sqlController = new SQLController();
                 _errorController = new ErrorController();
                 _xmlController = new XMLController();
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
+        }
+
+        private void toolStripTextBoxConnectionString_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                if (this.toolStripTextBoxConnectionString.Text.Trim() != string.Empty) toolStripButtonDBConnect.Enabled = true;
+                else toolStripButtonDBConnect.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -147,7 +151,7 @@ namespace DatabaseDiagram
         {
             try
             {
-                this.sqlDependencyDiagram.View.SelectionList.Clear();                
+                this.sqlDependencyDiagram.View.SelectionList.Clear();
                 this.sqlDependencyDiagram.Model.LineRoutingEnabled = true; //enabling for model
                 //this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
             }
@@ -269,7 +273,7 @@ namespace DatabaseDiagram
                 ArrayList sortedlist = new ArrayList(this.ReadTableDataFromXMLFile(updatedXml).Values);
 
                 // Create diagram symbol nodes for each employee and initialize the diagram
-                this.CreateOrgDiagramFromList(sortedlist, isCompact);                
+                this.CreateOrgDiagramFromList(sortedlist, isCompact);
                 sortedlist.Clear();
 
                 //Make connection between nodes
@@ -464,7 +468,7 @@ namespace DatabaseDiagram
                         this.sqlDependencyDiagram.Model.LineRoutingEnabled = true;
 
                         refTableSymbol.EnableCentralPort = true;
-                        refTableSymbol.DrawPorts = false;                        
+                        refTableSymbol.DrawPorts = false;
 
                         //creating connection point ports.
                         Syncfusion.Windows.Forms.Diagram.ConnectionPoint cp = new Syncfusion.Windows.Forms.Diagram.ConnectionPoint();
@@ -507,7 +511,7 @@ namespace DatabaseDiagram
                     {
                         LineConnector ortholink = new LineConnector(PointF.Empty, new PointF(0, 1));
                         ortholink.EditStyle.AllowDelete = false;
-                        ortholink.LineStyle.DashStyle = DashStyle.Solid;                        
+                        ortholink.LineStyle.DashStyle = DashStyle.Solid;
 
                         ortholink.LineStyle.LineWidth = 1f;
                         ortholink.LineStyle.LineColor = Color.Black;
@@ -734,7 +738,7 @@ namespace DatabaseDiagram
             {
                 _errorController.DisplayErrorMessage(ex.Message);
             }
-        }        
+        }
 
         private void printToolStripButton_Click(object sender, EventArgs e)
         {
@@ -761,7 +765,7 @@ namespace DatabaseDiagram
         private void openStripButton_Click(object sender, EventArgs e)
         {
             try
-            {                
+            {
                 this.openFileDialog1.Filter = "EDD file(*.edd)|*.edd";
 
                 if (this.openFileDialog1.ShowDialog() == DialogResult.OK)
@@ -820,21 +824,7 @@ namespace DatabaseDiagram
         {
             try
             {
-                List<string> activeDBs;
-                this.cboDatabase.Enabled = false;
-                this.cboTable.Enabled = false;
-
-                //// retrieve dropdown values
-                //activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlConnectionString);
-
-                //activeDBs.Insert(0, TextStrings.PleaseSelectDatabase);
-
-                //if (activeDBs.Count > 1)
-                //{
-                //    this.cboDatabase.ComboBox.DataSource = null;
-                //    this.cboDatabase.ComboBox.DataSource = activeDBs;
-                //    this.cboDatabase.Enabled = true;
-                //}
+                this.toolStripButtonDBConnect.Enabled = this.cboDatabase.Enabled = this.cboTable.Enabled = false;
             }
             catch (Exception ex)
             {
@@ -877,7 +867,6 @@ namespace DatabaseDiagram
                 {
                     var distinctTables = initialData.GroupBy(p => p.TABLE_NAME).Select(g => g.First()).ToList();
 
-                    //var comboData = initialData.Select(tbl => tbl.TABLE_NAME).Distinct().ToList();
                     this.cboTable.ComboBox.DataSource = null;
                     this.cboTable.ComboBox.DataSource = distinctTables;
                     this.cboTable.ComboBox.DisplayMember = TextStrings.TABLE_NAME;
@@ -892,14 +881,29 @@ namespace DatabaseDiagram
 
         private void compactViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IsCompact = true;
-            this.GenerateDiagram(true);
+            try
+            {
+                IsCompact = true;
+                this.GenerateDiagram(true);
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
         }
 
         private void dataTypeViewToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            IsCompact = false;
-            this.GenerateDiagram(false);
+            try
+            {
+                IsCompact = false;
+                this.GenerateDiagram(false);
+                this.GenerateDiagram(true);
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
+            }
         }
 
         private void GenerateDiagram(bool isCompact = true)
@@ -942,13 +946,41 @@ namespace DatabaseDiagram
 
             try
             {
-                // attemprt to connect to DB
-                // connect and get a list of DB's and populate DB dropdown
+                string formattedConnectionString = this.toolStripTextBoxConnectionString.Text.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
+                using (SqlConnection connection = new SqlConnection(formattedConnectionString))
+                {
+                    connection.Open();
+                    _sharedData.SqlConnectionString = formattedConnectionString;
+                }
+
+                RetrieveDatabases(); // if reached - connect valid
 
             }
             catch (SqlException sqlEx)
             {
-                _errorController.DisplayErrorMessage("Not able to connect to database, please check your connection string.");
+                _errorController.DisplayErrorMessage("Not able to connect to database, please check that the connection string is correct and try again.");
+            }
+        }
+
+        private void RetrieveDatabases()
+        {
+            try
+            {
+                // retrieve dropdown values
+                activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlConnectionString);
+
+                activeDBs.Insert(0, TextStrings.PleaseSelectDatabase);
+
+                if (activeDBs.Count > 1)
+                {
+                    this.cboDatabase.ComboBox.DataSource = null;
+                    this.cboDatabase.ComboBox.DataSource = activeDBs;
+                    this.cboDatabase.Enabled = true;
+                }                
+            }
+            catch (Exception ex)
+            {
+                _errorController.DisplayErrorMessage(ex.Message);
             }
         }
     }

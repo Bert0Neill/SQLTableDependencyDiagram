@@ -54,8 +54,8 @@ namespace DatabaseDiagram
             this.toolStripLabel6 = new System.Windows.Forms.ToolStripLabel();
             this.cboTable = new System.Windows.Forms.ToolStripComboBox();
             this.viewSplitToolStripSplitButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.compactViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataTypeViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator5 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -68,7 +68,7 @@ namespace DatabaseDiagram
             this.toolStripConnectionString = new System.Windows.Forms.ToolStrip();
             this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
             this.toolStripTextBoxConnectionString = new System.Windows.Forms.ToolStripTextBox();
-            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
+            this.toolStripButtonDBConnect = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.sqlDependencyDiagram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.model1)).BeginInit();
             this.panel2.SuspendLayout();
@@ -4354,7 +4354,7 @@ namespace DatabaseDiagram
             this.toolStripActions.Location = new System.Drawing.Point(1, 35);
             this.toolStripActions.Name = "toolStripActions";
             this.toolStripActions.Padding = new System.Windows.Forms.Padding(0, 4, 1, 0);
-            this.toolStripActions.Size = new System.Drawing.Size(1197, 25);
+            this.toolStripActions.Size = new System.Drawing.Size(1197, 29);
             this.toolStripActions.Stretch = true;
             this.toolStripActions.TabIndex = 2;
             this.toolStripActions.Text = "toolStrip2";
@@ -4373,6 +4373,7 @@ namespace DatabaseDiagram
             this.cboDatabase.Margin = new System.Windows.Forms.Padding(10, 0, 1, 0);
             this.cboDatabase.Name = "cboDatabase";
             this.cboDatabase.Size = new System.Drawing.Size(250, 25);
+            this.cboDatabase.SelectedIndexChanged += new System.EventHandler(this.cboDatabase_SelectedIndexChanged);
             // 
             // toolStripLabel6
             // 
@@ -4386,12 +4387,14 @@ namespace DatabaseDiagram
             this.cboTable.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.cboTable.Name = "cboTable";
             this.cboTable.Size = new System.Drawing.Size(250, 25);
+            this.cboTable.SelectedIndexChanged += new System.EventHandler(this.cboTable_SelectedIndexChanged);
             // 
             // viewSplitToolStripSplitButton
             // 
             this.viewSplitToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem1,
-            this.toolStripMenuItem2});
+            this.compactViewToolStripMenuItem,
+            this.dataTypeViewToolStripMenuItem});
+
             this.viewSplitToolStripSplitButton.Enabled = false;
             this.viewSplitToolStripSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("viewSplitToolStripSplitButton.Image")));
             this.viewSplitToolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -4399,19 +4402,21 @@ namespace DatabaseDiagram
             this.viewSplitToolStripSplitButton.Size = new System.Drawing.Size(121, 22);
             this.viewSplitToolStripSplitButton.Text = "Diagram Type";
             // 
-            // toolStripMenuItem1
+            // compactViewToolStripMenuItem
             // 
-            this.toolStripMenuItem1.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-            this.toolStripMenuItem1.Size = new System.Drawing.Size(198, 24);
-            this.toolStripMenuItem1.Text = "Compact View";
+            this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
+            this.compactViewToolStripMenuItem.Name = "toolStripMenuItem1";
+            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.compactViewToolStripMenuItem.Text = "Compact View";
+            this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem2
+            // dataTypeViewToolStripMenuItem
             // 
-            this.toolStripMenuItem2.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem2.Image")));
-            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
-            this.toolStripMenuItem2.Size = new System.Drawing.Size(198, 24);
-            this.toolStripMenuItem2.Text = "Extended View";
+            this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem2.Image")));
+            this.dataTypeViewToolStripMenuItem.Name = "toolStripMenuItem2";
+            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.dataTypeViewToolStripMenuItem.Text = "Extended View";
+            this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
             // 
             // toolStripSeparator5
             // 
@@ -4457,21 +4462,21 @@ namespace DatabaseDiagram
             // 
             this.toolStripMenuItem3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem3.Image")));
             this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(198, 24);
+            this.toolStripMenuItem3.Size = new System.Drawing.Size(110, 24);
             this.toolStripMenuItem3.Text = "PNG";
             // 
             // toolStripMenuItem4
             // 
             this.toolStripMenuItem4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem4.Image")));
             this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(198, 24);
+            this.toolStripMenuItem4.Size = new System.Drawing.Size(110, 24);
             this.toolStripMenuItem4.Text = "JPEG";
             // 
             // toolStripMenuItem5
             // 
             this.toolStripMenuItem5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem5.Image")));
             this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(198, 24);
+            this.toolStripMenuItem5.Size = new System.Drawing.Size(110, 24);
             this.toolStripMenuItem5.Text = "GIF";
             // 
             // printToolStripButton
@@ -4503,7 +4508,7 @@ namespace DatabaseDiagram
             this.toolStripConnectionString.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripLabel3,
             this.toolStripTextBoxConnectionString,
-            this.toolStripButton1});
+            this.toolStripButtonDBConnect});
             this.toolStripConnectionString.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStripConnectionString.Location = new System.Drawing.Point(0, 0);
             this.toolStripConnectionString.Name = "toolStripConnectionString";
@@ -4527,16 +4532,16 @@ namespace DatabaseDiagram
             this.toolStripTextBoxConnectionString.Size = new System.Drawing.Size(850, 25);
             this.toolStripTextBoxConnectionString.ToolTipText = "Enter the connection string to your database and click \'Connect To Database\'";
             // 
-            // toolStripButton1
+            // toolStripButtonDBConnect
             // 
-            this.toolStripButton1.Image = global::VSAutoTableDependencyDiagram.Properties.Resources.ConnectToDatabase;
-            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.toolStripButton1.Name = "toolStripButton1";
-            this.toolStripButton1.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
-            this.toolStripButton1.Size = new System.Drawing.Size(154, 22);
-            this.toolStripButton1.Text = "Connect To Database";
-            this.toolStripButton1.ToolTipText = "Connect to database";
-            this.toolStripButton1.Click += new System.EventHandler(this.toolStripButton1_Click);
+            this.toolStripButtonDBConnect.Image = global::VSAutoTableDependencyDiagram.Properties.Resources.ConnectToDatabase;
+            this.toolStripButtonDBConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButtonDBConnect.Name = "toolStripButtonDBConnect";
+            this.toolStripButtonDBConnect.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.toolStripButtonDBConnect.Size = new System.Drawing.Size(154, 22);
+            this.toolStripButtonDBConnect.Text = "Connect To Database";
+            this.toolStripButtonDBConnect.ToolTipText = "Connect to database";
+            this.toolStripButtonDBConnect.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
             // DiagramGenerator
             // 
@@ -4580,8 +4585,8 @@ namespace DatabaseDiagram
         private System.Windows.Forms.ToolStripLabel toolStripLabel6;
         private System.Windows.Forms.ToolStripComboBox cboTable;
         private System.Windows.Forms.ToolStripDropDownButton viewSplitToolStripSplitButton;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem compactViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dataTypeViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
@@ -4594,7 +4599,7 @@ namespace DatabaseDiagram
         private System.Windows.Forms.ToolStrip toolStripConnectionString;
         private System.Windows.Forms.ToolStripLabel toolStripLabel3;
         private System.Windows.Forms.ToolStripTextBox toolStripTextBoxConnectionString;
-        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripButton toolStripButtonDBConnect;
     }
 }
 
