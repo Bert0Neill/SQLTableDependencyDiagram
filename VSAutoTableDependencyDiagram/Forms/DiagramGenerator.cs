@@ -796,17 +796,17 @@ namespace DatabaseDiagram
                 this.cboDatabase.Enabled = false;
                 this.cboTable.Enabled = false;
 
-                // retrieve dropdown values
-                activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlConnectionString);
+                //// retrieve dropdown values
+                //activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlConnectionString);
 
-                activeDBs.Insert(0, TextStrings.PleaseSelectDatabase);
+                //activeDBs.Insert(0, TextStrings.PleaseSelectDatabase);
 
-                if (activeDBs.Count > 1)
-                {
-                    this.cboDatabase.ComboBox.DataSource = null;
-                    this.cboDatabase.ComboBox.DataSource = activeDBs;
-                    this.cboDatabase.Enabled = true;
-                }
+                //if (activeDBs.Count > 1)
+                //{
+                //    this.cboDatabase.ComboBox.DataSource = null;
+                //    this.cboDatabase.ComboBox.DataSource = activeDBs;
+                //    this.cboDatabase.Enabled = true;
+                //}
             }
             catch (Exception ex)
             {

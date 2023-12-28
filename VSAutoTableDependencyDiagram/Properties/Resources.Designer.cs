@@ -83,6 +83,16 @@ namespace VSAutoTableDependencyDiagram.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap Diagram {
+            get {
+                object obj = ResourceManager.GetObject("Diagram", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap ForeignKey {
             get {
                 object obj = ResourceManager.GetObject("ForeignKey", resourceCulture);
@@ -97,15 +107,6 @@ namespace VSAutoTableDependencyDiagram.Properties {
             get {
                 object obj = ResourceManager.GetObject("SSMSTableDependencyDiagramLogo", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Ngo9BigBOggjHTQxAR8/V1NHaF5cWWdCf1FpRmJGdld5fUVHYVZUTXxaS00DNHVRdkdgWH1cc3VSQ2BeV.
-        /// </summary>
-        internal static string SyncfusionKey {
-            get {
-                return ResourceManager.GetString("SyncfusionKey", resourceCulture);
             }
         }
     }
