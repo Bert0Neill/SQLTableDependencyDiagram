@@ -49,6 +49,9 @@ namespace DatabaseDiagram
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.cboTable = new System.Windows.Forms.ToolStripComboBox();
+            this.viewSplitToolStripSplitButton = new System.Windows.Forms.ToolStripDropDownButton();
+            this.compactViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dataTypeViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.openStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
@@ -62,9 +65,6 @@ namespace DatabaseDiagram
             this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
             this.colorDialog1 = new System.Windows.Forms.ColorDialog();
             this.ImageList = new System.Windows.Forms.ImageList(this.components);
-            this.viewSplitToolStripSplitButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.compactViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dataTypeViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             ((System.ComponentModel.ISupportInitialize)(this.sqlDependencyDiagram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.model1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -190,6 +190,35 @@ namespace DatabaseDiagram
             this.cboTable.Size = new System.Drawing.Size(200, 25);
             this.cboTable.SelectedIndexChanged += new System.EventHandler(this.cboTable_SelectedIndexChanged);
             // 
+            // viewSplitToolStripSplitButton
+            // 
+            this.viewSplitToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.compactViewToolStripMenuItem,
+            this.dataTypeViewToolStripMenuItem});
+            this.viewSplitToolStripSplitButton.Enabled = false;
+            this.viewSplitToolStripSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("viewSplitToolStripSplitButton.Image")));
+            this.viewSplitToolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.viewSplitToolStripSplitButton.Name = "viewSplitToolStripSplitButton";
+            this.viewSplitToolStripSplitButton.Size = new System.Drawing.Size(121, 22);
+            this.viewSplitToolStripSplitButton.Text = "Diagram Type";
+            this.viewSplitToolStripSplitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // compactViewToolStripMenuItem
+            // 
+            this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
+            this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
+            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.compactViewToolStripMenuItem.Text = "Compact View";
+            this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
+            // 
+            // dataTypeViewToolStripMenuItem
+            // 
+            this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
+            this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
+            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.dataTypeViewToolStripMenuItem.Text = "Extended View";
+            this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
+            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
@@ -237,7 +266,7 @@ namespace DatabaseDiagram
             // 
             this.pNGToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pNGToolStripMenuItem.Image")));
             this.pNGToolStripMenuItem.Name = "pNGToolStripMenuItem";
-            this.pNGToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.pNGToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.pNGToolStripMenuItem.Text = "PNG";
             this.pNGToolStripMenuItem.Click += new System.EventHandler(this.pNGToolStripMenuItem_Click);
             // 
@@ -245,7 +274,7 @@ namespace DatabaseDiagram
             // 
             this.jPEGToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("jPEGToolStripMenuItem.Image")));
             this.jPEGToolStripMenuItem.Name = "jPEGToolStripMenuItem";
-            this.jPEGToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.jPEGToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.jPEGToolStripMenuItem.Text = "JPEG";
             this.jPEGToolStripMenuItem.Click += new System.EventHandler(this.jPEGToolStripMenuItem_Click);
             // 
@@ -253,7 +282,7 @@ namespace DatabaseDiagram
             // 
             this.gIFToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("gIFToolStripMenuItem.Image")));
             this.gIFToolStripMenuItem.Name = "gIFToolStripMenuItem";
-            this.gIFToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.gIFToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.gIFToolStripMenuItem.Text = "GIF";
             this.gIFToolStripMenuItem.Click += new System.EventHandler(this.gIFToolStripMenuItem_Click);
             // 
@@ -4449,35 +4478,6 @@ namespace DatabaseDiagram
             this.ImageList.Images.SetKeyName(4160, "ZoomToFit.png");
             this.ImageList.Images.SetKeyName(4161, "ZoomToggle.png");
             this.ImageList.Images.SetKeyName(4162, "ZoomToWidth.png");
-            // 
-            // viewSplitToolStripSplitButton
-            // 
-            this.viewSplitToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.compactViewToolStripMenuItem,
-            this.dataTypeViewToolStripMenuItem});
-            this.viewSplitToolStripSplitButton.Enabled = false;
-            this.viewSplitToolStripSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("viewSplitToolStripSplitButton.Image")));
-            this.viewSplitToolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.viewSplitToolStripSplitButton.Name = "viewSplitToolStripSplitButton";
-            this.viewSplitToolStripSplitButton.Size = new System.Drawing.Size(121, 22);
-            this.viewSplitToolStripSplitButton.Text = "Diagram Type";
-            this.viewSplitToolStripSplitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            // 
-            // compactViewToolStripMenuItem
-            // 
-            this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
-            this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
-            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
-            this.compactViewToolStripMenuItem.Text = "Compact View";
-            this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
-            // 
-            // dataTypeViewToolStripMenuItem
-            // 
-            this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
-            this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
-            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
-            this.dataTypeViewToolStripMenuItem.Text = "Extended View";
-            this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
             // 
             // DiagramGenerator
             // 

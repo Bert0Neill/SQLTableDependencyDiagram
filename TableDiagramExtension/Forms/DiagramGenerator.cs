@@ -480,7 +480,7 @@ namespace DatabaseDiagram
                     {
                         LineConnector ortholink = new LineConnector(PointF.Empty, new PointF(0, 1));
                         ortholink.EditStyle.AllowDelete = false;
-                        ortholink.LineStyle.DashStyle = DashStyle.Solid;
+                        ortholink.LineStyle.DashStyle = DashStyle.Solid;                        
 
                         ortholink.LineStyle.LineWidth = 1f;
                         ortholink.LineStyle.LineColor = Color.Black;
@@ -897,6 +897,8 @@ namespace DatabaseDiagram
                 DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlOlapConnectionInfoBase.ConnectionString, selectedDatabase, dependencyTables);
 
                 InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables, isCompact);
+
+                // sqlDependencyDiagram.FitDocument(); // need zooming and scrolling for this to work correctly
                 sqlDependencyDiagram.View.SelectionList.Clear();
 
                 // enable buttons
