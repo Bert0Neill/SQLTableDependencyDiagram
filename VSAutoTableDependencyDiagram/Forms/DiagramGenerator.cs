@@ -3,6 +3,7 @@
 // Use of this code is subject to the terms of our license.
 // Any infringement will be prosecuted under applicable laws. 
 #endregion
+using Microsoft.VisualStudio.Imaging;
 using Syncfusion.SVG.IO;
 using Syncfusion.Windows.Forms.Diagram;
 using Syncfusion.Windows.Forms.Diagram.Controls;
@@ -10,6 +11,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Drawing.Imaging;
@@ -55,6 +57,33 @@ namespace DatabaseDiagram
             sqlDependencyDiagram.EndUpdate();
 
             sqlDependencyDiagram.EventSink.NodeClick += new NodeMouseEventHandler(EventSink_NodeClick);
+
+            toolStripTextBoxConnectionString.Text = "Enter your database connection string..."; // Set initial placeholder text
+            toolStripTextBoxConnectionString.ForeColor = SystemColors.GrayText; // Set initial placeholder text color
+
+            toolStripTextBoxConnectionString.GotFocus += toolStripTextBoxConnectionString_GotFocus;
+            toolStripTextBoxConnectionString.LostFocus += toolStripTextBoxConnectionString_LostFocus;
+
+        }
+
+        private void toolStripTextBoxConnectionString_LostFocus(object sender, EventArgs e)
+        {
+            ToolStripTextBox textBox = (ToolStripTextBox)sender;
+            if (string.IsNullOrWhiteSpace(textBox.Text))
+            {
+                textBox.Text = "Enter your database connection string...for e.g. Data Source=.\\MSSQLSERVER01;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False";
+                textBox.ForeColor = SystemColors.GrayText; // Set placeholder text color
+            }
+        }
+
+        private void toolStripTextBoxConnectionString_GotFocus(object sender, EventArgs e)
+        {
+            ToolStripTextBox textBox = (ToolStripTextBox)sender;
+            if (textBox.Text == "Enter your database connection string...for e.g. Data Source=.\\MSSQLSERVER01;Integrated Security=True;Connect Timeout=30;Encrypt=False;Trust Server Certificate=False;Application Intent=ReadWrite;Multi Subnet Failover=False")
+            {
+                textBox.Text = string.Empty;
+                textBox.ForeColor = SystemColors.ControlText; // Set regular text color
+            }
         }
 
         public DiagramGenerator(SharedData sharedData)
@@ -908,6 +937,19 @@ namespace DatabaseDiagram
             }
         }
 
-       
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+
+            try
+            {
+                // attemprt to connect to DB
+                // connect and get a list of DB's and populate DB dropdown
+
+            }
+            catch (SqlException sqlEx)
+            {
+                _errorController.DisplayErrorMessage("Not able to connect to database, please check your connection string.");
+            }
+        }
     }
 }
