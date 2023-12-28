@@ -38,7 +38,7 @@ namespace DatabaseDiagram
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            Syncfusion.Windows.Forms.Diagram.Binding binding1 = new Syncfusion.Windows.Forms.Diagram.Binding();
+            Syncfusion.Windows.Forms.Diagram.Binding binding2 = new Syncfusion.Windows.Forms.Diagram.Binding();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(DiagramGenerator));
             this.sqlDependencyDiagram = new Syncfusion.Windows.Forms.Diagram.Controls.Diagram(this.components);
             this.model1 = new Syncfusion.Windows.Forms.Diagram.Model(this.components);
@@ -49,10 +49,18 @@ namespace DatabaseDiagram
             this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
             this.toolStripLabel2 = new System.Windows.Forms.ToolStripLabel();
             this.cboTable = new System.Windows.Forms.ToolStripComboBox();
+            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
+            this.toolStripLabel3 = new System.Windows.Forms.ToolStripLabel();
+            this.toolStripTextBox1 = new System.Windows.Forms.ToolStripTextBox();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
+            this.ImageList = new System.Windows.Forms.ImageList(this.components);
             this.viewSplitToolStripSplitButton = new System.Windows.Forms.ToolStripDropDownButton();
             this.compactViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dataTypeViewToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
             this.openStripButton = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.exportToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
@@ -60,11 +68,7 @@ namespace DatabaseDiagram
             this.jPEGToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.gIFToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
-            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
-            this.colorDialog1 = new System.Windows.Forms.ColorDialog();
-            this.ImageList = new System.Windows.Forms.ImageList(this.components);
+            this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.sqlDependencyDiagram)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.model1)).BeginInit();
             this.panel1.SuspendLayout();
@@ -75,13 +79,13 @@ namespace DatabaseDiagram
             // sqlDependencyDiagram
             // 
             this.sqlDependencyDiagram.BackColor = System.Drawing.Color.White;
-            binding1.DefaultConnector = null;
-            binding1.DefaultNode = null;
-            binding1.Diagram = this.sqlDependencyDiagram;
-            binding1.Id = null;
-            binding1.Label = ((System.Collections.Generic.List<string>)(resources.GetObject("binding1.Label")));
-            binding1.ParentId = null;
-            this.sqlDependencyDiagram.Binding = binding1;
+            binding2.DefaultConnector = null;
+            binding2.DefaultNode = null;
+            binding2.Diagram = this.sqlDependencyDiagram;
+            binding2.Id = null;
+            binding2.Label = ((System.Collections.Generic.List<string>)(resources.GetObject("binding2.Label")));
+            binding2.ParentId = null;
+            this.sqlDependencyDiagram.Binding = binding2;
             this.sqlDependencyDiagram.Controller.Constraint = Syncfusion.Windows.Forms.Diagram.Constraints.PageEditable;
             this.sqlDependencyDiagram.Controller.DefaultConnectorTool = Syncfusion.Windows.Forms.Diagram.ConnectorTool.OrgLineConnectorTool;
             this.sqlDependencyDiagram.Controller.PasteOffset = new System.Drawing.SizeF(10F, 10F);
@@ -93,7 +97,7 @@ namespace DatabaseDiagram
             this.sqlDependencyDiagram.Model = this.model1;
             this.sqlDependencyDiagram.Name = "sqlDependencyDiagram";
             this.sqlDependencyDiagram.ScrollVirtualBounds = ((System.Drawing.RectangleF)(resources.GetObject("sqlDependencyDiagram.ScrollVirtualBounds")));
-            this.sqlDependencyDiagram.Size = new System.Drawing.Size(1136, 680);
+            this.sqlDependencyDiagram.Size = new System.Drawing.Size(1199, 649);
             this.sqlDependencyDiagram.SmartSizeBox = false;
             this.sqlDependencyDiagram.TabIndex = 1;
             this.sqlDependencyDiagram.Text = "diagram1";
@@ -107,6 +111,7 @@ namespace DatabaseDiagram
             this.sqlDependencyDiagram.View.Grid.Visible = false;
             this.sqlDependencyDiagram.View.ScrollVirtualBounds = ((System.Drawing.RectangleF)(resources.GetObject("resource.ScrollVirtualBounds")));
             this.sqlDependencyDiagram.View.ZoomType = Syncfusion.Windows.Forms.Diagram.ZoomType.Center;
+            this.sqlDependencyDiagram.VScroll = true;
             // 
             // model1
             // 
@@ -115,15 +120,19 @@ namespace DatabaseDiagram
             this.model1.DocumentScale.DisplayName = "No Scale";
             this.model1.DocumentScale.Height = 1F;
             this.model1.DocumentScale.Width = 1F;
-            this.model1.DocumentSize.Height = 1169F;
-            this.model1.DocumentSize.Width = 827F;
+            this.model1.DocumentSize.Height = 625.9843F;
+            this.model1.DocumentSize.Width = 438.189F;
+            this.model1.LineBridgingEnabled = true;
+            this.model1.LineRoutingEnabled = true;
             this.model1.LineStyle.DashPattern = null;
             this.model1.LineStyle.LineColor = System.Drawing.Color.LightGray;
             this.model1.LineStyle.LineWidth = 0F;
-            this.model1.LogicalSize = new System.Drawing.SizeF(827F, 1169F);
+            this.model1.LogicalSize = new System.Drawing.SizeF(438.189F, 625.9843F);
+            this.model1.OptimizeLineBridging = true;
             this.model1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.model1.ShadowStyle.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.model1.ShadowStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
+            this.model1.SizeToContent = true;
             // 
             // panel1
             // 
@@ -132,7 +141,7 @@ namespace DatabaseDiagram
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1136, 34);
+            this.panel1.Size = new System.Drawing.Size(1199, 65);
             this.panel1.TabIndex = 0;
             // 
             // toolStrip1
@@ -141,6 +150,9 @@ namespace DatabaseDiagram
             this.toolStrip1.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStrip1.ImageScalingSize = new System.Drawing.Size(18, 18);
             this.toolStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripLabel3,
+            this.toolStripTextBox1,
+            this.toolStripButton1,
             this.toolStripLabel1,
             this.cboDatabase,
             this.toolStripSeparator2,
@@ -151,10 +163,12 @@ namespace DatabaseDiagram
             this.openStripButton,
             this.saveToolStripButton,
             this.exportToolStripButton,
-            this.printToolStripButton});
+            this.printToolStripButton,
+            this.toolStripSeparator1});
+            this.toolStrip1.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
-            this.toolStrip1.Size = new System.Drawing.Size(1136, 25);
+            this.toolStrip1.Size = new System.Drawing.Size(1199, 50);
             this.toolStrip1.Stretch = true;
             this.toolStrip1.TabIndex = 0;
             this.toolStrip1.Text = "toolStrip1";
@@ -162,7 +176,7 @@ namespace DatabaseDiagram
             // toolStripLabel1
             // 
             this.toolStripLabel1.Name = "toolStripLabel1";
-            this.toolStripLabel1.Size = new System.Drawing.Size(101, 22);
+            this.toolStripLabel1.Size = new System.Drawing.Size(101, 17);
             this.toolStripLabel1.Text = "Select Database";
             // 
             // cboDatabase
@@ -175,12 +189,12 @@ namespace DatabaseDiagram
             // toolStripSeparator2
             // 
             this.toolStripSeparator2.Name = "toolStripSeparator2";
-            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator2.Size = new System.Drawing.Size(6, 23);
             // 
             // toolStripLabel2
             // 
             this.toolStripLabel2.Name = "toolStripLabel2";
-            this.toolStripLabel2.Size = new System.Drawing.Size(77, 22);
+            this.toolStripLabel2.Size = new System.Drawing.Size(77, 17);
             this.toolStripLabel2.Text = "Select Table";
             // 
             // cboTable
@@ -190,121 +204,37 @@ namespace DatabaseDiagram
             this.cboTable.Size = new System.Drawing.Size(200, 25);
             this.cboTable.SelectedIndexChanged += new System.EventHandler(this.cboTable_SelectedIndexChanged);
             // 
-            // viewSplitToolStripSplitButton
-            // 
-            this.viewSplitToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.compactViewToolStripMenuItem,
-            this.dataTypeViewToolStripMenuItem});
-            this.viewSplitToolStripSplitButton.Enabled = false;
-            this.viewSplitToolStripSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("viewSplitToolStripSplitButton.Image")));
-            this.viewSplitToolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.viewSplitToolStripSplitButton.Name = "viewSplitToolStripSplitButton";
-            this.viewSplitToolStripSplitButton.Size = new System.Drawing.Size(121, 22);
-            this.viewSplitToolStripSplitButton.Text = "Diagram Type";
-            this.viewSplitToolStripSplitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            // 
-            // compactViewToolStripMenuItem
-            // 
-            this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
-            this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
-            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
-            this.compactViewToolStripMenuItem.Text = "Compact View";
-            this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
-            // 
-            // dataTypeViewToolStripMenuItem
-            // 
-            this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
-            this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
-            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
-            this.dataTypeViewToolStripMenuItem.Text = "Extended View";
-            this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
-            // 
             // toolStripSeparator3
             // 
             this.toolStripSeparator3.Name = "toolStripSeparator3";
-            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 25);
+            this.toolStripSeparator3.Size = new System.Drawing.Size(6, 23);
             // 
-            // openStripButton
+            // toolStripSeparator1
             // 
-            this.openStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openStripButton.Image")));
-            this.openStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.openStripButton.Name = "openStripButton";
-            this.openStripButton.Size = new System.Drawing.Size(62, 22);
-            this.openStripButton.Text = "Open";
-            this.openStripButton.Visible = false;
-            this.openStripButton.Click += new System.EventHandler(this.openStripButton_Click);
+            this.toolStripSeparator1.Name = "toolStripSeparator1";
+            this.toolStripSeparator1.Size = new System.Drawing.Size(6, 23);
             // 
-            // saveToolStripButton
+            // toolStripLabel3
             // 
-            this.saveToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
-            this.saveToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.saveToolStripButton.Name = "saveToolStripButton";
-            this.saveToolStripButton.Size = new System.Drawing.Size(55, 22);
-            this.saveToolStripButton.Text = "Save";
-            this.saveToolStripButton.Visible = false;
-            this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+            this.toolStripLabel3.Name = "toolStripLabel3";
+            this.toolStripLabel3.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.toolStripLabel3.Size = new System.Drawing.Size(111, 17);
+            this.toolStripLabel3.Text = "Connection String";
             // 
-            // exportToolStripButton
+            // toolStripTextBox1
             // 
-            this.exportToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.pNGToolStripMenuItem,
-            this.jPEGToolStripMenuItem,
-            this.gIFToolStripMenuItem});
-            this.exportToolStripButton.Enabled = false;
-            this.exportToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("exportToolStripButton.Image")));
-            this.exportToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
-            this.exportToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.exportToolStripButton.Name = "exportToolStripButton";
-            this.exportToolStripButton.ShowDropDownArrow = false;
-            this.exportToolStripButton.Size = new System.Drawing.Size(66, 22);
-            this.exportToolStripButton.Text = "Export";
-            this.exportToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            // 
-            // pNGToolStripMenuItem
-            // 
-            this.pNGToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pNGToolStripMenuItem.Image")));
-            this.pNGToolStripMenuItem.Name = "pNGToolStripMenuItem";
-            this.pNGToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
-            this.pNGToolStripMenuItem.Text = "PNG";
-            this.pNGToolStripMenuItem.Click += new System.EventHandler(this.pNGToolStripMenuItem_Click);
-            // 
-            // jPEGToolStripMenuItem
-            // 
-            this.jPEGToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("jPEGToolStripMenuItem.Image")));
-            this.jPEGToolStripMenuItem.Name = "jPEGToolStripMenuItem";
-            this.jPEGToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
-            this.jPEGToolStripMenuItem.Text = "JPEG";
-            this.jPEGToolStripMenuItem.Click += new System.EventHandler(this.jPEGToolStripMenuItem_Click);
-            // 
-            // gIFToolStripMenuItem
-            // 
-            this.gIFToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("gIFToolStripMenuItem.Image")));
-            this.gIFToolStripMenuItem.Name = "gIFToolStripMenuItem";
-            this.gIFToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
-            this.gIFToolStripMenuItem.Text = "GIF";
-            this.gIFToolStripMenuItem.Click += new System.EventHandler(this.gIFToolStripMenuItem_Click);
-            // 
-            // printToolStripButton
-            // 
-            this.printToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
-            this.printToolStripButton.Enabled = false;
-            this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
-            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
-            this.printToolStripButton.Name = "printToolStripButton";
-            this.printToolStripButton.Size = new System.Drawing.Size(56, 22);
-            this.printToolStripButton.Text = "Print";
-            this.printToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
-            this.printToolStripButton.Click += new System.EventHandler(this.printToolStripButton_Click);
+            this.toolStripTextBox1.Font = new System.Drawing.Font("Segoe UI", 8.830189F);
+            this.toolStripTextBox1.Name = "toolStripTextBox1";
+            this.toolStripTextBox1.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.toolStripTextBox1.Size = new System.Drawing.Size(850, 25);
             // 
             // panel2
             // 
             this.panel2.Controls.Add(this.sqlDependencyDiagram);
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.panel2.Location = new System.Drawing.Point(0, 34);
+            this.panel2.Location = new System.Drawing.Point(0, 65);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1136, 680);
+            this.panel2.Size = new System.Drawing.Size(1199, 649);
             this.panel2.TabIndex = 1;
             // 
             // openFileDialog1
@@ -4479,11 +4409,125 @@ namespace DatabaseDiagram
             this.ImageList.Images.SetKeyName(4161, "ZoomToggle.png");
             this.ImageList.Images.SetKeyName(4162, "ZoomToWidth.png");
             // 
+            // viewSplitToolStripSplitButton
+            // 
+            this.viewSplitToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.compactViewToolStripMenuItem,
+            this.dataTypeViewToolStripMenuItem});
+            this.viewSplitToolStripSplitButton.Enabled = false;
+            this.viewSplitToolStripSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("viewSplitToolStripSplitButton.Image")));
+            this.viewSplitToolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.viewSplitToolStripSplitButton.Name = "viewSplitToolStripSplitButton";
+            this.viewSplitToolStripSplitButton.Size = new System.Drawing.Size(121, 22);
+            this.viewSplitToolStripSplitButton.Text = "Diagram Type";
+            this.viewSplitToolStripSplitButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // compactViewToolStripMenuItem
+            // 
+            this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
+            this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
+            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.compactViewToolStripMenuItem.Text = "Compact View";
+            this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
+            // 
+            // dataTypeViewToolStripMenuItem
+            // 
+            this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
+            this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
+            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.dataTypeViewToolStripMenuItem.Text = "Extended View";
+            this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
+            // 
+            // openStripButton
+            // 
+            this.openStripButton.Image = ((System.Drawing.Image)(resources.GetObject("openStripButton.Image")));
+            this.openStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.openStripButton.Name = "openStripButton";
+            this.openStripButton.Size = new System.Drawing.Size(62, 22);
+            this.openStripButton.Text = "Open";
+            this.openStripButton.Visible = false;
+            this.openStripButton.Click += new System.EventHandler(this.openStripButton_Click);
+            // 
+            // saveToolStripButton
+            // 
+            this.saveToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.saveToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("saveToolStripButton.Image")));
+            this.saveToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.saveToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.saveToolStripButton.Name = "saveToolStripButton";
+            this.saveToolStripButton.Size = new System.Drawing.Size(55, 21);
+            this.saveToolStripButton.Text = "Save";
+            this.saveToolStripButton.Visible = false;
+            this.saveToolStripButton.Click += new System.EventHandler(this.saveToolStripButton_Click);
+            // 
+            // exportToolStripButton
+            // 
+            this.exportToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.pNGToolStripMenuItem,
+            this.jPEGToolStripMenuItem,
+            this.gIFToolStripMenuItem});
+            this.exportToolStripButton.Enabled = false;
+            this.exportToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("exportToolStripButton.Image")));
+            this.exportToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
+            this.exportToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.exportToolStripButton.Name = "exportToolStripButton";
+            this.exportToolStripButton.ShowDropDownArrow = false;
+            this.exportToolStripButton.Size = new System.Drawing.Size(66, 21);
+            this.exportToolStripButton.Text = "Export";
+            this.exportToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            // 
+            // pNGToolStripMenuItem
+            // 
+            this.pNGToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("pNGToolStripMenuItem.Image")));
+            this.pNGToolStripMenuItem.Name = "pNGToolStripMenuItem";
+            this.pNGToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
+            this.pNGToolStripMenuItem.Text = "PNG";
+            this.pNGToolStripMenuItem.Click += new System.EventHandler(this.pNGToolStripMenuItem_Click);
+            // 
+            // jPEGToolStripMenuItem
+            // 
+            this.jPEGToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("jPEGToolStripMenuItem.Image")));
+            this.jPEGToolStripMenuItem.Name = "jPEGToolStripMenuItem";
+            this.jPEGToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
+            this.jPEGToolStripMenuItem.Text = "JPEG";
+            this.jPEGToolStripMenuItem.Click += new System.EventHandler(this.jPEGToolStripMenuItem_Click);
+            // 
+            // gIFToolStripMenuItem
+            // 
+            this.gIFToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("gIFToolStripMenuItem.Image")));
+            this.gIFToolStripMenuItem.Name = "gIFToolStripMenuItem";
+            this.gIFToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
+            this.gIFToolStripMenuItem.Text = "GIF";
+            this.gIFToolStripMenuItem.Click += new System.EventHandler(this.gIFToolStripMenuItem_Click);
+            // 
+            // printToolStripButton
+            // 
+            this.printToolStripButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.printToolStripButton.Enabled = false;
+            this.printToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("printToolStripButton.Image")));
+            this.printToolStripButton.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.printToolStripButton.Name = "printToolStripButton";
+            this.printToolStripButton.Size = new System.Drawing.Size(56, 22);
+            this.printToolStripButton.Text = "Print";
+            this.printToolStripButton.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.printToolStripButton.Click += new System.EventHandler(this.printToolStripButton_Click);
+            // 
+            // toolStripButton1
+            // 
+            this.toolStripButton1.Image = global::VSAutoTableDependencyDiagram.Properties.Resources.ConnectToDatabase;
+            this.toolStripButton1.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton1.Name = "toolStripButton1";
+            this.toolStripButton1.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
+            this.toolStripButton1.Size = new System.Drawing.Size(154, 22);
+            this.toolStripButton1.Text = "Connect To Database";
+            this.toolStripButton1.TextImageRelation = System.Windows.Forms.TextImageRelation.TextBeforeImage;
+            this.toolStripButton1.ToolTipText = "Connect to database";
+            // 
             // DiagramGenerator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1136, 714);
+            this.ClientSize = new System.Drawing.Size(1199, 714);
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -4529,6 +4573,10 @@ namespace DatabaseDiagram
         private System.Windows.Forms.ToolStripDropDownButton viewSplitToolStripSplitButton;
         private System.Windows.Forms.ToolStripMenuItem compactViewToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dataTypeViewToolStripMenuItem;
+        private System.Windows.Forms.ToolStripTextBox toolStripTextBox1;
+        private System.Windows.Forms.ToolStripButton toolStripButton1;
+        private System.Windows.Forms.ToolStripLabel toolStripLabel3;
+        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
     }
 }
 

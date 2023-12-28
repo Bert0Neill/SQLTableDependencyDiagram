@@ -39,7 +39,7 @@ namespace VSAutoTableDependencyDiagram.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("TableDiagramExtension.Resources.TextStrings", typeof(TextStrings).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("VSAutoTableDependencyDiagram.Resources.TextStrings", typeof(TextStrings).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

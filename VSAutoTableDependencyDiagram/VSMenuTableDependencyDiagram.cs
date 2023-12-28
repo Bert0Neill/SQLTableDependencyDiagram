@@ -1,10 +1,13 @@
-﻿using Microsoft.VisualStudio.Shell;
+﻿using DatabaseDiagram;
+using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
+using Syncfusion.Licensing;
 using System;
 using System.ComponentModel.Design;
 using System.Globalization;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Task = System.Threading.Tasks.Task;
 
 namespace VSAutoTableDependencyDiagram
@@ -76,7 +79,7 @@ namespace VSAutoTableDependencyDiagram
             await ThreadHelper.JoinableTaskFactory.SwitchToMainThreadAsync(package.DisposalToken);
 
             OleMenuCommandService commandService = await package.GetServiceAsync(typeof(IMenuCommandService)) as OleMenuCommandService;
-            Instance = new VSMenuTableDependencyDiagram(package, commandService);
+            Instance = new VSMenuTableDependencyDiagram(package, commandService);            
         }
 
         /// <summary>
@@ -89,17 +92,21 @@ namespace VSAutoTableDependencyDiagram
         private void Execute(object sender, EventArgs e)
         {
             ThreadHelper.ThrowIfNotOnUIThread();
-            string message = string.Format(CultureInfo.CurrentCulture, "Inside {0}.MenuItemCallback()", this.GetType().FullName);
-            string title = "VSMenuTableDependencyDiagram";
 
-            // Show a message box to prove we were here
-            VsShellUtilities.ShowMessageBox(
-                this.package,
-                message,
-                title,
-                OLEMSGICON.OLEMSGICON_INFO,
-                OLEMSGBUTTON.OLEMSGBUTTON_OK,
-                OLEMSGDEFBUTTON.OLEMSGDEFBUTTON_FIRST);
+            try
+            {
+                ThreadHelper.ThrowIfNotOnUIThread();
+
+                SyncfusionLicenseProvider.RegisterLicense(Properties.Settings.Default.SyncfusionKey);
+                Application.EnableVisualStyles();
+
+                DiagramGenerator frmDiagramGenerator = new DiagramGenerator();
+                frmDiagramGenerator.ShowDialog();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
         }
     }
 }

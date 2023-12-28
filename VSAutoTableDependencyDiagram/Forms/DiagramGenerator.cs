@@ -3,7 +3,6 @@
 // Use of this code is subject to the terms of our license.
 // Any infringement will be prosecuted under applicable laws. 
 #endregion
-using Microsoft.Extensions.Logging;
 using Syncfusion.SVG.IO;
 using Syncfusion.Windows.Forms.Diagram;
 using Syncfusion.Windows.Forms.Diagram.Controls;
@@ -909,5 +908,7 @@ namespace DatabaseDiagram
                 _errorController.DisplayErrorMessage(ex.Message);
             }
         }
+
+      
     }
 }
