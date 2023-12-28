@@ -31,7 +31,6 @@ namespace DatabaseDiagram
     {
         #region Members
         SharedData _sharedData = null;
-        bool needSave = false;
         public string fileName;
         private Node prevbNode = null;
         private OpenFileDialog fileDialog = new OpenFileDialog();
