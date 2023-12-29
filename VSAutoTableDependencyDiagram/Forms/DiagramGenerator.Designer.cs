@@ -99,10 +99,10 @@ namespace DatabaseDiagram
             this.sqlDependencyDiagram.Model = this.model1;
             this.sqlDependencyDiagram.Name = "sqlDependencyDiagram";
             this.sqlDependencyDiagram.ScrollVirtualBounds = ((System.Drawing.RectangleF)(resources.GetObject("sqlDependencyDiagram.ScrollVirtualBounds")));
-            this.sqlDependencyDiagram.Size = new System.Drawing.Size(1199, 714);
+            this.sqlDependencyDiagram.Size = new System.Drawing.Size(1352, 714);
             this.sqlDependencyDiagram.SmartSizeBox = false;
             this.sqlDependencyDiagram.TabIndex = 1;
-            this.sqlDependencyDiagram.Text = "diagram1";
+            this.sqlDependencyDiagram.Text = "SQL Table Diagram";
             // 
             // 
             // 
@@ -119,18 +119,18 @@ namespace DatabaseDiagram
             // 
             this.model1.AlignmentType = Syncfusion.Windows.Forms.Diagram.AlignmentType.SelectedNode;
             this.model1.BackgroundStyle.PathBrushStyle = Syncfusion.Windows.Forms.Diagram.PathGradientBrushStyle.RectangleCenter;
+            this.model1.BoundaryConstraintsEnabled = false;
             this.model1.DocumentScale.DisplayName = "No Scale";
             this.model1.DocumentScale.Height = 1F;
             this.model1.DocumentScale.Width = 1F;
+            this.model1.DocumentSize.DisplayName = "SameAsPrinter";
             this.model1.DocumentSize.Height = 625.9843F;
             this.model1.DocumentSize.Width = 438.189F;
-            this.model1.LineBridgingEnabled = true;
             this.model1.LineRoutingEnabled = true;
             this.model1.LineStyle.DashPattern = null;
             this.model1.LineStyle.LineColor = System.Drawing.Color.LightGray;
             this.model1.LineStyle.LineWidth = 0F;
             this.model1.LogicalSize = new System.Drawing.SizeF(438.189F, 625.9843F);
-            this.model1.OptimizeLineBridging = true;
             this.model1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.model1.ShadowStyle.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.model1.ShadowStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
@@ -142,7 +142,7 @@ namespace DatabaseDiagram
             this.panel2.Dock = System.Windows.Forms.DockStyle.Fill;
             this.panel2.Location = new System.Drawing.Point(0, 0);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(1199, 714);
+            this.panel2.Size = new System.Drawing.Size(1352, 714);
             this.panel2.TabIndex = 1;
             // 
             // openFileDialog1
@@ -4319,6 +4319,8 @@ namespace DatabaseDiagram
             // 
             // tableLayoutPanelDiagram
             // 
+            this.tableLayoutPanelDiagram.AutoSize = true;
+            this.tableLayoutPanelDiagram.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.tableLayoutPanelDiagram.CellBorderStyle = System.Windows.Forms.TableLayoutPanelCellBorderStyle.Single;
             this.tableLayoutPanelDiagram.ColumnCount = 1;
             this.tableLayoutPanelDiagram.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
@@ -4331,11 +4333,12 @@ namespace DatabaseDiagram
             this.tableLayoutPanelDiagram.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelDiagram.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
             this.tableLayoutPanelDiagram.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 20F));
-            this.tableLayoutPanelDiagram.Size = new System.Drawing.Size(1199, 70);
+            this.tableLayoutPanelDiagram.Size = new System.Drawing.Size(1352, 65);
             this.tableLayoutPanelDiagram.TabIndex = 2;
             // 
             // toolStripActions
             // 
+            this.toolStripActions.AutoSize = false;
             this.toolStripActions.BackColor = System.Drawing.Color.Transparent;
             this.toolStripActions.GripStyle = System.Windows.Forms.ToolStripGripStyle.Hidden;
             this.toolStripActions.ImageScalingSize = new System.Drawing.Size(18, 18);
@@ -4351,10 +4354,10 @@ namespace DatabaseDiagram
             this.exportToolStripButton,
             this.printToolStripButton});
             this.toolStripActions.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
-            this.toolStripActions.Location = new System.Drawing.Point(1, 35);
+            this.toolStripActions.Location = new System.Drawing.Point(1, 33);
             this.toolStripActions.Name = "toolStripActions";
             this.toolStripActions.Padding = new System.Windows.Forms.Padding(0, 4, 1, 0);
-            this.toolStripActions.Size = new System.Drawing.Size(1197, 29);
+            this.toolStripActions.Size = new System.Drawing.Size(1350, 29);
             this.toolStripActions.Stretch = true;
             this.toolStripActions.TabIndex = 2;
             this.toolStripActions.Text = "toolStrip2";
@@ -4394,7 +4397,6 @@ namespace DatabaseDiagram
             this.viewSplitToolStripSplitButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.compactViewToolStripMenuItem,
             this.dataTypeViewToolStripMenuItem});
-
             this.viewSplitToolStripSplitButton.Enabled = false;
             this.viewSplitToolStripSplitButton.Image = ((System.Drawing.Image)(resources.GetObject("viewSplitToolStripSplitButton.Image")));
             this.viewSplitToolStripSplitButton.ImageTransparentColor = System.Drawing.Color.Magenta;
@@ -4404,16 +4406,16 @@ namespace DatabaseDiagram
             // 
             // compactViewToolStripMenuItem
             // 
-            this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem1.Image")));
-            this.compactViewToolStripMenuItem.Name = "toolStripMenuItem1";
+            this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
+            this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
             this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
             this.compactViewToolStripMenuItem.Text = "Compact View";
             this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
             // 
             // dataTypeViewToolStripMenuItem
             // 
-            this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem2.Image")));
-            this.dataTypeViewToolStripMenuItem.Name = "toolStripMenuItem2";
+            this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
+            this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
             this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
             this.dataTypeViewToolStripMenuItem.Text = "Extended View";
             this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
@@ -4496,7 +4498,7 @@ namespace DatabaseDiagram
             this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(4, 4);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(1191, 25);
+            this.panel1.Size = new System.Drawing.Size(1344, 25);
             this.panel1.TabIndex = 1;
             // 
             // toolStripConnectionString
@@ -4512,7 +4514,7 @@ namespace DatabaseDiagram
             this.toolStripConnectionString.LayoutStyle = System.Windows.Forms.ToolStripLayoutStyle.Flow;
             this.toolStripConnectionString.Location = new System.Drawing.Point(0, 0);
             this.toolStripConnectionString.Name = "toolStripConnectionString";
-            this.toolStripConnectionString.Size = new System.Drawing.Size(1191, 25);
+            this.toolStripConnectionString.Size = new System.Drawing.Size(1344, 25);
             this.toolStripConnectionString.Stretch = true;
             this.toolStripConnectionString.TabIndex = 0;
             this.toolStripConnectionString.Text = "toolStrip1";
@@ -4530,7 +4532,8 @@ namespace DatabaseDiagram
             this.toolStripTextBoxConnectionString.Name = "toolStripTextBoxConnectionString";
             this.toolStripTextBoxConnectionString.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
             this.toolStripTextBoxConnectionString.Size = new System.Drawing.Size(850, 25);
-            this.toolStripTextBoxConnectionString.ToolTipText = "Enter the connection string to your database and click \'Connect To Database\'";
+            this.toolStripTextBoxConnectionString.ToolTipText = "Enter the connection string (for e.g. Data Source=localhost\\MSSQLSERVER01;Integra" +
+    "ted Security=True;) and click \'Connect To Database\'";
             // 
             // toolStripButtonDBConnect
             // 
@@ -4547,7 +4550,7 @@ namespace DatabaseDiagram
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1199, 714);
+            this.ClientSize = new System.Drawing.Size(1352, 714);
             this.Controls.Add(this.tableLayoutPanelDiagram);
             this.Controls.Add(this.panel2);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -4559,7 +4562,6 @@ namespace DatabaseDiagram
             ((System.ComponentModel.ISupportInitialize)(this.model1)).EndInit();
             this.panel2.ResumeLayout(false);
             this.tableLayoutPanelDiagram.ResumeLayout(false);
-            this.tableLayoutPanelDiagram.PerformLayout();
             this.toolStripActions.ResumeLayout(false);
             this.toolStripActions.PerformLayout();
             this.panel1.ResumeLayout(false);
@@ -4567,6 +4569,7 @@ namespace DatabaseDiagram
             this.toolStripConnectionString.ResumeLayout(false);
             this.toolStripConnectionString.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 

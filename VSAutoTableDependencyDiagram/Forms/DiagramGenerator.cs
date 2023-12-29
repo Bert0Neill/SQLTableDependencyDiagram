@@ -49,6 +49,7 @@ namespace DatabaseDiagram
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
                 InitializeComponent();
 
                 sqlDependencyDiagram.BeginUpdate();
@@ -73,6 +74,10 @@ namespace DatabaseDiagram
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
 
@@ -153,6 +158,8 @@ namespace DatabaseDiagram
             {
                 this.sqlDependencyDiagram.View.SelectionList.Clear();
                 this.sqlDependencyDiagram.Model.LineRoutingEnabled = true; //enabling for model
+                //this.sqlDependencyDiagram.Controller.ActivateTool("ZoomTool");
+                //this.sqlDependencyDiagram.FitDocument(); // need zooming and scrolling for this to work correctly
                 //this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
             }
             catch (Exception ex)
@@ -172,7 +179,7 @@ namespace DatabaseDiagram
 
                 // loop dependencyTables and create each table
                 int pointLeft = 0; // over
-                int pointRight = 250; // down
+                int pointRight = 300; // down
 
                 foreach (string table in dependencyTables)
                 {
@@ -180,7 +187,7 @@ namespace DatabaseDiagram
                     if (tableCount == 4)
                     {
                         pointLeft = 150; //over
-                        pointRight += 300; // down
+                        pointRight += 350; // down
                         tableCount = 0; // rest for next row
                     }
                     else
@@ -215,7 +222,7 @@ namespace DatabaseDiagram
             {
                 sqlDependencyDiagram.Model.Clear();
                 sqlDependencyDiagram.Model.BeginUpdate();
-                RoundRect rrect = new RoundRect(10, 10, 250, 100, MeasureUnits.Pixel);
+                RoundRect rrect = new RoundRect(10, 60, 250, 100, MeasureUnits.Pixel);
                 rrect.TreatAsObstacle = true; //Enabling obstacle property for node
                 rrect.FillStyle.Color = Color.Transparent;
                 rrect.EditStyle.AllowSelect = false;
@@ -251,19 +258,19 @@ namespace DatabaseDiagram
                 rrect.Labels.Add(lblManyToMany);
 
                 sqlDependencyDiagram.Model.AppendChild(rrect);
-                LineConnector oneToOne = new LineConnector(new PointF(20, 30), new PointF(110, 30));
+                LineConnector oneToOne = new LineConnector(new PointF(20, 80), new PointF(110, 80));
                 oneToOne.EditStyle.AllowSelect = false;
                 oneToOne.TailDecorator.DecoratorShape = DecoratorShape.None;
                 oneToOne.HeadDecorator.DecoratorShape = DecoratorShape.None;
                 sqlDependencyDiagram.Model.AppendChild(oneToOne);
 
-                LineConnector oneToMany = new LineConnector(new PointF(20, 60), new PointF(110, 60));
+                LineConnector oneToMany = new LineConnector(new PointF(20, 110), new PointF(110, 110));
                 oneToMany.EditStyle.AllowSelect = false;
                 oneToMany.TailDecorator.DecoratorShape = DecoratorShape.None;
                 oneToMany.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
                 sqlDependencyDiagram.Model.AppendChild(oneToMany);
 
-                LineConnector manyToMany = new LineConnector(new PointF(20, 90), new PointF(110, 90));
+                LineConnector manyToMany = new LineConnector(new PointF(20, 140), new PointF(110, 140));
                 manyToMany.EditStyle.AllowSelect = false;
                 manyToMany.TailDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
                 manyToMany.HeadDecorator.DecoratorShape = DecoratorShape.ReverseArrow;
@@ -836,6 +843,7 @@ namespace DatabaseDiagram
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
                 this.viewSplitToolStripSplitButton.Enabled = false;
                 DatabaseMetaData selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
 
@@ -847,12 +855,17 @@ namespace DatabaseDiagram
             {
                 _errorController.DisplayErrorMessage(ex.Message);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void cboDatabase_SelectedIndexChanged(object sender, EventArgs e)
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
                 List<DatabaseMetaData> initialData;
                 string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
                 this.cboTable.Enabled = false;
@@ -877,6 +890,10 @@ namespace DatabaseDiagram
             {
                 _errorController.DisplayErrorMessage(ex.Message);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void compactViewToolStripMenuItem_Click(object sender, EventArgs e)
@@ -898,7 +915,6 @@ namespace DatabaseDiagram
             {
                 IsCompact = false;
                 this.GenerateDiagram(false);
-                this.GenerateDiagram(true);
             }
             catch (Exception ex)
             {
@@ -910,6 +926,8 @@ namespace DatabaseDiagram
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
+
                 // get server & table name
                 string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
                 selectedTable = (DatabaseMetaData)this.cboTable.ComboBox.SelectedValue;
@@ -928,8 +946,7 @@ namespace DatabaseDiagram
                 DataTable Relationships = _sqlController.RetrieveRelationshipData(this._sharedData.SqlConnectionString, selectedDatabase, dependencyTables);
 
                 InitializeDiagramFromXMLData(updatedXml, Relationships, dependencyTables, isCompact);
-
-                // sqlDependencyDiagram.FitDocument(); // need zooming and scrolling for this to work correctly
+                
                 sqlDependencyDiagram.View.SelectionList.Clear();
 
                 // enable buttons
@@ -939,6 +956,10 @@ namespace DatabaseDiagram
             {
                 _errorController.DisplayErrorMessage(ex.Message);
             }
+            finally
+            {
+                Cursor = Cursors.Default;
+            }
         }
 
         private void toolStripButton1_Click(object sender, EventArgs e)
@@ -947,18 +968,16 @@ namespace DatabaseDiagram
             try
             {
                 string formattedConnectionString = this.toolStripTextBoxConnectionString.Text.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
-                using (SqlConnection connection = new SqlConnection(formattedConnectionString))
-                {
-                    connection.Open();
-                    _sharedData.SqlConnectionString = formattedConnectionString;
-                }
+                SqlConnection connection = new SqlConnection(formattedConnectionString);
+                connection.Open();
 
+                _sharedData.SqlConnectionString = formattedConnectionString;
                 RetrieveDatabases(); // if reached - connect valid
 
             }
             catch (SqlException sqlEx)
             {
-                _errorController.DisplayErrorMessage("Not able to connect to database, please check that the connection string is correct and try again.");
+                _errorController.DisplayErrorMessage($"Not able to connect to database, please check that the connection string is correct and try again. Error {sqlEx.Message}");
             }
         }
 
@@ -966,6 +985,8 @@ namespace DatabaseDiagram
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
+
                 // retrieve dropdown values
                 activeDBs = _sqlController.RetrieveDatabases(this._sharedData.SqlConnectionString);
 
@@ -976,11 +997,15 @@ namespace DatabaseDiagram
                     this.cboDatabase.ComboBox.DataSource = null;
                     this.cboDatabase.ComboBox.DataSource = activeDBs;
                     this.cboDatabase.Enabled = true;
-                }                
+                }
             }
             catch (Exception ex)
             {
                 _errorController.DisplayErrorMessage(ex.Message);
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
     }
