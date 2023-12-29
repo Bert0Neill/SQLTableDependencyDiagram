@@ -4406,7 +4406,7 @@ namespace DatabaseDiagram
             // 
             this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
             this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
-            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
             this.compactViewToolStripMenuItem.Text = "Compact View";
             this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
             // 
@@ -4414,7 +4414,7 @@ namespace DatabaseDiagram
             // 
             this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
             this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
-            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
             this.dataTypeViewToolStripMenuItem.Text = "Extended View";
             this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
             // 
@@ -4462,7 +4462,7 @@ namespace DatabaseDiagram
             // 
             this.PNG_Export_ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("PNG_Export_ToolStripMenuItem.Image")));
             this.PNG_Export_ToolStripMenuItem.Name = "PNG_Export_ToolStripMenuItem";
-            this.PNG_Export_ToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.PNG_Export_ToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.PNG_Export_ToolStripMenuItem.Text = "PNG";
             this.PNG_Export_ToolStripMenuItem.Click += new System.EventHandler(this.PNG_Export_toolStripMenuItem_Click);
             // 
@@ -4470,7 +4470,7 @@ namespace DatabaseDiagram
             // 
             this.JPEG_Export_ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("JPEG_Export_ToolStripMenuItem.Image")));
             this.JPEG_Export_ToolStripMenuItem.Name = "JPEG_Export_ToolStripMenuItem";
-            this.JPEG_Export_ToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.JPEG_Export_ToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.JPEG_Export_ToolStripMenuItem.Text = "JPEG";
             this.JPEG_Export_ToolStripMenuItem.Click += new System.EventHandler(this.JPEG_Export_ToolStripMenuItem_Click);
             // 
@@ -4478,7 +4478,7 @@ namespace DatabaseDiagram
             // 
             this.GIF_Export_ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("GIF_Export_ToolStripMenuItem.Image")));
             this.GIF_Export_ToolStripMenuItem.Name = "GIF_Export_ToolStripMenuItem";
-            this.GIF_Export_ToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.GIF_Export_ToolStripMenuItem.Size = new System.Drawing.Size(110, 24);
             this.GIF_Export_ToolStripMenuItem.Text = "GIF";
             this.GIF_Export_ToolStripMenuItem.Click += new System.EventHandler(this.GIF_Export_ToolStripMenuItem_Click);
             // 
@@ -4543,8 +4543,8 @@ namespace DatabaseDiagram
             this.toolStripButtonDBConnect.ImageTransparentColor = System.Drawing.Color.Magenta;
             this.toolStripButtonDBConnect.Name = "toolStripButtonDBConnect";
             this.toolStripButtonDBConnect.Overflow = System.Windows.Forms.ToolStripItemOverflow.Always;
-            this.toolStripButtonDBConnect.Size = new System.Drawing.Size(154, 22);
-            this.toolStripButtonDBConnect.Text = "Connect To Database";
+            this.toolStripButtonDBConnect.Size = new System.Drawing.Size(136, 22);
+            this.toolStripButtonDBConnect.Text = "Connect To Server";
             this.toolStripButtonDBConnect.ToolTipText = "Connect to database";
             this.toolStripButtonDBConnect.Click += new System.EventHandler(this.toolStripButton1_Click);
             // 
