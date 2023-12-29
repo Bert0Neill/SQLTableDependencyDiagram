@@ -42,7 +42,7 @@ namespace DatabaseDiagram
 
         #endregion
 
-        #region Form initialize
+        #region Form CTOR\Load
         public DiagramGenerator()
         {
             try
@@ -83,8 +83,6 @@ namespace DatabaseDiagram
                 _errorController.DisplayErrorMessage(ex.Message);
             }
         }
-
-        
 
         #endregion
 
@@ -879,11 +877,7 @@ namespace DatabaseDiagram
         }
         #endregion
 
-        #region Helper Methods
-        /// Save diagram as Image
-        /// </summary>
-        /// <param name="filename">Filename </param>
-        /// <param name="imageformat">image format</param>
+        #region Helper Methods        
         private void SaveImage(string filename, ImageFormat imageformat)
         {
             try
