@@ -867,6 +867,12 @@ namespace DatabaseDiagram
         {
             try
             {
+                Cursor = Cursors.WaitCursor;
+
+                // clear previous selections
+                this.cboDatabase.ComboBox.DataSource = null;
+                this.cboTable.ComboBox.DataSource = null;
+
                 string formattedConnectionString = this.toolStripTextBoxConnectionString.Text.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
                 SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(formattedConnectionString);
                 
@@ -881,6 +887,10 @@ namespace DatabaseDiagram
             catch (SqlException sqlEx)
             {
                 _errorController.DisplayErrorMessage(String.Format(TextStrings.InvalidDBConnection, sqlEx.Message));
+            }
+            finally
+            {
+                Cursor = Cursors.Default;
             }
         }
 
