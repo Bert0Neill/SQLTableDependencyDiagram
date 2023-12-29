@@ -60,9 +60,9 @@ namespace DatabaseDiagram
             this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             this.saveToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.exportToolStripButton = new System.Windows.Forms.ToolStripDropDownButton();
-            this.toolStripMenuItem3 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
-            this.toolStripMenuItem5 = new System.Windows.Forms.ToolStripMenuItem();
+            this.PNG_Export_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.JPEG_Export_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.GIF_Export_ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.printToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.panel1 = new System.Windows.Forms.Panel();
             this.toolStripConnectionString = new System.Windows.Forms.ToolStrip();
@@ -126,7 +126,6 @@ namespace DatabaseDiagram
             this.model1.DocumentSize.DisplayName = "SameAsPrinter";
             this.model1.DocumentSize.Height = 625.9843F;
             this.model1.DocumentSize.Width = 438.189F;
-            this.model1.LineRoutingEnabled = true;
             this.model1.LineStyle.DashPattern = null;
             this.model1.LineStyle.LineColor = System.Drawing.Color.LightGray;
             this.model1.LineStyle.LineWidth = 0F;
@@ -134,7 +133,6 @@ namespace DatabaseDiagram
             this.model1.Padding = new System.Windows.Forms.Padding(0, 0, 0, 0);
             this.model1.ShadowStyle.Color = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
             this.model1.ShadowStyle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))), ((int)(((byte)(105)))));
-            this.model1.SizeToContent = true;
             // 
             // panel2
             // 
@@ -4408,7 +4406,7 @@ namespace DatabaseDiagram
             // 
             this.compactViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("compactViewToolStripMenuItem.Image")));
             this.compactViewToolStripMenuItem.Name = "compactViewToolStripMenuItem";
-            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.compactViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
             this.compactViewToolStripMenuItem.Text = "Compact View";
             this.compactViewToolStripMenuItem.Click += new System.EventHandler(this.compactViewToolStripMenuItem_Click);
             // 
@@ -4416,7 +4414,7 @@ namespace DatabaseDiagram
             // 
             this.dataTypeViewToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("dataTypeViewToolStripMenuItem.Image")));
             this.dataTypeViewToolStripMenuItem.Name = "dataTypeViewToolStripMenuItem";
-            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(167, 24);
+            this.dataTypeViewToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
             this.dataTypeViewToolStripMenuItem.Text = "Extended View";
             this.dataTypeViewToolStripMenuItem.Click += new System.EventHandler(this.dataTypeViewToolStripMenuItem_Click);
             // 
@@ -4448,9 +4446,9 @@ namespace DatabaseDiagram
             // exportToolStripButton
             // 
             this.exportToolStripButton.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.toolStripMenuItem3,
-            this.toolStripMenuItem4,
-            this.toolStripMenuItem5});
+            this.PNG_Export_ToolStripMenuItem,
+            this.JPEG_Export_ToolStripMenuItem,
+            this.GIF_Export_ToolStripMenuItem});
             this.exportToolStripButton.Enabled = false;
             this.exportToolStripButton.Image = ((System.Drawing.Image)(resources.GetObject("exportToolStripButton.Image")));
             this.exportToolStripButton.ImageScaling = System.Windows.Forms.ToolStripItemImageScaling.None;
@@ -4460,26 +4458,29 @@ namespace DatabaseDiagram
             this.exportToolStripButton.Size = new System.Drawing.Size(66, 21);
             this.exportToolStripButton.Text = "Export";
             // 
-            // toolStripMenuItem3
+            // PNG_Export_ToolStripMenuItem
             // 
-            this.toolStripMenuItem3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem3.Image")));
-            this.toolStripMenuItem3.Name = "toolStripMenuItem3";
-            this.toolStripMenuItem3.Size = new System.Drawing.Size(110, 24);
-            this.toolStripMenuItem3.Text = "PNG";
+            this.PNG_Export_ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("PNG_Export_ToolStripMenuItem.Image")));
+            this.PNG_Export_ToolStripMenuItem.Name = "PNG_Export_ToolStripMenuItem";
+            this.PNG_Export_ToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.PNG_Export_ToolStripMenuItem.Text = "PNG";
+            this.PNG_Export_ToolStripMenuItem.Click += new System.EventHandler(this.PNG_Export_toolStripMenuItem_Click);
             // 
-            // toolStripMenuItem4
+            // JPEG_Export_ToolStripMenuItem
             // 
-            this.toolStripMenuItem4.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem4.Image")));
-            this.toolStripMenuItem4.Name = "toolStripMenuItem4";
-            this.toolStripMenuItem4.Size = new System.Drawing.Size(110, 24);
-            this.toolStripMenuItem4.Text = "JPEG";
+            this.JPEG_Export_ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("JPEG_Export_ToolStripMenuItem.Image")));
+            this.JPEG_Export_ToolStripMenuItem.Name = "JPEG_Export_ToolStripMenuItem";
+            this.JPEG_Export_ToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.JPEG_Export_ToolStripMenuItem.Text = "JPEG";
+            this.JPEG_Export_ToolStripMenuItem.Click += new System.EventHandler(this.JPEG_Export_ToolStripMenuItem_Click);
             // 
-            // toolStripMenuItem5
+            // GIF_Export_ToolStripMenuItem
             // 
-            this.toolStripMenuItem5.Image = ((System.Drawing.Image)(resources.GetObject("toolStripMenuItem5.Image")));
-            this.toolStripMenuItem5.Name = "toolStripMenuItem5";
-            this.toolStripMenuItem5.Size = new System.Drawing.Size(110, 24);
-            this.toolStripMenuItem5.Text = "GIF";
+            this.GIF_Export_ToolStripMenuItem.Image = ((System.Drawing.Image)(resources.GetObject("GIF_Export_ToolStripMenuItem.Image")));
+            this.GIF_Export_ToolStripMenuItem.Name = "GIF_Export_ToolStripMenuItem";
+            this.GIF_Export_ToolStripMenuItem.Size = new System.Drawing.Size(198, 24);
+            this.GIF_Export_ToolStripMenuItem.Text = "GIF";
+            this.GIF_Export_ToolStripMenuItem.Click += new System.EventHandler(this.GIF_Export_ToolStripMenuItem_Click);
             // 
             // printToolStripButton
             // 
@@ -4490,6 +4491,7 @@ namespace DatabaseDiagram
             this.printToolStripButton.Name = "printToolStripButton";
             this.printToolStripButton.Size = new System.Drawing.Size(56, 22);
             this.printToolStripButton.Text = "Print";
+            this.printToolStripButton.Click += new System.EventHandler(this.printToolStripButton_Click_1);
             // 
             // panel1
             // 
@@ -4594,9 +4596,9 @@ namespace DatabaseDiagram
         private System.Windows.Forms.ToolStripButton toolStripButton3;
         private System.Windows.Forms.ToolStripButton saveToolStripButton;
         private System.Windows.Forms.ToolStripDropDownButton exportToolStripButton;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem3;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem4;
-        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem5;
+        private System.Windows.Forms.ToolStripMenuItem PNG_Export_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem JPEG_Export_ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem GIF_Export_ToolStripMenuItem;
         private System.Windows.Forms.ToolStripButton printToolStripButton;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.ToolStrip toolStripConnectionString;

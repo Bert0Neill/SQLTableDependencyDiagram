@@ -162,7 +162,7 @@
         AAEAAAD/////AQAAAAAAAAAMAgAAAFdTeXN0ZW0uV2luZG93cy5Gb3JtcywgVmVyc2lvbj00LjAuMC4w
         LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPWI3N2E1YzU2MTkzNGUwODkFAQAAACZTeXN0
         ZW0uV2luZG93cy5Gb3Jtcy5JbWFnZUxpc3RTdHJlYW1lcgEAAAAERGF0YQcCAgAAAAkDAAAADwMAAAC+
-        lA8AAk1TRnQBSQFMAgEBQwEQATABEQGwAQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
+        lA8AAk1TRnQBSQFMAgEBQwEQAYgBEAG4AQABEAEAARABAAT/AQkBAAj/AUIBTQE2AQQGAAE2AQQCAAEo
         AwABQAMAARABQQIAAQEBAAEIBgABRAEQFwABgAIAAYADAAKAAQABgAMAAYABAAGAAQACgAIAA8ABAAHA
         AdwBwAEAAfABygGmAQABMwUAATMBAAEzAQABMwEAAjMCAAMWAQADHAEAAyIBAAMpAQADVQEAA00BAANC
         AQADOQEAAYABfAH/AQACUAH/AQABkwEAAdYBAAH/AewBzAEAAcYB1gHvAQAB1gLnAQABkAGpAa0CAAH/
@@ -17209,12 +17209,12 @@
   <data name="viewSplitToolStripSplitButton.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAJcEhZcwAAEE0AABBNAWeMAeAAAAELSURBVDhPtZI9TsNAEIVfekRq6CwKmlTcgpIOem4Auxus
+        YQUAAAAJcEhZcwAAEE0AABBNAWeMAeAAAAELSURBVDhPtZI9TsNAEIVfekRq6CwKmlTcgpIOao4Auxus
         SOEaARSPsJQCwSGgQjRU1KloIqXgAJGZN7GjOPEamnzS6Hnf/K1sYzeEURchu4XLPuBljktZmPJMn/lW
         vHyhn90jlVNcyxHS/GCpeg7yYPlWghRa9Iybx3NtPoHLj037+YXmXizfCguCpPDZmw76hr/7MXXjV/P/
         NYDXjsWfA1B0MMz3G5sZsQFJkkw1CqoZTc2MlgGWqLSxmbGzG5DV9oqmd7E5YG3zZixv4iaH+k/0tPFM
-        P+1EP+mn+RUsLh9rrHw/HuFKZtr8DicDDJ/2zCfcUttWEvO3YNG6VsT8LbiBRdTSMmJ+HeAXNoO1qmFH
-        VzoAAAAASUVORK5CYII=
+        P+1EP+mn+RUsLh9rrHw/HuFKZtr8DicDDJ/2zCfcUttWEvO3YNG6VsT8LbiBRdTSMmJ+HeAXMtq1qXUF
+        2OUAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="toolStripButton3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -17236,7 +17236,7 @@
         AGQfxYtBanAaAFYAtQEXhqkZNQDNANIyEwSD9FAOGBgASxwuA/BNGaoAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolStripMenuItem3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="PNG_Export_ToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
         JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAAA6UlE
@@ -17247,7 +17247,7 @@
         AAAASUVORK5CYII=
 </value>
   </data>
-  <data name="toolStripMenuItem4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="JPEG_Export_ToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
         JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAAA2ElE
@@ -17257,7 +17257,7 @@
         pgMgfgcSBBlEBK4DptwPcANAaRpqCEkYqO8R2IABBgwMADG4z9WLklyKAAAAAElFTkSuQmCC
 </value>
   </data>
-  <data name="toolStripMenuItem5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="GIF_Export_ToolStripMenuItem.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6
         JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAA68AAAOvAGVvHJJAAABrUlE
