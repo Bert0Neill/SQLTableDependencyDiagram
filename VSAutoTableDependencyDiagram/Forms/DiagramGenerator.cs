@@ -107,7 +107,15 @@ namespace DatabaseDiagram
             this.sqlDependencyDiagram.Model.LineStyle.LineColor = Color.LightGray;
             this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
 
-          
+            // Where diagram is the instance of the Diagram control.
+
+            this.sqlDependencyDiagram.EventSink.NodeMouseEnter += EventSink_NodeMouseEnter;
+
+            this.sqlDependencyDiagram.EventSink.NodeMouseLeave += EventSink_NodeMouseLeave;
+
+
+
+           
 
             this.sqlDependencyDiagram.View.SelectionList.Clear();
         }
@@ -133,12 +141,22 @@ namespace DatabaseDiagram
 
                 //this.sqlDependencyDiagram.Controller.ActivateTool("ZoomTool");
                 //this.sqlDependencyDiagram.FitDocument(); // need zooming and scrolling for this to work correctly
-                //this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
+                this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
             }
             catch (Exception ex)
             {
                 _errorController.DisplayErrorMessage(ex.Message);
             }
+        }
+
+        private void EventSink_NodeMouseLeave(NodeMouseEventArgs evtArgs)
+        {
+            this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
+        }
+
+        private void EventSink_NodeMouseEnter(NodeMouseEventArgs evtArgs)
+        {
+            this.sqlDependencyDiagram.Controller.ActivateTool("SelectTool");
         }
 
         /// <summary>
