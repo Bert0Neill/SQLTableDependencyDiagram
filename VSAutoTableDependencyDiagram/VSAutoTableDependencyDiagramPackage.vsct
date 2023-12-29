@@ -56,7 +56,7 @@
         <Parent guid="guidVSAutoTableDependencyDiagramPackageCmdSet" id="MyMenuGroup" />
 		  <Icon guid="guidImages" id="DiagramIcon" />
         <Strings>
-          <ButtonText>Auto Generate SQL Table Dependency Diagram</ButtonText>
+          <ButtonText>SQL Server - Auto Generate Table Dependency Diagram</ButtonText>
         </Strings>
       </Button>
     </Buttons>

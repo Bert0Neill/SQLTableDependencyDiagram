@@ -699,8 +699,8 @@ namespace DatabaseDiagram
                 this.viewSplitToolStripSplitButton.Enabled = true;
             }
             catch (Exception ex)
-            {
-                _errorController.DisplayErrorMessage(ex.Message);
+            {                
+                _errorController.DisplayErrorMessage(String.Format(TextStrings.WarningSqlServerConnString, ex.Message));
             }
             finally
             {
@@ -713,6 +713,7 @@ namespace DatabaseDiagram
             try
             {
                 Cursor = Cursors.WaitCursor;
+
                 List<DatabaseMetaData> initialData;
                 string selectedDatabase = this.cboDatabase.ComboBox.SelectedValue.ToString();
                 this.cboTable.Enabled = false;
@@ -736,7 +737,7 @@ namespace DatabaseDiagram
             }
             catch (Exception ex)
             {
-                _errorController.DisplayErrorMessage(ex.Message);
+                _errorController.DisplayErrorMessage(String.Format(TextStrings.WarningSqlServerConnString, ex.Message));
             }
             finally
             {
@@ -864,12 +865,14 @@ namespace DatabaseDiagram
 
         private void toolStripButton1_Click(object sender, EventArgs e)
         {
-
             try
             {
                 string formattedConnectionString = this.toolStripTextBoxConnectionString.Text.Replace(SqlStatements.Multiple_Active_Result_Sets, SqlStatements.MultipleActiveResultSets).Replace(SqlStatements.Trust_Server_Certificate, SqlStatements.TrustServerCertificate);
+                SqlConnectionStringBuilder builder = new SqlConnectionStringBuilder(formattedConnectionString);
+                
                 SqlConnection connection = new SqlConnection(formattedConnectionString);
                 connection.Open();
+                connection.Close();
 
                 _sharedData.SqlConnectionString = formattedConnectionString;
                 RetrieveDatabases(); // if reached - connect valid
@@ -877,7 +880,7 @@ namespace DatabaseDiagram
             }
             catch (SqlException sqlEx)
             {
-                _errorController.DisplayErrorMessage($"Not able to connect to database, please check that the connection string is correct and try again. Error {sqlEx.Message}");
+                _errorController.DisplayErrorMessage(String.Format(TextStrings.InvalidDBConnection, sqlEx.Message));
             }
         }
 

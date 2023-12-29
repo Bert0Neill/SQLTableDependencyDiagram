@@ -115,6 +115,15 @@ namespace VSAutoTableDependencyDiagram.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Not able to connect to database, please check that the connection string is valid for SQl Server only. Error {0}.
+        /// </summary>
+        internal static string InvalidDBConnection {
+            get {
+                return ResourceManager.GetString("InvalidDBConnection", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to IsPrimaryKey.
         /// </summary>
         internal static string IsPrimaryKey {
@@ -266,6 +275,15 @@ namespace VSAutoTableDependencyDiagram.Resources {
         internal static string urn {
             get {
                 return ResourceManager.GetString("urn", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ensure your connection string is valid for SQL Server. Error {0}.
+        /// </summary>
+        internal static string WarningSqlServerConnString {
+            get {
+                return ResourceManager.GetString("WarningSqlServerConnString", resourceCulture);
             }
         }
     }
