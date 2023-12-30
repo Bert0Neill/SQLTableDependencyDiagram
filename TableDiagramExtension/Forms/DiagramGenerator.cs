@@ -107,6 +107,12 @@ namespace DatabaseDiagram
             this.sqlDependencyDiagram.Model.BoundaryConstraintsEnabled = false;
             this.sqlDependencyDiagram.Model.MinimumSize = sqlDependencyDiagram.View.ClientRectangle.Size;
             this.sqlDependencyDiagram.Model.SizeToContent = true;
+
+            // Where diagram is the instance of the Diagram control.
+            this.sqlDependencyDiagram.EventSink.NodeMouseEnter += EventSink_NodeMouseEnter;
+            this.sqlDependencyDiagram.EventSink.NodeMouseLeave += EventSink_NodeMouseLeave;
+
+
             this.sqlDependencyDiagram.View.SelectionList.Clear();
         }
         #endregion
@@ -121,7 +127,7 @@ namespace DatabaseDiagram
             {
                 this.sqlDependencyDiagram.View.SelectionList.Clear();                
                 this.sqlDependencyDiagram.Model.LineRoutingEnabled = true; //enabling for model
-                //this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
+                this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
             }
             catch (Exception ex)
             {
@@ -510,6 +516,18 @@ namespace DatabaseDiagram
         #endregion
 
         #region Event Handlers
+
+
+        private void EventSink_NodeMouseLeave(NodeMouseEventArgs evtArgs)
+        {
+            this.sqlDependencyDiagram.Controller.ActivateTool("PanTool");
+        }
+
+        private void EventSink_NodeMouseEnter(NodeMouseEventArgs evtArgs)
+        {
+            this.sqlDependencyDiagram.Controller.ActivateTool("SelectTool");
+        }
+
         void EventSink_NodeClick(NodeMouseEventArgs evtArgs)
         {
             try

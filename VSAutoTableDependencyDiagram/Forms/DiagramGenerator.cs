@@ -108,14 +108,8 @@ namespace DatabaseDiagram
             this.sqlDependencyDiagram.Model.RenderingStyle.SmoothingMode = SmoothingMode.HighQuality;
 
             // Where diagram is the instance of the Diagram control.
-
             this.sqlDependencyDiagram.EventSink.NodeMouseEnter += EventSink_NodeMouseEnter;
-
             this.sqlDependencyDiagram.EventSink.NodeMouseLeave += EventSink_NodeMouseLeave;
-
-
-
-           
 
             this.sqlDependencyDiagram.View.SelectionList.Clear();
         }
