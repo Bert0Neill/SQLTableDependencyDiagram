@@ -256,8 +256,8 @@ SELECT DISTINCT
     END AS '@ColumnDataType'
 FROM sys.columns AS c
 	LEFT OUTER JOIN sys.index_columns AS i ON c.object_id = i.object_id AND c.column_id = i.column_id AND i.index_id = 1
-		LEFT OUTER JOIN sys.foreign_key_columns AS f ON c.object_id = f.parent_object_id AND c.column_id = f.parent_column_id
-			INNER JOIN INFORMATION_SCHEMA.COLUMNS isc on  c.name = isc.COLUMN_NAME -- join table column
+		LEFT OUTER JOIN sys.foreign_key_columns AS f ON c.object_id = f.parent_object_id AND c.column_id = f.parent_column_id			
+			INNER JOIN INFORMATION_SCHEMA.COLUMNS isc ON c.name = isc.COLUMN_NAME AND OBJECT_NAME(c.object_id) = isc.TABLE_NAME
 WHERE c.object_id = t.object_id
 FOR XML PATH ('Column'),TYPE
 )
@@ -267,27 +267,31 @@ FROM sys.schemas AS s
 	AND t.Name IN ({1})
 FOR XML PATH('Table'),ROOT('Tables')</value>
     <comment>USE {0}
-SELECT
+SELECT 
 s.name AS '@Schema',
 t.name AS '@Name',
 t.object_id AS '@TableId',
 (
-SELECT c.name AS '@Name',
+SELECT DISTINCT
+	c.name AS '@Name',
     --c.column_id AS '@ColumnId',
     IIF(i.object_id IS NOT NULL,1,0) AS '@IsPrimaryKey',
-    f.referenced_object_id AS '@ForeignKey'
+    f.referenced_object_id AS '@ForeignKey',
+	CASE 
+        WHEN isc.CHARACTER_MAXIMUM_LENGTH IS NULL THEN ' (' + UPPER(SUBSTRING(isc.DATA_TYPE, 1, 1)) + LOWER(SUBSTRING(isc.DATA_TYPE, 2, LEN(isc.DATA_TYPE))) + ')'
+        ELSE ' (' + UPPER(SUBSTRING(isc.DATA_TYPE, 1, 1)) + LOWER(SUBSTRING(isc.DATA_TYPE, 2, LEN(isc.DATA_TYPE))) + ' ' + CAST(isc.CHARACTER_MAXIMUM_LENGTH AS VARCHAR(4)) + ')' 
+    END AS '@ColumnDataType'
 FROM sys.columns AS c
-	LEFT OUTER JOIN sys.index_columns AS i ON c.object_id = i.object_id
-	  AND c.column_id = i.column_id
-	  AND i.index_id = 1
+	LEFT OUTER JOIN sys.index_columns AS i ON c.object_id = i.object_id AND c.column_id = i.column_id AND i.index_id = 1
 		LEFT OUTER JOIN sys.foreign_key_columns AS f ON c.object_id = f.parent_object_id AND c.column_id = f.parent_column_id
+			INNER JOIN INFORMATION_SCHEMA.COLUMNS isc on  c.name = isc.COLUMN_NAME -- join table column
 WHERE c.object_id = t.object_id
 FOR XML PATH ('Column'),TYPE
 )
-FROM sys.schemAS AS s
+FROM sys.schemas AS s
   INNER JOIN sys.tables AS t ON s.schema_id = t.schema_id
-  --AND t.Name IN ('CustomerAddress', 'Address', 'Customer')
-  AND t.Name IN ({1})
+--  AND t.Name IN ('CustomerAddress', 'Address', 'Customer')
+	AND t.Name IN ({1})
 FOR XML PATH('Table'),ROOT('Tables')</comment>
   </data>
   <data name="SelectDependencyTableName" xml:space="preserve">

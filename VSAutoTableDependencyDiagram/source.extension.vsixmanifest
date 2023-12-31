@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PackageManifest Version="2.0.0" xmlns="http://schemas.microsoft.com/developer/vsx-schema/2011" xmlns:d="http://schemas.microsoft.com/developer/vsx-schema-design/2011">
     <Metadata>
-        <Identity Id="VSAutoTableDependencyDiagramv3.45a7499f-572f-4b27-a4ba-0cb0aaac2319" Version="1.1" Language="en-US" Publisher="Bert O'Neill" />
+        <Identity Id="VSAutoTableDependencyDiagramv4.45a7499f-572f-4b27-a4ba-0cb0aaac2319" Version="1.1" Language="en-US" Publisher="Bert O'Neill" />
         <DisplayName>SQL Server Auto Generate Table Dependency Diagram</DisplayName>
         <Description xml:space="preserve">A quick way to generate an ERD for SQL Server (only), using a single table as the starting reference, and combining all its related tables (first level foreign keys).
 
